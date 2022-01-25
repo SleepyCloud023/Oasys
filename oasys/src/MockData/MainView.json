@@ -1,0 +1,60 @@
+{
+  "ClassList": ["Address", "Id", "Name", "RegDate", "RegPlace", "Title"],
+  "TagList": ["Good", "Bad"],
+  "ObjectList": [
+    {
+      "object": {
+        "class": ["Title"],
+        "bbox": [
+          [0, 0],
+          [10, 10]
+        ]
+      }
+    },
+    {
+      "object": {
+        "class": ["Name"],
+        "bbox": [
+          [0, 10],
+          [20, 20]
+        ]
+      }
+    },
+    {
+      "object": {
+        "class": ["Id"],
+        "bbox": [
+          [0, 20],
+          [30, 30]
+        ]
+      }
+    },
+    {
+      "object": {
+        "class": ["Address"],
+        "bbox": [
+          [0, 30],
+          [40, 40]
+        ]
+      }
+    },
+    {
+      "object": {
+        "class": ["RegDate"],
+        "bbox": [
+          [0, 40],
+          [50, 50]
+        ]
+      }
+    },
+    {
+      "object": {
+        "class": ["RegPlace"],
+        "bbox": [
+          [0, 50],
+          [60, 60]
+        ]
+      }
+    }
+  ]
+}
