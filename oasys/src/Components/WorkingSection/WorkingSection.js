@@ -6,7 +6,7 @@ import RightControlPanel from './RightControlPanel';
 
 const StyledWorkingSection = styled.div`
   /* 색상 */
-  background-color: #252c2c;
+  background-color: #26293b;
 
   /* 정렬 */
   flex: 70 0 0;

@@ -17,8 +17,9 @@ const MainCanvas = styled.div`
     }
   }}
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: start;
+  align-items: start;
+  background-color: #1c1d1f;
 `;
 
 function MainViewCanvas({ areaPercent, ...rest }) {
@@ -43,6 +44,7 @@ function MainViewCanvas({ areaPercent, ...rest }) {
         stroke="green"
         fill="transparent"
         stroke-width="3"
+        key="{index}"
       />
     );
   });
