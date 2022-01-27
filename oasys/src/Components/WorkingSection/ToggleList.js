@@ -1,10 +1,9 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
 const StyledToggleList = styled.ul`
   margin: 0;
   padding: 0;
-  height: 100px;
   overflow-y: auto;
   /* 스크롤바 숨기기 */
   &::-webkit-scrollbar {

@@ -1,8 +1,8 @@
-import React from "react";
-import styled, { css } from "styled-components";
-import HighlightAltIcon from "@mui/icons-material/HighlightAlt";
-import PanToolIcon from "@mui/icons-material/PanTool";
-import PolylineIcon from "@mui/icons-material/Polyline";
+import React from 'react';
+import styled, { css } from 'styled-components';
+import HighlightAltIcon from '@mui/icons-material/HighlightAlt';
+import PanToolIcon from '@mui/icons-material/PanTool';
+import PolylineIcon from '@mui/icons-material/Polyline';
 
 const StyledLeftPanel = styled.div`
   /* 색상 */
@@ -15,7 +15,7 @@ const StyledLeftPanel = styled.div`
   /* 배치 */
   ${({ areaPercent }) => {
     if (!areaPercent) {
-      console.log("StyledLeftPanel: areaPercent is undefined");
+      console.log('StyledLeftPanel: areaPercent is undefined');
     } else {
       return `
         flex: ${areaPercent} 0 0;
@@ -29,15 +29,15 @@ const StyledLeftPanel = styled.div`
 
 const ResizedIconStyle = {
   // 색상
-  color: "azure",
-  border: "2px solid black",
-  borderRadius: "3px",
+  color: 'azure',
+  border: '2px solid black',
+  borderRadius: '3px',
   // 배치
-  margin: "4px 0",
+  margin: '4px 0',
   // 크기
   // 1rem = 브라우저 16px
-  fontSize: "1.5rem",
-  cursor: "pointer",
+  fontSize: '1.5rem',
+  cursor: 'pointer',
 };
 
 function LeftControlPanel({ areaPercent, ...rest }) {

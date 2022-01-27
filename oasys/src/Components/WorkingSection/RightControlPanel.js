@@ -12,13 +12,15 @@ const RightPanel = styled.div`
   /* 배치 */
   ${({ areaPercent }) => {
     if (!areaPercent) {
-      console.log("RightPanel: areaPercent is needed");
+      console.log('RightPanel: areaPercent is needed');
     } else {
       return `
         flex: ${areaPercent} 0 0;
       `;
     }
   }}
+  flex-flow: column;
+  display: flex;
 `;
 
 function objectExtractor(element, index) {
@@ -43,17 +45,17 @@ function RightControlPanel({ areaPercent, ...rest }) {
   return (
     <RightPanel areaPercent={areaPercent} {...rest}>
       <ToggleList
-        title={"Bounding Box"}
+        title={'Bounding Box'}
         contentList={ObjectList}
         contentExtractor={objectExtractor}
       />
       <ToggleList
-        title={"Class"}
+        title={'Class'}
         contentList={ClassList}
         contentExtractor={classExtractor}
       />
       <ToggleList
-        title={"Tag"}
+        title={'Tag'}
         contentList={TagList}
         contentExtractor={tagExtractor}
       />
