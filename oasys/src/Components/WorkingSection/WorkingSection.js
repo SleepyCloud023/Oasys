@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useState } from 'react';
+=======
+import React from 'react';
+>>>>>>> upstream/main
 import styled from 'styled-components';
 import LeftControlPanel from './LeftControlPanel';
 import MainViewCanvas from './MainViewCanvas/MainViewCanvas';
@@ -11,10 +15,7 @@ const StyledWorkingSection = styled.div`
   /* 정렬 */
   flex: 70 0 0;
   display: flex;
-
-  height = 500px;
   overflow-y: auto;
-  /* 스크롤바 숨기기 */
   &::-webkit-scrollbar {
     display: none;
   }
