@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import MockData from '../../MockData/MainView.json';
+import MockData from '../../MockData/MainView2.json';
 import ToggleList from './ToggleList';
 
 const RightPanel = styled.div`

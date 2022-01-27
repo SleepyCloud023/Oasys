@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import React, { useState } from 'react';
-=======
-import React from 'react';
->>>>>>> upstream/main
 import styled from 'styled-components';
 import LeftControlPanel from './LeftControlPanel';
 import MainViewCanvas from './MainViewCanvas/MainViewCanvas';
