@@ -1,8 +1,8 @@
-import React from "react";
-import styled from "styled-components";
-import LeftControlPanel from "./LeftControlPanel";
-import MainViewCanvas from "./MainViewCanvas";
-import RightControlPanel from "./RightControlPanel";
+import React from 'react';
+import styled from 'styled-components';
+import LeftControlPanel from './LeftControlPanel';
+import MainViewCanvas from './MainViewCanvas/MainViewCanvas';
+import RightControlPanel from './RightControlPanel';
 
 const StyledWorkingSection = styled.div`
   /* 색상 */
@@ -11,6 +11,10 @@ const StyledWorkingSection = styled.div`
   /* 정렬 */
   flex: 70 0 0;
   display: flex;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 function WorkingSection({ children, ...rest }) {

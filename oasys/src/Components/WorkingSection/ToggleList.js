@@ -1,20 +1,34 @@
-import React from "react";
-import styled from "styled-components";
+import React, { useState } from 'react';
+import styled, { css } from 'styled-components';
 
 const StyledToggleList = styled.ul`
   margin: 0;
   padding: 0;
-  height: 100px;
+  width: 100%;
   overflow-y: auto;
   /* 스크롤바 숨기기 */
   &::-webkit-scrollbar {
     display: none;
   }
+  ${({ upperFixed }) =>
+    upperFixed &&
+    css`
+      margin-bottom: auto;
+    `}
+  ${({ expandRatio }) => {
+    console.log(expandRatio);
+
+    expandRatio &&
+      css`
+        flex: ${expandRatio} 0 0;
+      `;
+  }}
 `;
 
 const ListCover = styled.li`
   background-color: azure;
   border-radius: 3px;
+  border: 1px solid black;
   color: black;
   font-style: italic;
   font-size: 1rem;
@@ -35,7 +49,17 @@ const ListElement = styled.li`
   padding: auto 4px;
 `;
 
-function ToggleList({ title, contentList, contentExtractor, ...rest }) {
+function ToggleList({
+  title,
+  contentList,
+  contentExtractor,
+  expandRatio,
+  upperFixed,
+  ...rest
+}) {
+  const [fold, setFold] = useState(false);
+  const onToggle = () => setFold(!fold);
+
   const isExtractorExist = (extractor) =>
     extractor
       ? true
@@ -43,14 +67,15 @@ function ToggleList({ title, contentList, contentExtractor, ...rest }) {
 
   const listElements =
     isExtractorExist(contentExtractor) &&
+    !fold &&
     contentList.map((content, index) => {
       const fullContent = contentExtractor(content, index);
       return <ListElement key={index}>{fullContent}</ListElement>;
     });
 
   return (
-    <StyledToggleList>
-      <ListCover>{title}</ListCover>
+    <StyledToggleList expandRatio={expandRatio} upperFixed={upperFixed}>
+      <ListCover onClick={onToggle}>{title}</ListCover>
       {listElements}
     </StyledToggleList>
   );

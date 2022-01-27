@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "styled-components";
-import MockData from "../../MockData/MainView.json";
-import ToggleList from "./ToggleList";
+import React from 'react';
+import styled from 'styled-components';
+import MockData from '../../MockData/MainView.json';
+import ToggleList from './ToggleList';
 
 const RightPanel = styled.div`
   border: 1px solid transparent;
@@ -12,13 +12,22 @@ const RightPanel = styled.div`
   /* 배치 */
   ${({ areaPercent }) => {
     if (!areaPercent) {
-      console.log("RightPanel: areaPercent is needed");
+      console.log('RightPanel: areaPercent is needed');
     } else {
       return `
         flex: ${areaPercent} 0 0;
       `;
     }
   }}
+  /* 스크롤 설정 */
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  /* 레이아웃 */
+  display: flex;
+  flex-flow: column;
+  justify-content: end;
 `;
 
 function objectExtractor(element, index) {
@@ -40,20 +49,25 @@ function tagExtractor(tagName, index) {
 
 function RightControlPanel({ areaPercent, ...rest }) {
   const { ObjectList, ClassList, TagList } = MockData;
+  const multiList = [...ObjectList, ...ObjectList, ...ObjectList];
+  console.log(`multiList: ${multiList}`);
   return (
     <RightPanel areaPercent={areaPercent} {...rest}>
       <ToggleList
-        title={"Bounding Box"}
-        contentList={ObjectList}
+        title={'Bounding Box'}
+        contentList={multiList}
         contentExtractor={objectExtractor}
+        expandRatio={80}
+        upperFixed
       />
       <ToggleList
-        title={"Class"}
+        title={'Class'}
         contentList={ClassList}
         contentExtractor={classExtractor}
+        expandRatio={20}
       />
       <ToggleList
-        title={"Tag"}
+        title={'Tag'}
         contentList={TagList}
         contentExtractor={tagExtractor}
       />
