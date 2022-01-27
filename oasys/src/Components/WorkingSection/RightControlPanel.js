@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "styled-components";
-import MockData from "../../MockData/MainView.json";
-import ToggleList from "./ToggleList";
+import React from 'react';
+import styled from 'styled-components';
+import MockData from '../../MockData/MainView.json';
+import ToggleList from './ToggleList';
 
 const RightPanel = styled.div`
   border: 1px solid transparent;
