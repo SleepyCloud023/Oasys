@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import Container from "./Components/Container";
-import LeftControlPanel from "./Components/LeftControlPanel";
-import MainViewCanvas from "./Components/MainViewCanvas";
-import RightControlPanel from "./Components/RightControlPanel";
+import Footer from "./Components/Footer/Footer";
+import Header from "./Components/Header/Header";
+import WorkingSection from "./Components/WorkingSection/WorkingSection";
 
 const AppBlock = styled.div`
   display: flex;
@@ -15,13 +14,9 @@ const AppBlock = styled.div`
 function App() {
   return (
     <AppBlock>
-      <Container sectionType={"header"}></Container>
-      <Container sectionType={"workingSection"}>
-        <LeftControlPanel />
-        <MainViewCanvas />
-        <RightControlPanel />
-      </Container>
-      <Container sectionType={"footer"}></Container>
+      <Header />
+      <WorkingSection />
+      <Footer />
     </AppBlock>
   );
 }
