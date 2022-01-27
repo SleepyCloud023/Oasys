@@ -3,54 +3,54 @@
   "TagList": ["Good", "Bad"],
   "ObjectList": [
     {
-      "object": {
-        "class": ["Title"],
-        "bbox": [
+      "Object": {
+        "ClassName": ["Title"],
+        "Bbox": [
           [0, 0],
           [10, 10]
         ]
       }
     },
     {
-      "object": {
-        "class": ["Name"],
-        "bbox": [
+      "Object": {
+        "ClassName": ["Name"],
+        "Bbox": [
           [0, 10],
           [20, 20]
         ]
       }
     },
     {
-      "object": {
-        "class": ["Id"],
-        "bbox": [
+      "Object": {
+        "ClassName": ["Id"],
+        "Bbox": [
           [0, 20],
           [30, 30]
         ]
       }
     },
     {
-      "object": {
-        "class": ["Address"],
-        "bbox": [
+      "Object": {
+        "ClassName": ["Address"],
+        "Bbox": [
           [0, 30],
           [40, 40]
         ]
       }
     },
     {
-      "object": {
-        "class": ["RegDate"],
-        "bbox": [
+      "Object": {
+        "ClassName": ["RegDate"],
+        "Bbox": [
           [0, 40],
           [50, 50]
         ]
       }
     },
     {
-      "object": {
-        "class": ["RegPlace"],
-        "bbox": [
+      "Object": {
+        "ClassName": ["RegPlace"],
+        "Bbox": [
           [0, 50],
           [60, 60]
         ]
