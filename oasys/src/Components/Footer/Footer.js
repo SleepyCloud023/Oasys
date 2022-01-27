@@ -18,12 +18,25 @@ const StyledButton = styled.button`
 `;
 
 function Footer({ children, ...rest }) {
+  const [mouseMode, setMouseMode] = useState("move");
   const [dialogOn, setDialogOn] = useState(false);
   return (
     <StyledFooter {...rest}>
       <StyledButton onClick={() => setDialogOn(true)}>
         테스트 모달 버튼
       </StyledButton>
+      {/* 연습용 */}
+      <StyledButton onClick={() => setMouseMode("move")}>
+        move 모드
+      </StyledButton>
+      <StyledButton onClick={() => setMouseMode("box")}>box 모드</StyledButton>
+      <StyledButton onClick={() => setMouseMode("polygon")}>
+        polygon 모드
+      </StyledButton>
+      <StyledButton>
+        <h1>current Mode: {mouseMode}</h1>
+      </StyledButton>
+
       <Dialog dialogOn={dialogOn} setDialogOn={setDialogOn} />
     </StyledFooter>
   );

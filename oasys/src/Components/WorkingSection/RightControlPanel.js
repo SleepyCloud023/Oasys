@@ -1,10 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import MockData from "../../MockData/MainView.json";
+import ToggleList from "./ToggleList";
 
 const RightPanel = styled.div`
+  border: 1px solid transparent;
+  border-radius: 3px;
   border: 2px solid azure;
-  border-radius: 4px;
   color: white;
   font: bold;
   /* 배치 */
@@ -19,40 +21,43 @@ const RightPanel = styled.div`
   }}
 `;
 
-const ListCover = styled.div`
-  background-color: azure;
-  border-radius: 3px;
-  color: black;
-`;
+function objectExtractor(element, index) {
+  const { ClassName, Bbox } = element.Object;
+  console.log(`${index}: ${Bbox}`);
+  const content = `[${index}]: ${ClassName}`;
+  return content;
+}
 
-const ElementCover = styled.div`
-  font-size: 0.75rem;
-  background-color: #5c5b5b;
-  border: 1px solid black;
-  border-radius: 3px;
-`;
+function classExtractor(className, index) {
+  const content = `[${index}]: ${className}`;
+  return content;
+}
+
+function tagExtractor(tagName, index) {
+  const content = `[${index}]: ${tagName}`;
+  return content;
+}
 
 function RightControlPanel({ areaPercent, ...rest }) {
-  const { ClassList, TagList, ObjectList } = MockData;
+  const { ObjectList, ClassList, TagList } = MockData;
   return (
-    <>
-      <RightPanel areaPercent={areaPercent} {...rest}>
-        <ListCover>Objects</ListCover>
-        {ObjectList.map(({ object }, idx) => (
-          <ElementCover key={idx}>
-            Object[{idx}]: {object.class}
-          </ElementCover>
-        ))}
-        <ListCover>Class</ListCover>
-        {ClassList.map((className, idx) => (
-          <ElementCover key={idx}>{className}</ElementCover>
-        ))}
-        <ListCover>Tag</ListCover>
-        {TagList.map((tagName, idx) => (
-          <ElementCover key={idx}>{tagName}</ElementCover>
-        ))}
-      </RightPanel>
-    </>
+    <RightPanel areaPercent={areaPercent} {...rest}>
+      <ToggleList
+        title={"Bounding Box"}
+        contentList={ObjectList}
+        contentExtractor={objectExtractor}
+      />
+      <ToggleList
+        title={"Class"}
+        contentList={ClassList}
+        contentExtractor={classExtractor}
+      />
+      <ToggleList
+        title={"Tag"}
+        contentList={TagList}
+        contentExtractor={tagExtractor}
+      />
+    </RightPanel>
   );
 }
 
