@@ -1,5 +1,5 @@
-import React from "react";
-import styled, { css } from "styled-components";
+import React from 'react';
+import styled, { css } from 'styled-components';
 
 const MainCanvas = styled.div`
   color: white;
@@ -8,7 +8,7 @@ const MainCanvas = styled.div`
   /* 배치 */
   ${({ areaPercent }) => {
     if (!areaPercent) {
-      console.log("MainCanvas: areaPercent is needed");
+      console.log('MainCanvas: areaPercent is needed');
     } else {
       return `
         flex: ${areaPercent} 0 0;
