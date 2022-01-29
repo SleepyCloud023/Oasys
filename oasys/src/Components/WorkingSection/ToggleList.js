@@ -4,7 +4,6 @@ import styled, { css } from 'styled-components';
 const StyledToggleList = styled.ul`
   margin: 0;
   padding: 0;
-  width: 100%;
   overflow-y: auto;
   /* 스크롤바 숨기기 */
   &::-webkit-scrollbar {

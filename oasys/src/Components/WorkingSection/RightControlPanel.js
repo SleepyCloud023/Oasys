@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import MockData from '../../MockData/MainView.json';
+import MockData from '../../MockData/MainView2.json';
 import ToggleList from './ToggleList';
 
 const RightPanel = styled.div`
@@ -55,7 +55,7 @@ function RightControlPanel({ areaPercent, ...rest }) {
     <RightPanel areaPercent={areaPercent} {...rest}>
       <ToggleList
         title={'Bounding Box'}
-        contentList={multiList}
+        contentList={ObjectList}
         contentExtractor={objectExtractor}
         expandRatio={80}
         upperFixed
