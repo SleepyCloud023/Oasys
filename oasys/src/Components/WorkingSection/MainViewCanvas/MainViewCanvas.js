@@ -25,6 +25,8 @@ const MainCanvas = styled.div`
 function MainViewCanvas({ areaPercent, ...rest }) {
   const { ObjectList, ClassList, TagList } = MockData;
 
+  console.log(MockData);
+
   function objectExtractor(element, index) {
     const { ClassName, Bbox } = element.Object;
     const [x1, y1] = Bbox[0];
@@ -34,7 +36,6 @@ function MainViewCanvas({ areaPercent, ...rest }) {
 
   const boxElements = ObjectList.map((content, index) => {
     const fullContent = objectExtractor(content, index);
-    console.log(fullContent);
     return (
       <rect
         x={fullContent[0]}
@@ -43,11 +44,13 @@ function MainViewCanvas({ areaPercent, ...rest }) {
         height={fullContent[3]}
         stroke="green"
         fill="transparent"
-        stroke-width="3"
-        key="{index}"
+        strokeWidth="3"
+        key="canvasItem{index}"
       />
     );
   });
+
+  console.log(boxElements);
 
   return (
     <>

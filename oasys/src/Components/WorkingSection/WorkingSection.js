@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import LeftControlPanel from './LeftControlPanel';
 import MainViewCanvas from './MainViewCanvas/MainViewCanvas';
 import RightControlPanel from './RightControlPanel';
+import MockData from '../../MockData/MainView2.json';
 
 const StyledWorkingSection = styled.div`
   /* 색상 */
@@ -24,8 +25,12 @@ function WorkingSection({ children, ...rest }) {
   return (
     <StyledWorkingSection {...rest}>
       <LeftControlPanel mouseMode={mouseMode} />
-      <MainViewCanvas areaPercent={80} mouseMode={mouseMode} />
-      <RightControlPanel areaPercent={20} />
+      <MainViewCanvas
+        mockData={MockData}
+        areaPercent={80}
+        mouseMode={mouseMode}
+      />
+      <RightControlPanel mockData={MockData} areaPercent={20} />
     </StyledWorkingSection>
   );
 }
