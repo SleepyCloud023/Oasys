@@ -45,13 +45,6 @@ const ResizedIconStyle = {
   },
 };
 
-const StyledButton = styled.button`
-  border: 2px solid greenyellow;
-  border-radius: 4px;
-  background-color: azure;
-  margin: 16px;
-`;
-
 function LeftControlPanel({ areaPercent, ...rest }) {
   const panStyle  = {...ResizedIconStyle, color: 'azure'};
   const highStyle = {...ResizedIconStyle, color: 'azure'};
