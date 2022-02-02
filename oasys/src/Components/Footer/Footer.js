@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import Dialog from "./Dialog";
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import Dialog from './Dialog';
 
 const StyledFooter = styled.footer`
-  background-color: gray;
+  background-color: #2d2f42;
   flex: 15 0 0;
   display: flex;
   justify-content: flex-end;
@@ -18,7 +18,7 @@ const StyledButton = styled.button`
 `;
 
 function Footer({ children, ...rest }) {
-  const [mouseMode, setMouseMode] = useState("move");
+  const [mouseMode, setMouseMode] = useState('move');
   const [dialogOn, setDialogOn] = useState(false);
   return (
     <StyledFooter {...rest}>
@@ -26,7 +26,7 @@ function Footer({ children, ...rest }) {
         테스트 모달 버튼
       </StyledButton>
       {/* 연습용 */}
-      <StyledButton onClick={() => setMouseMode("move")}>
+      {/* <StyledButton onClick={() => setMouseMode("move")}>
         move 모드
       </StyledButton>
       <StyledButton onClick={() => setMouseMode("box")}>box 모드</StyledButton>
@@ -35,7 +35,7 @@ function Footer({ children, ...rest }) {
       </StyledButton>
       <StyledButton>
         <h1>current Mode: {mouseMode}</h1>
-      </StyledButton>
+      </StyledButton> */}
 
       <Dialog dialogOn={dialogOn} setDialogOn={setDialogOn} />
     </StyledFooter>

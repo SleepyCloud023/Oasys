@@ -15,7 +15,7 @@ const StyledLeftPanel = styled.div`
   /* 배치 */
   ${({ areaPercent }) => {
     if (!areaPercent) {
-      console.log("StyledLeftPanel: areaPercent is undefined");
+      console.log('StyledLeftPanel: areaPercent is undefined');
     } else {
       return `
         flex: ${areaPercent} 0 0;
@@ -29,14 +29,14 @@ const StyledLeftPanel = styled.div`
 
 const ResizedIconStyle = {
   // 색상
-  color: "azure",
-  border: "2px solid black",
-  borderRadius: "3px",
+  color: 'azure',
+  border: '2px solid black',
+  borderRadius: '3px',
   // 배치
-  margin: "4px 0",
+  margin: '4px 0',
   // 크기
   // 1rem = 브라우저 16px
-  fontSize: "5rem",
+  fontSize: "1.5rem",
   cursor: "pointer",
 
   "&:hover":{

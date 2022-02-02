@@ -1,0 +1,24 @@
+{
+  "ClassList": ["Address", "Id", "Name", "RegDate", "RegPlace", "Title"],
+  "TagList": ["Good", "Bad"],
+  "ObjectList": [
+    {
+      "Object": {
+        "ClassName": ["Title"],
+        "Bbox": [
+          [20, 25],
+          [185, 50]
+        ]
+      }
+    },
+    {
+      "Object": {
+        "ClassName": ["Name"],
+        "Bbox": [
+          [50, 55],
+          [155, 80]
+        ]
+      }
+    }
+  ]
+}
