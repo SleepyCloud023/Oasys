@@ -45,25 +45,6 @@ const ResizedIconStyle = {
   },
 };
 
-const ClickedIconStyle = {
-  // 색상
-  color: "lightgreen",
-  backgroundColor: 'lightgray',
-  border: "2px solid black",
-  borderRadius: "3px",
-  // 배치
-  margin: "4px 0",
-  // 크기
-  // 1rem = 브라우저 16px
-  fontSize: "1.5rem",
-  cursor: "pointer",
-
-  "&:hover":{
-    color : 'azure',
-    backgroundColor: 'black'
-  },
-};
-
 const StyledButton = styled.button`
   border: 2px solid greenyellow;
   border-radius: 4px;
@@ -72,76 +53,36 @@ const StyledButton = styled.button`
 `;
 
 function LeftControlPanel({ areaPercent, ...rest }) {
-  const [panStyle , setPanStyle] = useState(ResizedIconStyle);
-  const [highStyle, setHighStyle] = useState(ResizedIconStyle);
-  const [polyStyle, setPolyStyle] = useState(ResizedIconStyle);
+  const panStyle  = {...ResizedIconStyle, color: 'azure'};
+  const highStyle = {...ResizedIconStyle, color: 'azure'};
+  const polyStyle = {...ResizedIconStyle, color: 'azure'};
+
   const [mode, setMode] = useState(null)
-
-  const onPanClick = () => {
-    if (panStyle === ResizedIconStyle) {
-      setPanStyle(ClickedIconStyle);
-      setMode("Pan");
-      if (highStyle === ClickedIconStyle) {
-        setHighStyle(ResizedIconStyle);
-      }
-      else if (polyStyle === ClickedIconStyle) {
-        setPolyStyle(ResizedIconStyle);
-      }
-    }
-    else{
-      setPanStyle(ResizedIconStyle);
-      setMode(null);
-    }
-  };
-
-  const onHighClick = () => {
-    if (highStyle === ResizedIconStyle) {
-      setHighStyle(ClickedIconStyle);
-      setMode("High");
-      if (panStyle === ClickedIconStyle) {
-        setPanStyle(ResizedIconStyle);
-      }
-      else if (polyStyle === ClickedIconStyle) {
-        setPolyStyle(ResizedIconStyle);
-      }
-    }
-    else{
-      setHighStyle(ResizedIconStyle);
-      setMode(null);
-    }
+  switch (mode){
+    case "Pan":
+      panStyle.color = 'lightgreen';
+      break;
+    case "High":
+      highStyle.color = 'lightgreen';
+      break;
+    case "Poly":
+      polyStyle.color = 'lightgreen';
+      break;
+    default:
+      break;
   }
-  
-  const onPolyClick = () => {
-    if (polyStyle === ResizedIconStyle) {
-      setPolyStyle(ClickedIconStyle);
-      setMode("Poly");
-      if (panStyle === ClickedIconStyle) {
-        setPanStyle(ResizedIconStyle);
-      }
-      else if (highStyle === ClickedIconStyle) {
-        setHighStyle(ResizedIconStyle);
-      }
-    }
-    else{
-      setPolyStyle(ResizedIconStyle);
-      setMode(null);
-    }
-  };
 
   return (
     <StyledLeftPanel areaPercent={areaPercent} {...rest}>
-      <PanToolIcon sx={panStyle} 
-        onClick = {onPanClick}
+      <PanToolIcon sx={panStyle}
+        onClick = {() => mode === "Pan" ? setMode(null) : setMode("Pan")}
       />
-      <HighlightAltIcon sx={highStyle} 
-        onClick = {onHighClick}
+      <HighlightAltIcon sx={highStyle}
+        onClick = {() => mode === "High" ? setMode(null) : setMode("High")}
       />
-      <PolylineIcon sx={polyStyle} 
-        onClick = {onPolyClick}
+      <PolylineIcon sx={polyStyle}
+        onClick = {() => mode === "Poly" ? setMode(null) : setMode("Poly")}
       />
-      <StyledButton>
-        <h1>current Mode: {mode}</h1>
-      </StyledButton>
     </StyledLeftPanel>
   );
 }
