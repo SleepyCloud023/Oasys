@@ -55,7 +55,7 @@ const ClickedIconStyle = {
   margin: "4px 0",
   // 크기
   // 1rem = 브라우저 16px
-  fontSize: "5rem",
+  fontSize: "1.5rem",
   cursor: "pointer",
 
   "&:hover":{
