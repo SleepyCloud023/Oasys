@@ -1,8 +1,8 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
 const StyledHeader = styled.header`
-  background-color: gray;
+  background-color: #2d2f42;
   flex: 15 0 0;
   display: flex;
 `;

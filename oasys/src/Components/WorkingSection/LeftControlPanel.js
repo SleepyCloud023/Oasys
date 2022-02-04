@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import HighlightAltIcon from '@mui/icons-material/HighlightAlt';
 import PanToolIcon from '@mui/icons-material/PanTool';
@@ -38,14 +38,47 @@ const ResizedIconStyle = {
   // 1rem = 브라우저 16px
   fontSize: '1.5rem',
   cursor: 'pointer',
+
+  '&:hover': {
+    color: 'lightgreen',
+    backgroundColor: 'lightgray',
+  },
 };
 
 function LeftControlPanel({ areaPercent, ...rest }) {
+  const panStyle = { ...ResizedIconStyle, color: 'azure' };
+  const highStyle = { ...ResizedIconStyle, color: 'azure' };
+  const polyStyle = { ...ResizedIconStyle, color: 'azure' };
+
+  const [mode, setMode] = useState(null);
+  switch (mode) {
+    case 'Pan':
+      panStyle.color = 'lightgreen';
+      break;
+    case 'High':
+      highStyle.color = 'lightgreen';
+      break;
+    case 'Poly':
+      polyStyle.color = 'lightgreen';
+      break;
+    default:
+      break;
+  }
+
   return (
     <StyledLeftPanel areaPercent={areaPercent} {...rest}>
-      <PanToolIcon sx={ResizedIconStyle} />
-      <HighlightAltIcon sx={ResizedIconStyle} />
-      <PolylineIcon sx={ResizedIconStyle} />
+      <PanToolIcon
+        sx={panStyle}
+        onClick={() => (mode === 'Pan' ? setMode(null) : setMode('Pan'))}
+      />
+      <HighlightAltIcon
+        sx={highStyle}
+        onClick={() => (mode === 'High' ? setMode(null) : setMode('High'))}
+      />
+      <PolylineIcon
+        sx={polyStyle}
+        onClick={() => (mode === 'Poly' ? setMode(null) : setMode('Poly'))}
+      />
     </StyledLeftPanel>
   );
 }

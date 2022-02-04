@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import LeftControlPanel from './LeftControlPanel';
 import MainViewCanvas from './MainViewCanvas/MainViewCanvas';
@@ -6,7 +6,7 @@ import RightControlPanel from './RightControlPanel';
 
 const StyledWorkingSection = styled.div`
   /* 색상 */
-  background-color: #252c2c;
+  background-color: #26293b;
 
   /* 정렬 */
   flex: 70 0 0;
@@ -18,10 +18,13 @@ const StyledWorkingSection = styled.div`
 `;
 
 function WorkingSection({ children, ...rest }) {
+  // move, box, polygon
+  const [mouseMode, setMouseMode] = useState('move');
+
   return (
     <StyledWorkingSection {...rest}>
-      <LeftControlPanel />
-      <MainViewCanvas areaPercent={80} />
+      <LeftControlPanel mouseMode={mouseMode} />
+      <MainViewCanvas areaPercent={80} mouseMode={mouseMode} />
       <RightControlPanel areaPercent={20} />
     </StyledWorkingSection>
   );
