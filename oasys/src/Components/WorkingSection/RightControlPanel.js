@@ -32,7 +32,7 @@ const RightPanel = styled.div`
 
 function objectExtractor(element, index) {
   const { ClassName, Bbox } = element.Object;
-  console.log(`${index}: ${Bbox}`);
+  //console.log(`${index}: ${Bbox}`);
   const content = `[${index}]: ${ClassName}`;
   return content;
 }
@@ -50,7 +50,7 @@ function tagExtractor(tagName, index) {
 function RightControlPanel({ areaPercent, ...rest }) {
   const { ObjectList, ClassList, TagList } = MockData;
   const multiList = [...ObjectList, ...ObjectList, ...ObjectList];
-  console.log(`multiList: ${multiList}`);
+  //console.log(`multiList: ${multiList}`);
   return (
     <RightPanel areaPercent={areaPercent} {...rest}>
       <ToggleList

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import LeftControlPanel from './LeftControlPanel';
-import MainViewCanvas from './MainViewCanvas/MainViewCanvas';
+import MainViewPanel from './MainViewPanel/MainViewPanel';
 import RightControlPanel from './RightControlPanel';
 import MockData from '../../MockData/MainView2.json';
 
@@ -25,7 +25,7 @@ function WorkingSection({ children, ...rest }) {
   return (
     <StyledWorkingSection {...rest}>
       <LeftControlPanel mouseMode={mouseMode} />
-      <MainViewCanvas
+      <MainViewPanel
         mockData={MockData}
         areaPercent={80}
         mouseMode={mouseMode}
