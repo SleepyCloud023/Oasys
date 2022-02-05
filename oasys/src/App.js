@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Footer from './Components/Footer/Footer';
 import Header from './Components/Header/Header';
 import WorkingSection from './Components/WorkingSection/WorkingSection';
+// import redux from
 
 const AppBlock = styled.div`
   display: flex;

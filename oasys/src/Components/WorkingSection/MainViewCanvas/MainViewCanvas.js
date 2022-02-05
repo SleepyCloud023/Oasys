@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import MockData from '../../../MockData/MainView2.json';
 
 const MainCanvas = styled.div`
