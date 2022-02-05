@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useReducer } from 'react';
 import styled from 'styled-components';
 import LeftControlPanel from './LeftControlPanel';
 import MainViewCanvas from './MainViewCanvas/MainViewCanvas';
 import RightControlPanel from './RightControlPanel';
+import reducer from './utils';
 
 const StyledWorkingSection = styled.div`
   /* 색상 */
@@ -17,16 +18,21 @@ const StyledWorkingSection = styled.div`
   }
 `;
 
+export const WorkDispatch = React.createContext(null);
+
 function WorkingSection({ children, ...rest }) {
-  // move, box, polygon
-  const [mouseMode, setMouseMode] = useState('move');
+  // TODO: 각 컴포넌트 MOVE, BOX, POLYGON 모드 연동
+  const initialState = { mouseMode: 'MOVE' };
+  const [workState, workDispatch] = useReducer(reducer, initialState);
 
   return (
-    <StyledWorkingSection {...rest}>
-      <LeftControlPanel mouseMode={mouseMode} />
-      <MainViewCanvas areaPercent={80} mouseMode={mouseMode} />
-      <RightControlPanel areaPercent={20} />
-    </StyledWorkingSection>
+    <WorkDispatch.Provider value={workDispatch}>
+      <StyledWorkingSection {...rest}>
+        <LeftControlPanel mouseMode={workState.mouseMode} />
+        <MainViewCanvas areaPercent={80} mouseMode={workState.mouseMode} />
+        <RightControlPanel areaPercent={20} />
+      </StyledWorkingSection>
+    </WorkDispatch.Provider>
   );
 }
 

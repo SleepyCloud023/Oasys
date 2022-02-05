@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import styled, { css } from 'styled-components';
+import React, { useContext } from 'react';
+import styled from 'styled-components';
 import HighlightAltIcon from '@mui/icons-material/HighlightAlt';
 import PanToolIcon from '@mui/icons-material/PanTool';
 import PolylineIcon from '@mui/icons-material/Polyline';
+import { WorkDispatch } from './WorkingSection';
 
 const StyledLeftPanel = styled.div`
   /* 색상 */
@@ -27,7 +28,7 @@ const StyledLeftPanel = styled.div`
   padding: 2px;
 `;
 
-const ResizedIconStyle = {
+const DefaultIconStyle = {
   // 색상
   color: 'azure',
   border: '2px solid black',
@@ -45,39 +46,39 @@ const ResizedIconStyle = {
   },
 };
 
-function LeftControlPanel({ areaPercent, ...rest }) {
-  const panStyle = { ...ResizedIconStyle, color: 'azure' };
-  const highStyle = { ...ResizedIconStyle, color: 'azure' };
-  const polyStyle = { ...ResizedIconStyle, color: 'azure' };
+function LeftControlPanel({ areaPercent, mouseMode, ...rest }) {
+  const workDispatch = useContext(WorkDispatch);
+  const changeMouseMode = (nextMode) => {
+    workDispatch({
+      type: 'CHANGE_MOUSEMODE',
+      nextMode,
+    });
+  };
+  const defaultMouseMode = 'MOVE';
+  const currentModeStyle = { ...DefaultIconStyle, color: 'lightgreen' };
 
-  const [mode, setMode] = useState(null);
-  switch (mode) {
-    case 'Pan':
-      panStyle.color = 'lightgreen';
-      break;
-    case 'High':
-      highStyle.color = 'lightgreen';
-      break;
-    case 'Poly':
-      polyStyle.color = 'lightgreen';
-      break;
-    default:
-      break;
-  }
+  const getIconStyle = (targetMode) => ({
+    ...DefaultIconStyle,
+    color: targetMode === mouseMode ? currentModeStyle : DefaultIconStyle,
+  });
+  const onIconClick = (targetMode) =>
+    targetMode === mouseMode
+      ? changeMouseMode(defaultMouseMode)
+      : changeMouseMode(targetMode);
 
   return (
     <StyledLeftPanel areaPercent={areaPercent} {...rest}>
       <PanToolIcon
-        sx={panStyle}
-        onClick={() => (mode === 'Pan' ? setMode(null) : setMode('Pan'))}
+        sx={getIconStyle('MOVE')}
+        onClick={() => onIconClick('MOVE')}
       />
       <HighlightAltIcon
-        sx={highStyle}
-        onClick={() => (mode === 'High' ? setMode(null) : setMode('High'))}
+        sx={getIconStyle('BOX')}
+        onClick={() => onIconClick('BOX')}
       />
       <PolylineIcon
-        sx={polyStyle}
-        onClick={() => (mode === 'Poly' ? setMode(null) : setMode('Poly'))}
+        sx={getIconStyle('POLYGON')}
+        onClick={() => onIconClick('POLYGON')}
       />
     </StyledLeftPanel>
   );
