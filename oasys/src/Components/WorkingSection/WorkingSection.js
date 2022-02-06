@@ -26,12 +26,12 @@ function WorkingSection({ children, ...rest }) {
   useEffect(() => {
     // mount될 때 수행할 작업
     const initStateFromAPI = dummyFetchFileInfo();
-    // const initStateFromAPI_goal = await axios(URL_FILE_REQUEST);
+    // const initStateFromAPI_goal = await axios.get(URL_FILE_REQUEST);
 
     setInitialState(initStateFromAPI);
     // unmount될 때 수행할 작업
     return null;
-  }, [initialState]);
+  }, []);
 
   // TODO: 각 컴포넌트 MOVE, BOX, POLYGON 모드 연동
   const [workState, workDispatch] = useReducer(reducer, initialState);

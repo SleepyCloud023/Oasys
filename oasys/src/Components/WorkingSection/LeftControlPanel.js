@@ -65,11 +65,19 @@ function LeftControlPanel({ areaPercent, mouseMode, ...rest }) {
       ? changeMouseMode(defaultMouseMode)
       : changeMouseMode(targetMode);
 
+  // let somethingReward = 1;
+
+  // const onClickTemp = () => {
+  //   somethingReward += 1;
+  //   console.log(somethingReward);
+  // };
+
   return (
     <StyledLeftPanel areaPercent={areaPercent} {...rest}>
       <PanToolIcon
         sx={getIconStyle('MOVE')}
         onClick={() => onIconClick('MOVE')}
+        // something={somethingReward}
       />
       <HighlightAltIcon
         sx={getIconStyle('BOX')}
@@ -79,6 +87,7 @@ function LeftControlPanel({ areaPercent, mouseMode, ...rest }) {
         sx={getIconStyle('POLYGON')}
         onClick={() => onIconClick('POLYGON')}
       />
+      {/* <button onClick={onClickTemp}>+1 Reward</button> */}
     </StyledLeftPanel>
   );
 }
