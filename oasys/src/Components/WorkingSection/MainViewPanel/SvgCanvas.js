@@ -13,7 +13,7 @@ function SvgCanvas({ boxes, onAdd }) {
   const cBoxMode = useRef('onMouseUp');
 
   const onMouseDown = (e) => {
-    //cBox.current.strokeWidth = '3';
+    cBox.current.setAttribute('stroke-width', '2');
 
     var step;
     for (step = 0; step < 4; step++) {
@@ -27,7 +27,6 @@ function SvgCanvas({ boxes, onAdd }) {
 
   const onMouseMove = (e) => {
     if (cBoxMode.current == 'onMouseDown') {
-      console.log('1');
       cBoxPoint.current[2][0] = e.nativeEvent.offsetX;
       cBoxPoint.current[2][1] = e.nativeEvent.offsetY;
       cBoxPoint.current[3][0] = e.nativeEvent.offsetX;
@@ -37,7 +36,7 @@ function SvgCanvas({ boxes, onAdd }) {
   };
 
   const onMouseUp = (e) => {
-    //cBox.current.strokeWidth = '0';
+    cBox.current.setAttribute('stroke-width', '0');
 
     cBoxPoint.current[2][0] = e.nativeEvent.offsetX;
     cBoxPoint.current[2][1] = e.nativeEvent.offsetY;
@@ -59,13 +58,13 @@ function SvgCanvas({ boxes, onAdd }) {
       <polygon
         points={points_}
         stroke="green"
-        fill="transparent"
-        strokeWidth="3"
+        fill="green"
+        style={{ opacity: 0.5 }}
+        strokeWidth="2"
         key={`customId${index}`}
       />
     );
   });
-  console.log(boxElements);
 
   return (
     <svg
@@ -83,7 +82,7 @@ function SvgCanvas({ boxes, onAdd }) {
         points="100,100, 100,100 100,100 100,100"
         stroke="blue"
         fill="transparent"
-        strokeWidth="3"
+        strokeWidth="2"
         ref={cBox}
       ></polygon>
 
