@@ -41,7 +41,6 @@ function MainViewCanvas({ areaPercent, ...rest }) {
 
   const onAdd = (newBox) => {
     setBoxes([...boxes, newBox]);
-    console.log(boxes);
   };
 
   return (

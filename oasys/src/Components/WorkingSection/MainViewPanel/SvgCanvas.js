@@ -1,24 +1,6 @@
-import React, { useState, useRef } from 'react';
-
-function ArrayToString(point) {
-  const string_point =
-    point[0][0] +
-    ' ' +
-    point[0][1] +
-    ', ' +
-    point[1][0] +
-    ' ' +
-    point[1][1] +
-    ', ' +
-    point[2][0] +
-    ' ' +
-    point[2][1] +
-    ', ' +
-    point[3][0] +
-    ' ' +
-    point[3][1];
-  return string_point;
-}
+import React, { useRef } from 'react';
+import _ from 'lodash';
+import { PointToString } from './MainViewUtil';
 
 function SvgCanvas({ boxes, onAdd }) {
   const cBox = useRef();
@@ -28,9 +10,10 @@ function SvgCanvas({ boxes, onAdd }) {
     [0, 0],
     [0, 0],
   ]);
+  const cBoxMode = useRef('onMouseUp');
 
   const onMouseDown = (e) => {
-    cBox.current.strokeWidth = '3';
+    //cBox.current.strokeWidth = '3';
 
     var step;
     for (step = 0; step < 4; step++) {
@@ -38,32 +21,39 @@ function SvgCanvas({ boxes, onAdd }) {
       cBoxPoint.current[step][1] = e.nativeEvent.offsetY;
     }
 
-    cBox.current.setAttribute('points', ArrayToString(cBoxPoint.current));
+    cBox.current.setAttribute('points', PointToString(cBoxPoint.current));
+    cBoxMode.current = 'onMouseDown';
   };
 
   const onMouseMove = (e) => {
-    cBoxPoint.current[2][0] = e.nativeEvent.offsetX;
-    cBoxPoint.current[2][1] = e.nativeEvent.offsetX;
-    cBoxPoint.current[1][0] = e.nativeEvent.offsetX;
-    cBoxPoint.current[3][1] = e.nativeEvent.offsetX;
-    cBox.current.setAttribute('points', ArrayToString(cBoxPoint.current));
+    if (cBoxMode.current == 'onMouseDown') {
+      console.log('1');
+      cBoxPoint.current[2][0] = e.nativeEvent.offsetX;
+      cBoxPoint.current[2][1] = e.nativeEvent.offsetY;
+      cBoxPoint.current[3][0] = e.nativeEvent.offsetX;
+      cBoxPoint.current[1][1] = e.nativeEvent.offsetY;
+      cBox.current.setAttribute('points', PointToString(cBoxPoint.current));
+    }
   };
 
   const onMouseUp = (e) => {
-    cBox.current.strokeWidth = '0';
+    //cBox.current.strokeWidth = '0';
 
     cBoxPoint.current[2][0] = e.nativeEvent.offsetX;
     cBoxPoint.current[2][1] = e.nativeEvent.offsetY;
     cBoxPoint.current[3][0] = e.nativeEvent.offsetX;
     cBoxPoint.current[1][1] = e.nativeEvent.offsetY;
 
-    cBox.current.setAttribute('points', ArrayToString(cBoxPoint.current));
+    cBox.current.setAttribute('points', PointToString(cBoxPoint.current));
 
-    onAdd(cBoxPoint.current);
+    const newPoint = _.cloneDeep(cBoxPoint.current);
+    cBoxMode.current = 'onMouseUp';
+
+    onAdd(newPoint);
   };
 
   const boxElements = boxes.map((objects, index) => {
-    const points_ = ArrayToString(objects);
+    const points_ = PointToString(objects);
 
     return (
       <polygon
@@ -83,16 +73,17 @@ function SvgCanvas({ boxes, onAdd }) {
       baseProfile="full"
       width="320"
       height="204"
+      onMouseMove={onMouseMove}
       onMouseDown={onMouseDown}
       onMouseUp={onMouseUp}
     >
       <image href="img/test_image.jpg" />
 
       <polygon
-        points="0,0, 0,0 0,0 0,0"
-        stroke="green"
+        points="100,100, 100,100 100,100 100,100"
+        stroke="blue"
         fill="transparent"
-        strokeWidth="0"
+        strokeWidth="3"
         ref={cBox}
       ></polygon>
 
