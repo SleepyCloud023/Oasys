@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import MockData from '../../MockData/MainView2.json';
 import ToggleList from './ToggleList';
+import { WorkDispatch } from './WorkingSection';
 
 const RightPanel = styled.div`
   border: 1px solid transparent;
@@ -48,6 +49,8 @@ function tagExtractor(tagName, index) {
 }
 
 function RightControlPanel({ areaPercent, ...rest }) {
+  const workDispatch = useContext(WorkDispatch);
+
   const { ObjectList, ClassList, TagList } = MockData;
   const multiList = [...ObjectList, ...ObjectList, ...ObjectList];
   console.log(`multiList: ${multiList}`);

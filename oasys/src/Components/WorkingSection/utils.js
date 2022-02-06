@@ -9,4 +9,8 @@ function reducer(state, action) {
   }
 }
 
+export function dummyFetchFileInfo() {
+  return { mouseMode: 'MOVE' };
+}
+
 export default reducer;

@@ -57,10 +57,9 @@ function LeftControlPanel({ areaPercent, mouseMode, ...rest }) {
   const defaultMouseMode = 'MOVE';
   const currentModeStyle = { ...DefaultIconStyle, color: 'lightgreen' };
 
-  const getIconStyle = (targetMode) => ({
-    ...DefaultIconStyle,
-    color: targetMode === mouseMode ? currentModeStyle : DefaultIconStyle,
-  });
+  const getIconStyle = (targetMode) =>
+    targetMode === mouseMode ? currentModeStyle : DefaultIconStyle;
+
   const onIconClick = (targetMode) =>
     targetMode === mouseMode
       ? changeMouseMode(defaultMouseMode)
