@@ -1,4 +1,4 @@
-import MockData from '../../MockData/MainView2.json';
+import MockData from '../../MockData/MainView3.json';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -13,7 +13,12 @@ function reducer(state, action) {
 
 export function dummyFetchFileInfo() {
   const { ObjectList, ClassList, TagList } = MockData;
-  return { mouseMode: 'MOVE', ObjectList, ClassList, TagList };
+  return {
+    mouseMode: 'MOVE',
+    objectList: ObjectList,
+    classList: ClassList,
+    tagList: TagList,
+  };
 }
 
 export default reducer;

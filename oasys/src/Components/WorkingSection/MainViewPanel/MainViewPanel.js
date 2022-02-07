@@ -1,7 +1,6 @@
 import React, { useState, useRef } from 'react';
 import styled, { css } from 'styled-components';
 import SvgCanvas from './SvgCanvas';
-import MockData from '../../../MockData/MainView3.json';
 
 const MainCanvas = styled.div`
   color: white;
@@ -30,21 +29,12 @@ const canvasStyle = {
   flex: '1 0 0',
 };
 
-function MainViewCanvas({ areaPercent, ...rest }) {
-  let aaa = { 3: 7, 8: 9 };
-  let bbb = [3, 4, 5];
-  console.log(aaa);
-  console.log(bbb);
-  function eui_f(inp) {
-    this.name = inp;
-  }
-  let eui_object = new eui_f('정의령');
-  eui_object['age'] = 25;
-  console.log(eui_object);
+function MainViewCanvas({ areaPercent, workState, ...rest }) {
+  const { mouseMode, objectList, classList, tagList } = workState;
 
-  const { ObjectList, ClassList, TagList } = MockData;
+  console.log('MainView', objectList);
 
-  const boxList = ObjectList.map((content, index) => {
+  const boxList = objectList.map((content, index) => {
     const objects = objectExtractor(content, index);
     return objects;
   });

@@ -18,16 +18,24 @@ const StyledWorkingSection = styled.div`
   }
 `;
 
+const preLoading = {
+  mouseMode: 'MOVE',
+  objectList: [],
+  classList: [],
+  tagList: [],
+};
+
 export const WorkDispatch = React.createContext(null);
 
 function WorkingSection({ children, ...rest }) {
-  const [initialState, setInitialState] = useState({ mouseMode: 'MOVE' });
+  const [initialState, setInitialState] = useState(dummyFetchFileInfo());
   // TODO: 선택된 파일 로딩, async API call
   useEffect(() => {
     // mount될 때 수행할 작업
     const initStateFromAPI = dummyFetchFileInfo();
     // const initStateFromAPI_goal = await axios.get(URL_FILE_REQUEST);
 
+    console.log('useEffect', initStateFromAPI);
     setInitialState(initStateFromAPI);
     // unmount될 때 수행할 작업
     return null;
@@ -40,7 +48,7 @@ function WorkingSection({ children, ...rest }) {
     <WorkDispatch.Provider value={workDispatch}>
       <StyledWorkingSection {...rest}>
         <LeftControlPanel mouseMode={workState.mouseMode} />
-        <MainViewCanvas areaPercent={80} workState={workState} />
+        <MainViewPanel areaPercent={80} workState={workState} />
         <RightControlPanel areaPercent={20} mouseMode={workState.mouseMode} />
       </StyledWorkingSection>
     </WorkDispatch.Provider>
