@@ -31,6 +31,17 @@ const canvasStyle = {
 };
 
 function MainViewCanvas({ areaPercent, ...rest }) {
+  let aaa = { 3: 7, 8: 9 };
+  let bbb = [3, 4, 5];
+  console.log(aaa);
+  console.log(bbb);
+  function eui_f(inp) {
+    this.name = inp;
+  }
+  let eui_object = new eui_f('정의령');
+  eui_object['age'] = 25;
+  console.log(eui_object);
+
   const { ObjectList, ClassList, TagList } = MockData;
 
   const boxList = ObjectList.map((content, index) => {
