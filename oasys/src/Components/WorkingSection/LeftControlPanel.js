@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import HighlightAltIcon from '@mui/icons-material/HighlightAlt';
 import PanToolIcon from '@mui/icons-material/PanTool';
 import PolylineIcon from '@mui/icons-material/Polyline';
-import { WorkDispatch } from './WorkingSection';
+import { WorkStore } from './WorkingSection';
 
 const StyledLeftPanel = styled.div`
   /* 색상 */
@@ -47,7 +47,7 @@ const DefaultIconStyle = {
 };
 
 function LeftControlPanel({ areaPercent, mouseMode, ...rest }) {
-  const workDispatch = useContext(WorkDispatch);
+  const workDispatch = useContext(WorkStore).workDispatch;
   const changeMouseMode = (nextMode) => {
     workDispatch({
       type: 'CHANGE_MOUSEMODE',

@@ -1,5 +1,6 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 import styled, { css } from 'styled-components';
+import { WorkStore } from '../WorkingSection';
 import SvgCanvas from './SvgCanvas';
 
 const MainCanvas = styled.div`
@@ -21,7 +22,7 @@ const MainCanvas = styled.div`
 `;
 
 function objectExtractor(element, index) {
-  const { ClassName, Bbox } = element.Object;
+  const { Bbox, ...rest } = element;
   return Bbox;
 }
 
@@ -29,25 +30,19 @@ const canvasStyle = {
   flex: '1 0 0',
 };
 
-function MainViewCanvas({ areaPercent, workState, ...rest }) {
-  const { mouseMode, objectList, classList, tagList } = workState;
-
-  console.log('MainView', objectList);
+function MainViewCanvas({ areaPercent, ...rest }) {
+  const temp = useContext(WorkStore);
+  const { imgUrl, mouseMode, objectList, classList, tagList } = temp.workState;
 
   const boxList = objectList.map((content, index) => {
     const objects = objectExtractor(content, index);
     return objects;
   });
-  const [boxes, setBoxes] = useState(boxList);
-
-  const onAdd = (newBox) => {
-    setBoxes([...boxes, newBox]);
-  };
 
   return (
     <MainCanvas areaPercent={areaPercent} {...rest}>
       <svg style={canvasStyle}>
-        <SvgCanvas boxes={boxes} onAdd={onAdd} />
+        <SvgCanvas boxes={boxList} imgUrl={imgUrl} />
       </svg>
     </MainCanvas>
   );
