@@ -1,8 +1,10 @@
-import React, { useRef } from 'react';
+import React, { useRef, useContext } from 'react';
 import _ from 'lodash';
 import { PointToString } from './MainViewUtil';
+import { WorkStore } from '../WorkingSection';
 
-function SvgCanvas({ boxes, onAdd }) {
+function SvgCanvas({ boxes, imgUrl }) {
+  const workDispatch = useContext(WorkStore).workDispatch;
   const cBox = useRef();
   const cBoxPoint = useRef([
     [0, 0],
@@ -11,6 +13,13 @@ function SvgCanvas({ boxes, onAdd }) {
     [0, 0],
   ]);
   const cBoxMode = useRef('onMouseUp');
+
+  const onAdd = (newPoint) => {
+    workDispatch({
+      type: 'ADD_OBJECT',
+      newPoint: newPoint,
+    });
+  };
 
   const onMouseDown = (e) => {
     cBox.current.setAttribute('stroke-width', '2');
@@ -70,13 +79,14 @@ function SvgCanvas({ boxes, onAdd }) {
     <svg
       version="1.1"
       baseProfile="full"
-      width="320"
-      height="204"
+      width="700"
+      height="1000"
       onMouseMove={onMouseMove}
       onMouseDown={onMouseDown}
       onMouseUp={onMouseUp}
     >
-      <image href="img/test_image.jpg" />
+      {/* TODO: public path to url of API server */}
+      <image href={imgUrl} />
 
       <polygon
         points="100,100, 100,100 100,100 100,100"

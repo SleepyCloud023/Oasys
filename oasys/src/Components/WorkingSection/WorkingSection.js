@@ -2,7 +2,7 @@ import React, { useEffect, useReducer, useState } from 'react';
 import styled from 'styled-components';
 import LeftControlPanel from './LeftControlPanel';
 import MainViewPanel from './MainViewPanel/MainViewPanel';
-import RightControlPanel from './RightControlPanel';
+//import RightControlPanel from './RightControlPanel';
 import reducer, { dummyFetchFileInfo } from './utils';
 
 const StyledWorkingSection = styled.div`
@@ -25,7 +25,7 @@ const preLoading = {
   tagList: [],
 };
 
-export const WorkDispatch = React.createContext(null);
+export const WorkStore = React.createContext(null);
 
 function WorkingSection({ children, ...rest }) {
   // TODO: 각 컴포넌트 MOVE, BOX, POLYGON 모드 연동
@@ -44,13 +44,13 @@ function WorkingSection({ children, ...rest }) {
   }, []);
 
   return (
-    <WorkDispatch.Provider value={workDispatch}>
+    <WorkStore.Provider value={{ workState, workDispatch }}>
       <StyledWorkingSection {...rest}>
         <LeftControlPanel mouseMode={workState.mouseMode} />
-        <MainViewPanel areaPercent={80} workState={workState} />
-        <RightControlPanel areaPercent={20} mouseMode={workState.mouseMode} />
+        <MainViewPanel areaPercent={80} />
+        {/* <RightControlPanel areaPercent={20} mouseMode={workState.mouseMode} /> */}
       </StyledWorkingSection>
-    </WorkDispatch.Provider>
+    </WorkStore.Provider>
   );
 }
 
