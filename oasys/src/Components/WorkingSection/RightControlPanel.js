@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import MockData from '../../MockData/MainView2.json';
 import ToggleList from './ToggleList';
 import { WorkDispatch } from './WorkingSection';
 
@@ -32,9 +31,9 @@ const RightPanel = styled.div`
 `;
 
 function objectExtractor(element, index) {
-  const { ClassName, Bbox } = element.Object;
+  const { ObjectId, ClassName, Bbox } = element;
   //console.log(`${index}: ${Bbox}`);
-  const content = `[${index}]: ${ClassName}`;
+  const content = `[${ObjectId}]: ${ClassName}`;
   return content;
 }
 
@@ -48,30 +47,29 @@ function tagExtractor(tagName, index) {
   return content;
 }
 
-function RightControlPanel({ areaPercent, ...rest }) {
+function RightControlPanel({ areaPercent, workState, ...rest }) {
   const workDispatch = useContext(WorkDispatch);
+  console.log(workState);
+  const { objectList, classList, tagList } = workState;
 
-  const { ObjectList, ClassList, TagList } = MockData;
-  const multiList = [...ObjectList, ...ObjectList, ...ObjectList];
-  //console.log(`multiList: ${multiList}`);
   return (
     <RightPanel areaPercent={areaPercent} {...rest}>
       <ToggleList
         title={'Bounding Box'}
-        contentList={ObjectList}
+        contentList={objectList}
         contentExtractor={objectExtractor}
         expandRatio={80}
         upperFixed
       />
       <ToggleList
         title={'Class'}
-        contentList={ClassList}
+        contentList={classList}
         contentExtractor={classExtractor}
         expandRatio={20}
       />
       <ToggleList
         title={'Tag'}
-        contentList={TagList}
+        contentList={tagList}
         contentExtractor={tagExtractor}
       />
     </RightPanel>

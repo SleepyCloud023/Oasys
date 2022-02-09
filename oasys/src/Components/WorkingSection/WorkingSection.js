@@ -47,8 +47,8 @@ function WorkingSection({ children, ...rest }) {
     <WorkDispatch.Provider value={workDispatch}>
       <StyledWorkingSection {...rest}>
         <LeftControlPanel mouseMode={workState.mouseMode} />
-        <MainViewPanel areaPercent={80} workState={workState} />
-        <RightControlPanel areaPercent={20} mouseMode={workState.mouseMode} />
+        {/* <MainViewPanel areaPercent={80} workState={workState} /> */}
+        <RightControlPanel areaPercent={20} workState={workState} />
       </StyledWorkingSection>
     </WorkDispatch.Provider>
   );

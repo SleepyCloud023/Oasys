@@ -1,4 +1,4 @@
-import MockData from '../../MockData/MainView3.json';
+import MockData from '../../MockData/menu_1.json';
 
 function reducer(state, action) {
   switch (action.type) {
