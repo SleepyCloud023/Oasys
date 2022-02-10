@@ -16,8 +16,6 @@ const StyledToggleList = styled.ul`
       margin-bottom: auto;
     `}
   ${({ expandRatio }) => {
-    //console.log(expandRatio);
-
     expandRatio &&
       css`
         flex: ${expandRatio} 0 0;

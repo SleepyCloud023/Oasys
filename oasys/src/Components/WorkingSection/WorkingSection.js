@@ -19,13 +19,17 @@ const StyledWorkingSection = styled.div`
 `;
 
 const preLoading = {
+  statusText: 'PRELOADING',
   mouseMode: 'MOVE',
+  imageURL: '',
+  imageName: '',
+  objectListLength: 0,
   objectList: [],
   classList: [],
   tagList: [],
 };
 
-export const WorkDispatch = React.createContext(null);
+export const WorkStore = React.createContext(null);
 
 function WorkingSection({ children, ...rest }) {
   // TODO: 각 컴포넌트 MOVE, BOX, POLYGON 모드 연동
@@ -34,23 +38,25 @@ function WorkingSection({ children, ...rest }) {
   useEffect(() => {
     // mount될 때 수행할 작업
     const initStateFromAPI = dummyFetchFileInfo();
-    // const initStateFromAPI_goal = await axios.get(URL_FILE_REQUEST);
-    workDispatch({
-      type: 'INIT_STATE',
-      initState: initStateFromAPI,
+    // const initStateFromAPI_goal = await axios.get(imageID);
+    initStateFromAPI.then((response) => {
+      workDispatch({
+        type: 'INIT_STATE',
+        initState: response,
+      });
     });
     // unmount될 때 수행할 작업
     return null;
   }, []);
 
   return (
-    <WorkDispatch.Provider value={workDispatch}>
+    <WorkStore.Provider value={[workState, workDispatch]}>
       <StyledWorkingSection {...rest}>
         <LeftControlPanel mouseMode={workState.mouseMode} />
-        <MainViewPanel areaPercent={80} workState={workState} />
-        <RightControlPanel areaPercent={20} mouseMode={workState.mouseMode} />
+        <MainViewPanel areaPercent={80} />
+        <RightControlPanel areaPercent={20} workState={workState} />
       </StyledWorkingSection>
-    </WorkDispatch.Provider>
+    </WorkStore.Provider>
   );
 }
 
