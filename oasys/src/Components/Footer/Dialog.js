@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import styled, { keyframes, css } from "styled-components";
+import React, { useEffect, useState } from 'react';
+import styled, { keyframes, css } from 'styled-components';
 
 const fadeIn = keyframes`
   from {
@@ -96,7 +96,6 @@ function Dialog({
     if (preDialog && !dialogOn) {
       setAnimate(true);
       setTimeout(() => {
-        // console.log("Disappear Animation Start");
         setAnimate(false);
       }, 250);
     }
@@ -119,9 +118,9 @@ function Dialog({
 }
 
 Dialog.defaultProps = {
-  title: "저장하시겠습니까?",
-  confirmText: "확인",
-  cancelText: "취소",
+  title: '저장하시겠습니까?',
+  confirmText: '확인',
+  cancelText: '취소',
 };
 
 export default Dialog;
