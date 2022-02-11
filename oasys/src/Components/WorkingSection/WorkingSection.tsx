@@ -1,8 +1,9 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import styled from 'styled-components';
 import LeftControlPanel from './LeftControlPanel';
 import MainViewPanel from './MainViewPanel/MainViewPanel';
 import RightControlPanel from './RightControlPanel';
+import { ACTION, WorkState } from './types';
 import reducer, { dummyFetchFileInfo } from './utils';
 
 const StyledWorkingSection = styled.div`
@@ -18,7 +19,7 @@ const StyledWorkingSection = styled.div`
   }
 `;
 
-const preLoading = {
+const preLoading: WorkState = {
   statusText: 'PRELOADING',
   mouseMode: 'MOVE',
   imageURL: '',
@@ -29,9 +30,11 @@ const preLoading = {
   tagList: [],
 };
 
-export const WorkStore = React.createContext(null);
+export const WorkStore = React.createContext<
+  [WorkState, React.Dispatch<ACTION>] | null
+>(null);
 
-function WorkingSection({ children, ...rest }) {
+function WorkingSection() {
   // TODO: 각 컴포넌트 MOVE, BOX, POLYGON 모드 연동
   const [workState, workDispatch] = useReducer(reducer, preLoading);
   // TODO: 선택된 파일 로딩, async API call
@@ -46,15 +49,14 @@ function WorkingSection({ children, ...rest }) {
       });
     });
     // unmount될 때 수행할 작업
-    return null;
   }, []);
 
   return (
     <WorkStore.Provider value={[workState, workDispatch]}>
-      <StyledWorkingSection {...rest}>
-        <LeftControlPanel mouseMode={workState.mouseMode} />
+      <StyledWorkingSection>
+        <LeftControlPanel />
         <MainViewPanel areaPercent={80} />
-        <RightControlPanel areaPercent={20} workState={workState} />
+        <RightControlPanel areaPercent={20} />
       </StyledWorkingSection>
     </WorkStore.Provider>
   );
