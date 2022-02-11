@@ -46,7 +46,7 @@ const DefaultIconStyle = {
 };
 
 function LeftControlPanel({ areaPercent, mouseMode, ...rest }) {
-  const workDispatch = useContext(WorkStore).workDispatch;
+  const [_workState, workDispatch] = useContext(WorkStore);
   const changeMouseMode = (nextMode) => {
     workDispatch({
       type: 'CHANGE_MOUSEMODE',

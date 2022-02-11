@@ -3,8 +3,9 @@ import _ from 'lodash';
 import { PointToString } from './MainViewUtil';
 import { WorkStore } from '../WorkingSection';
 
-function SvgCanvas({ boxes, imageURL }) {
-  const [_workState, workDispatch] = useContext(WorkStore);
+function ImageCanvas({ boxes, imageURL, imagePoint }) {
+  const [workState, workDispatch] = useContext(WorkStore);
+
   const cBox = useRef();
   const cBoxPoint = useRef([
     [0, 0],
@@ -81,16 +82,29 @@ function SvgCanvas({ boxes, imageURL }) {
       baseProfile="full"
       width="700"
       height="1000"
-      onMouseMove={onMouseMove}
-      onMouseDown={onMouseDown}
-      onMouseUp={onMouseUp}
+      x={imagePoint[0]}
+      y={imagePoint[1]}
+      onMouseMove={(e) => {
+        if (workState.mouseMode == 'BOX') {
+          onMouseMove(e);
+        }
+      }}
+      onMouseDown={(e) => {
+        if (workState.mouseMode == 'BOX') {
+          onMouseDown(e);
+        }
+      }}
+      onMouseUp={(e) => {
+        if (workState.mouseMode == 'BOX') {
+          onMouseUp(e);
+        }
+      }}
     >
       {/* TODO: public path to url of API server */}
       <image href={imageURL} />
-
       <polygon
         points="100,100, 100,100 100,100 100,100"
-        stroke="blue"
+        stroke="green"
         fill="transparent"
         strokeWidth="2"
         ref={cBox}
@@ -101,4 +115,4 @@ function SvgCanvas({ boxes, imageURL }) {
   );
 }
 
-export default SvgCanvas;
+export default ImageCanvas;
