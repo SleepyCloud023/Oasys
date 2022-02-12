@@ -1,4 +1,6 @@
-export function PointToString(point) {
+import { BoundingBox } from '../types';
+
+export function PointToString(point: BoundingBox) {
   const string_point =
     point[0][0] +
     ' ' +
