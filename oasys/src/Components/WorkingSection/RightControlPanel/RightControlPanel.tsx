@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import ToggleList from './ToggleList';
-import { BoxObject } from './types';
-import { WorkStore } from './WorkingSection';
+import { BoxObject } from '../types';
+import { WorkStore } from '../WorkingSection';
 
 type PropsRightControlPanel = {
   readonly areaPercent?: number;

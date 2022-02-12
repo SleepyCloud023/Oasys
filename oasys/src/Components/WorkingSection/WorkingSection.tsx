@@ -1,10 +1,10 @@
 import React, { useEffect, useReducer } from 'react';
 import styled from 'styled-components';
-import LeftControlPanel from './LeftControlPanel';
-import MainViewPanel from './MainViewPanel/MainViewPanel';
-import RightControlPanel from './RightControlPanel';
 import { ACTION, WorkState } from './types';
-import reducer, { dummyFetchFileInfo } from './utils';
+import { dummyFetchFileInfo, reducer } from './utils';
+import LeftControlPanel from './LeftControlPanel';
+import { MainViewPanel } from './MainViewPanel';
+import { RightControlPanel } from './RightControlPanel';
 
 const StyledWorkingSection = styled.div`
   /* 색상 */

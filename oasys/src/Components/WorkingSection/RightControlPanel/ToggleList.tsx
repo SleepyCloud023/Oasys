@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
-import { BoxObject } from './types';
+import { BoxObject } from '../types';
 
 type PropsStyled = {
   readonly upperFixed?: boolean;
