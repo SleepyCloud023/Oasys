@@ -2,6 +2,7 @@ import React, { useState, useRef, useContext } from 'react';
 import styled, { css } from 'styled-components';
 import { WorkStore } from '../WorkingSection';
 import ImageCanvas from './ImageCanvas';
+import Button from '@mui/material/Button';
 
 const MainCanvas = styled.div`
   color: white;
@@ -16,8 +17,17 @@ const MainCanvas = styled.div`
       `;
     }
   }}
+  flex-flow: column;
   display: flex;
   background-color: #1c1d1f;
+`;
+
+const MainViewUtil = styled.div`
+  /* 색상 */
+  display: flex;
+  color: white;
+  font: bold;
+  font-size: 1.25rem;
 `;
 
 function objectExtractor(element, index) {
@@ -34,6 +44,8 @@ function MainViewCanvas({ areaPercent, ...rest }) {
   const { imageURL, mouseMode, objectList, classList, tagList } = workState;
 
   const [imagePoint, setImagePoint] = useState([50, 50]);
+  const [imageZoomOut, setImageZoomOut] = useState(1);
+
   const onclickState = useRef({
     originPoint: [50, 50],
     clickPoint: [0, 0],
@@ -44,6 +56,18 @@ function MainViewCanvas({ areaPercent, ...rest }) {
     const objects = objectExtractor(content, index);
     return objects;
   });
+
+  const imageZoom = (e) => {
+    if (imageZoomOut <= 1.6) {
+      setImageZoomOut(parseFloat((imageZoomOut + 0.2).toFixed(2)));
+    }
+  };
+
+  const imageOut = () => {
+    if (imageZoomOut >= 0.4) {
+      setImageZoomOut(parseFloat((imageZoomOut - 0.2).toFixed(2)));
+    }
+  };
 
   const onMouseDown = (e) => {
     onclickState.current['originPoint'][0] = imagePoint[0];
@@ -75,6 +99,17 @@ function MainViewCanvas({ areaPercent, ...rest }) {
 
   return (
     <MainCanvas areaPercent={areaPercent} {...rest}>
+      <MainViewUtil>
+        <Button variant="outlined" onClick={imageZoom}>
+          +
+        </Button>
+        <div style={{ marginLeft: 7, marginRight: 7 }}>
+          {imageZoomOut * 100}%
+        </div>
+        <Button variant="outlined" onClick={imageOut}>
+          -
+        </Button>
+      </MainViewUtil>
       <svg
         style={canvasStyle}
         onMouseMove={(e) => {
@@ -97,6 +132,7 @@ function MainViewCanvas({ areaPercent, ...rest }) {
           boxes={boxList}
           imageURL={imageURL}
           imagePoint={imagePoint}
+          imageZoomOut={imageZoomOut}
         />
       </svg>
     </MainCanvas>
