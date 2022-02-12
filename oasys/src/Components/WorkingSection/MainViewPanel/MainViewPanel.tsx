@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext, SyntheticEvent } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 import styled, { css } from 'styled-components';
 import { WorkStore } from '../WorkingSection';
 import ImageCanvas from './ImageCanvas';

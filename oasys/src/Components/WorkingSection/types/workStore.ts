@@ -3,7 +3,6 @@
 export type MouseMode = 'MOVE' | 'BOX' | 'POLYGON';
 
 export type Point = [number, number];
-
 export type BoundingBox = [lt: Point, rt: Point, rb: Point, lb: Point];
 
 // TODO: JSON 파일과 함께 구조 수정

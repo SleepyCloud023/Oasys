@@ -2,7 +2,7 @@ import React, { useEffect, useReducer } from 'react';
 import styled from 'styled-components';
 import { ACTION, WorkState } from './types';
 import { dummyFetchFileInfo, reducer } from './utils';
-import LeftControlPanel from './LeftControlPanel';
+import { LeftControlPanel } from './LeftControlPanel';
 import { MainViewPanel } from './MainViewPanel';
 import { RightControlPanel } from './RightControlPanel';
 
