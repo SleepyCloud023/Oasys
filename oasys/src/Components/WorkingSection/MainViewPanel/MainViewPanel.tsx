@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import { WorkStore } from '../WorkingSection';
 import ImageCanvas from './ImageCanvas';
 import Button from '@mui/material/Button';
-import { BoxObject } from '../types';
+import { BoxObject, Point } from '../types';
 
 type PropsMainViewPanel = { readonly areaPercent?: number };
 
@@ -43,20 +43,19 @@ const canvasStyle = {
 };
 
 function MainViewCanvas({ areaPercent }: PropsMainViewPanel) {
-  const notNullStore = useContext(WorkStore);
-  if (notNullStore === null) return null;
-
-  const [workState, workDispatch] = notNullStore;
-  const { imageURL, mouseMode, objectList, classList, tagList } = workState;
-
-  const [imagePoint, setImagePoint] = useState([50, 50]);
+  const [imagePoint, setImagePoint] = useState<Point>([50, 50]);
   const [imageZoomOut, setImageZoomOut] = useState(1);
-
   const onclickState = useRef({
     originPoint: [50, 50],
     clickPoint: [0, 0],
     on: false,
   });
+
+  const notNullStore = useContext(WorkStore);
+  if (notNullStore === null) return null;
+
+  const [workState, workDispatch] = notNullStore;
+  const { imageURL, mouseMode, objectList, classList, tagList } = workState;
 
   const boxList = objectList.map((content, index) => {
     const objects = objectExtractor(content, index);

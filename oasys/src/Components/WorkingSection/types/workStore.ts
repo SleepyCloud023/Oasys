@@ -2,12 +2,9 @@
 
 export type MouseMode = 'MOVE' | 'BOX' | 'POLYGON';
 
-export type BoundingBox = [
-  lt: [number, number],
-  rt: [number, number],
-  rb: [number, number],
-  lb: [number, number],
-];
+export type Point = [number, number];
+
+export type BoundingBox = [lt: Point, rt: Point, rb: Point, lb: Point];
 
 // TODO: JSON 파일과 함께 구조 수정
 type Extra = {

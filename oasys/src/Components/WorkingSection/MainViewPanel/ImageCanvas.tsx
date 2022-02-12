@@ -17,22 +17,20 @@ function ImageCanvas({
   imagePoint,
   imageZoomOut,
 }: PropsImageCanvse) {
-  const notNullStore = useContext(WorkStore);
-  if (notNullStore === null) return null;
-
-  const [workState, workDispatch] = notNullStore;
-
-  const cBox: React.MutableRefObject<SVGSVGElement | null> =
-    useRef<SVGSVGElement>(null);
-  const cBoxPoint: React.MutableRefObject<BoundingBox> = useRef([
+  const cBox = useRef<SVGPolygonElement>(null);
+  const cBoxPoint = useRef<BoundingBox>([
     [0, 0],
     [0, 0],
     [0, 0],
     [0, 0],
   ]);
   const cBoxMode = useRef('onMouseUp');
-  const imageCanvas: React.RefObject<SVGSVGElement | null | undefined> =
-    useRef();
+  const imageCanvas = useRef<SVGSVGElement>(null);
+
+  const notNullStore = useContext(WorkStore);
+  if (notNullStore === null) return null;
+
+  const [workState, workDispatch] = notNullStore;
 
   const onAdd = (newPoint: BoundingBox) => {
     workDispatch({
@@ -68,7 +66,7 @@ function ImageCanvas({
     cBoxMode.current = 'onMouseDown';
   };
 
-  const onMouseMove = (e) => {
+  const onMouseMove = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
     if (cBoxMode.current == 'onMouseDown') {
       if (imageCanvas.current === null || imageCanvas.current === undefined) {
         return null;
@@ -92,7 +90,7 @@ function ImageCanvas({
     }
   };
 
-  const onMouseUp = (e) => {
+  const onMouseUp = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
     if (imageCanvas.current === null || imageCanvas.current === undefined) {
       return null;
     }
