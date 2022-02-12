@@ -4,8 +4,13 @@ import HighlightAltIcon from '@mui/icons-material/HighlightAlt';
 import PanToolIcon from '@mui/icons-material/PanTool';
 import PolylineIcon from '@mui/icons-material/Polyline';
 import { WorkStore } from './WorkingSection';
+import { MouseMode } from './types';
 
-const StyledLeftPanel = styled.div`
+type PropsLeftControlPanel = {
+  readonly areaPercent?: number;
+};
+
+const StyledLeftPanel = styled.div<PropsLeftControlPanel>`
   /* 색상 */
   color: white;
   border: 2px solid azure;
@@ -45,9 +50,13 @@ const DefaultIconStyle = {
   },
 };
 
-function LeftControlPanel({ areaPercent, mouseMode, ...rest }) {
-  const [_workState, workDispatch] = useContext(WorkStore);
-  const changeMouseMode = (nextMode) => {
+function LeftControlPanel({ areaPercent }: PropsLeftControlPanel) {
+  const notNullStore = useContext(WorkStore);
+  if (notNullStore === null) return null;
+
+  const [workState, workDispatch] = notNullStore;
+  const { mouseMode } = workState;
+  const changeMouseMode = (nextMode: MouseMode) => {
     workDispatch({
       type: 'CHANGE_MOUSEMODE',
       nextMode,
@@ -56,16 +65,16 @@ function LeftControlPanel({ areaPercent, mouseMode, ...rest }) {
   const defaultMouseMode = 'MOVE';
   const currentModeStyle = { ...DefaultIconStyle, color: 'lightgreen' };
 
-  const getIconStyle = (targetMode) =>
+  const getIconStyle = (targetMode: MouseMode) =>
     targetMode === mouseMode ? currentModeStyle : DefaultIconStyle;
 
-  const onIconClick = (targetMode) =>
+  const onIconClick = (targetMode: MouseMode) =>
     targetMode === mouseMode
       ? changeMouseMode(defaultMouseMode)
       : changeMouseMode(targetMode);
 
   return (
-    <StyledLeftPanel areaPercent={areaPercent} {...rest}>
+    <StyledLeftPanel areaPercent={areaPercent}>
       <PanToolIcon
         sx={getIconStyle('MOVE')}
         onClick={() => onIconClick('MOVE')}

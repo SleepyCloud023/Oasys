@@ -1,9 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Footer from './Components/Footer/Footer';
-import Header from './Components/Header/Header';
-import WorkingSection from './Components/WorkingSection/WorkingSection';
-// import redux from
+import { Footer, Header, WorkingSection } from './Components';
 
 const AppBlock = styled.div`
   display: flex;

@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
+import { BoxObject } from '../types';
 
-const StyledToggleList = styled.ul`
+type PropsStyled = {
+  readonly upperFixed?: boolean;
+  readonly expandRatio?: number;
+};
+
+const StyledToggleList = styled.ul<PropsStyled>`
   margin: 0;
   padding: 0;
   width: 100%;
@@ -15,13 +21,14 @@ const StyledToggleList = styled.ul`
     css`
       margin-bottom: auto;
     `}
-  ${({ expandRatio }) => {
-    expandRatio &&
-      css`
-        flex: ${expandRatio} 0 0;
-      `;
-  }}
 `;
+
+// ${({ expandRatio }) => {
+//   expandRatio &&
+//     css`
+//       flex: ${expandRatio} 0 0;
+//     `;
+// }}
 
 const ListCover = styled.li`
   background-color: azure;
@@ -47,24 +54,25 @@ const ListElement = styled.li`
   padding: auto 4px;
 `;
 
-function ToggleList({
+type Extractor<T> = (content: T, index: number) => string;
+
+type PropsToggleList<T> = {
+  readonly title: string;
+  readonly contentList: Array<T>;
+  readonly contentExtractor: Extractor<T>;
+} & PropsStyled;
+
+function ToggleList<T>({
   title,
   contentList,
   contentExtractor,
   expandRatio,
   upperFixed,
-  ...rest
-}) {
+}: PropsToggleList<T>) {
   const [fold, setFold] = useState(false);
   const onToggle = () => setFold(!fold);
 
-  const isExtractorExist = (extractor) =>
-    extractor
-      ? true
-      : console.log(`In ${title}, contentExtractor is not given`) || false;
-
   const listElements =
-    isExtractorExist(contentExtractor) &&
     !fold &&
     contentList.map((content, index) => {
       const fullContent = contentExtractor(content, index);

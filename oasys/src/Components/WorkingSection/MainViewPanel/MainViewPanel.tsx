@@ -1,10 +1,13 @@
-import React, { useState, useRef, useContext } from 'react';
+import React, { useState, useRef, useContext, SyntheticEvent } from 'react';
 import styled, { css } from 'styled-components';
 import { WorkStore } from '../WorkingSection';
 import ImageCanvas from './ImageCanvas';
 import Button from '@mui/material/Button';
+import { BoxObject } from '../types';
 
-const MainCanvas = styled.div`
+type PropsMainViewPanel = { readonly areaPercent?: number };
+
+const MainCanvas = styled.div<PropsMainViewPanel>`
   color: white;
   font: bold;
   font-size: 1.25rem;
@@ -30,7 +33,7 @@ const MainViewUtil = styled.div`
   font-size: 1.25rem;
 `;
 
-function objectExtractor(element, index) {
+function objectExtractor(element: BoxObject, index: number) {
   const { Bbox, ...rest } = element;
   return Bbox;
 }
@@ -39,8 +42,11 @@ const canvasStyle = {
   flex: '1 0 0',
 };
 
-function MainViewCanvas({ areaPercent, ...rest }) {
-  const [workState, _workDispatch] = useContext(WorkStore);
+function MainViewCanvas({ areaPercent }: PropsMainViewPanel) {
+  const notNullStore = useContext(WorkStore);
+  if (notNullStore === null) return null;
+
+  const [workState, workDispatch] = notNullStore;
   const { imageURL, mouseMode, objectList, classList, tagList } = workState;
 
   const [imagePoint, setImagePoint] = useState([50, 50]);
@@ -57,7 +63,7 @@ function MainViewCanvas({ areaPercent, ...rest }) {
     return objects;
   });
 
-  const imageZoom = (e) => {
+  const imageZoom = () => {
     if (imageZoomOut <= 1.6) {
       setImageZoomOut(parseFloat((imageZoomOut + 0.2).toFixed(2)));
     }
@@ -69,7 +75,7 @@ function MainViewCanvas({ areaPercent, ...rest }) {
     }
   };
 
-  const onMouseDown = (e) => {
+  const onMouseDown = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
     onclickState.current['originPoint'][0] = imagePoint[0];
     onclickState.current['originPoint'][1] = imagePoint[1];
 
@@ -79,7 +85,7 @@ function MainViewCanvas({ areaPercent, ...rest }) {
     onclickState.current['on'] = true;
   };
 
-  const onMouseMove = (e) => {
+  const onMouseMove = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
     if (onclickState.current['on']) {
       const xMove =
         e.nativeEvent.offsetX - onclickState.current['clickPoint'][0];
@@ -93,12 +99,12 @@ function MainViewCanvas({ areaPercent, ...rest }) {
     }
   };
 
-  const onMouseUp = (e) => {
+  const onMouseUp = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
     onclickState.current['on'] = false;
   };
 
   return (
-    <MainCanvas areaPercent={areaPercent} {...rest}>
+    <MainCanvas areaPercent={areaPercent}>
       <MainViewUtil>
         <Button variant="outlined" onClick={imageZoom}>
           +
@@ -112,17 +118,17 @@ function MainViewCanvas({ areaPercent, ...rest }) {
       </MainViewUtil>
       <svg
         style={canvasStyle}
-        onMouseMove={(e) => {
+        onMouseMove={(e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
           if (workState.mouseMode == 'MOVE') {
             onMouseMove(e);
           }
         }}
-        onMouseDown={(e) => {
+        onMouseDown={(e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
           if (workState.mouseMode == 'MOVE') {
             onMouseDown(e);
           }
         }}
-        onMouseUp={(e) => {
+        onMouseUp={(e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
           if (workState.mouseMode == 'MOVE') {
             onMouseUp(e);
           }

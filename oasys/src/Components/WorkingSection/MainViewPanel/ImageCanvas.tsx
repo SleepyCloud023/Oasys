@@ -2,28 +2,49 @@ import React, { useRef, useContext } from 'react';
 import _ from 'lodash';
 import { PointToString } from './MainViewUtil';
 import { WorkStore } from '../WorkingSection';
+import { BoundingBox, Point } from '../types';
 
-function ImageCanvas({ boxes, imageURL, imagePoint, imageZoomOut }) {
-  const [workState, workDispatch] = useContext(WorkStore);
+type PropsImageCanvse = {
+  boxes: Array<BoundingBox>;
+  imageURL: string;
+  imagePoint: Point;
+  imageZoomOut: number;
+};
 
-  const cBox = useRef();
-  const cBoxPoint = useRef([
+function ImageCanvas({
+  boxes,
+  imageURL,
+  imagePoint,
+  imageZoomOut,
+}: PropsImageCanvse) {
+  const notNullStore = useContext(WorkStore);
+  if (notNullStore === null) return null;
+
+  const [workState, workDispatch] = notNullStore;
+
+  const cBox: React.MutableRefObject<SVGSVGElement | null> =
+    useRef<SVGSVGElement>(null);
+  const cBoxPoint: React.MutableRefObject<BoundingBox> = useRef([
     [0, 0],
     [0, 0],
     [0, 0],
     [0, 0],
   ]);
   const cBoxMode = useRef('onMouseUp');
-  const imageCanvas = useRef();
+  const imageCanvas: React.RefObject<SVGSVGElement | null | undefined> =
+    useRef();
 
-  const onAdd = (newPoint) => {
+  const onAdd = (newPoint: BoundingBox) => {
     workDispatch({
       type: 'ADD_OBJECT',
-      newPoint: newPoint,
+      newPoint,
     });
   };
 
-  const onMouseDown = (e) => {
+  const onMouseDown = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
+    if (imageCanvas.current === null || imageCanvas.current === undefined) {
+      return null;
+    }
     const offsetX =
       (e.nativeEvent.offsetX - imageCanvas.current.x.baseVal.value) *
       (1 / imageZoomOut);
@@ -37,6 +58,10 @@ function ImageCanvas({ boxes, imageURL, imagePoint, imageZoomOut }) {
       cBoxPoint.current[step][1] = offsetY;
     }
 
+    if (cBox.current === null || cBox.current === undefined) {
+      return null;
+    }
+
     cBox.current.setAttribute('points', PointToString(cBoxPoint.current));
     cBox.current.setAttribute('stroke-width', '2');
 
@@ -45,6 +70,9 @@ function ImageCanvas({ boxes, imageURL, imagePoint, imageZoomOut }) {
 
   const onMouseMove = (e) => {
     if (cBoxMode.current == 'onMouseDown') {
+      if (imageCanvas.current === null || imageCanvas.current === undefined) {
+        return null;
+      }
       const offsetX =
         (e.nativeEvent.offsetX - imageCanvas.current.x.baseVal.value) *
         (1 / imageZoomOut);
@@ -57,11 +85,17 @@ function ImageCanvas({ boxes, imageURL, imagePoint, imageZoomOut }) {
       cBoxPoint.current[3][0] = offsetX;
       cBoxPoint.current[1][1] = offsetY;
 
+      if (cBox.current === null || cBox.current === undefined) {
+        return null;
+      }
       cBox.current.setAttribute('points', PointToString(cBoxPoint.current));
     }
   };
 
   const onMouseUp = (e) => {
+    if (imageCanvas.current === null || imageCanvas.current === undefined) {
+      return null;
+    }
     const offsetX =
       (e.nativeEvent.offsetX - imageCanvas.current.x.baseVal.value) *
       (1 / imageZoomOut);
@@ -73,7 +107,12 @@ function ImageCanvas({ boxes, imageURL, imagePoint, imageZoomOut }) {
     cBoxPoint.current[2][1] = offsetY;
     cBoxPoint.current[3][0] = offsetX;
     cBoxPoint.current[1][1] = offsetY;
+
+    if (cBox.current === null || cBox.current === undefined) {
+      return null;
+    }
     cBox.current.setAttribute('stroke-width', '0');
+
     const newPoint = _.cloneDeep(cBoxPoint.current);
     onAdd(newPoint);
     cBoxMode.current = 'onMouseUp';
