@@ -24,7 +24,7 @@ function reducer(state: WorkState, action: ACTION): WorkState {
         objectList: [...state.objectList, new_object],
       };
     default:
-      throw new Error('undefined action type: WorkingSection/reducer.js');
+      throw new Error('undefined action type: WorkingSection/utils/reducer.ts');
   }
 }
 

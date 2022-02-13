@@ -13,6 +13,7 @@ function NavBar() {
         }}
       >
         <Link to={'/home'}>Home</Link>
+        <br />
         <Link to={'/dataset'}>Dataset</Link>
       </nav>
       <Outlet />

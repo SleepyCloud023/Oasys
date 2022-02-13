@@ -41,7 +41,7 @@ type ACTION_CHANGE_MOUSEMODE = {
   type: 'CHANGE_MOUSEMODE';
   nextMode: MouseMode;
 };
-export type ACTION_INIT_STATE = {
+type ACTION_INIT_STATE = {
   type: 'INIT_STATE';
   initState: WorkState;
 };
