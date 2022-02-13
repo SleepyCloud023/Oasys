@@ -1,8 +1,9 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import ToggleList from './ToggleList';
 import { BoxObject } from '../types';
 import { WorkStore } from '../WorkingSection';
+import { Chip, Divider, ListItem, ListItemText } from '@mui/material';
 
 type PropsRightControlPanel = {
   readonly areaPercent?: number;
@@ -47,36 +48,62 @@ function RightControlPanel({ areaPercent }: PropsRightControlPanel) {
       <ToggleList<BoxObject>
         title={'Bounding Box'}
         contentList={objectList}
-        contentExtractor={objectExtractor}
+        contentExtractor={ObjectExtractor}
         upperFixed
       />
       <ToggleList<string>
         title={'Class'}
         contentList={classList}
-        contentExtractor={classExtractor}
+        contentExtractor={ClassExtractor}
       />
       <ToggleList<string>
         title={'Tag'}
         contentList={tagList}
-        contentExtractor={tagExtractor}
+        contentExtractor={TagExtractor}
       />
     </RightPanel>
   );
 }
 
 // Warning: 함수 선언문만 Hoisting 되므로 arrow function으로 변경불가
-function objectExtractor(boxObject: BoxObject, index: number): string {
-  const { ObjectId, ClassName } = boxObject;
-  const content = `[${ObjectId}]: ${ClassName}`;
-  return content;
+function ObjectExtractor(boxObject: BoxObject, index: number) {
+  // const [hover, setHover] = useState(false);
+  const { ObjectId, ClassName, Bbox, Extra } = boxObject;
+  const text_primary = (
+    <>
+      {'Class: '}
+      {ClassName.length > 0 ? ClassName : 'Empty'}
+    </>
+  );
+  // const text_extra = true && Extra.map((extraObject) => extraObject.text);
+
+  const new_content = (
+    <>
+      <Divider light />
+      <ListItem
+        sx={{ px: '4px' }}
+        // onMouseOver={(e: React.MouseEvent<HTMLLIElement, MouseEvent>) =>
+        //   setHover(!hover)
+        // }
+      >
+        <Chip label={ObjectId} size={'small'} />
+        <ListItemText
+          sx={{ mx: '6px' }}
+          primary={text_primary}
+          // secondary={text_extra}
+        />
+      </ListItem>
+    </>
+  );
+  return new_content;
 }
 
-function classExtractor(className: string, index: number): string {
+function ClassExtractor(className: string, index: number) {
   const content = `[${index}]: ${className}`;
   return content;
 }
 
-function tagExtractor(tagName: string, index: number): string {
+function TagExtractor(tagName: string, index: number) {
   const content = `[${index}]: ${tagName}`;
   return content;
 }

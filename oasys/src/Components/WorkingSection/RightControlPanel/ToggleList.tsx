@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import { List } from '@mui/material';
 
 type PropsStyled = {
   readonly upperFixed?: boolean;
@@ -15,21 +18,16 @@ const StyledToggleList = styled.ul<PropsStyled>`
   &::-webkit-scrollbar {
     display: none;
   }
-  ${({ upperFixed }) =>
-    upperFixed &&
-    css`
-      margin-bottom: auto;
-    `}
+  ${({ upperFixed }) => {
+    return upperFixed
+      ? css`
+          margin-bottom: auto;
+        `
+      : null;
+  }}
 `;
 
-// ${({ expandRatio }) => {
-//   expandRatio &&
-//     css`
-//       flex: ${expandRatio} 0 0;
-//     `;
-// }}
-
-const ListCover = styled.li`
+const ListCover = styled.div`
   background-color: azure;
   border-radius: 3px;
   border: 1px solid black;
@@ -42,9 +40,10 @@ const ListCover = styled.li`
   /* 커버 상단 고정 */
   position: sticky;
   top: 0;
+  z-index: 1;
 `;
 
-const ListElement = styled.li`
+const ListElement = styled.div`
   background-color: gray;
   border: 1px solid black;
   border-radius: 3px;
@@ -53,7 +52,7 @@ const ListElement = styled.li`
   padding: auto 4px;
 `;
 
-type Extractor<T> = (content: T, index: number) => string;
+type Extractor<T> = (content: T, index: number) => string | React.ReactNode;
 
 type PropsToggleList<T> = {
   readonly title: string;
@@ -80,8 +79,13 @@ function ToggleList<T>({
 
   return (
     <StyledToggleList expandRatio={expandRatio} upperFixed={upperFixed}>
-      <ListCover onClick={onToggle}>{title}</ListCover>
-      {listElements}
+      <List sx={{ py: 0 }}>
+        <ListCover onClick={onToggle}>
+          {fold ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
+          {title}
+        </ListCover>
+        {listElements}
+      </List>
     </StyledToggleList>
   );
 }
