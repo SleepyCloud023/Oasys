@@ -48,14 +48,12 @@ function RightControlPanel({ areaPercent }: PropsRightControlPanel) {
         title={'Bounding Box'}
         contentList={objectList}
         contentExtractor={objectExtractor}
-        expandRatio={80}
         upperFixed
       />
       <ToggleList<string>
         title={'Class'}
         contentList={classList}
         contentExtractor={classExtractor}
-        expandRatio={20}
       />
       <ToggleList<string>
         title={'Tag'}

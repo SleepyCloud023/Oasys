@@ -1,22 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Footer, Header, WorkingSection } from './Components';
+import { Footer, Header, WorkingSection } from '../Components';
 
-const AppBlock = styled.div`
+const AnnotationBlock = styled.div`
   display: flex;
   flex-flow: column;
   width: 100vw;
   height: 100vh;
 `;
 
-function App() {
+function Annotation() {
   return (
-    <AppBlock>
+    <AnnotationBlock>
       <Header />
       <WorkingSection />
       <Footer />
-    </AppBlock>
+    </AnnotationBlock>
   );
 }
 
-export default App;
+export default Annotation;

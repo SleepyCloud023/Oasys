@@ -17,15 +17,19 @@ const StyledButton = styled.button`
   margin: 16px;
 `;
 
-function Footer({ children, ...rest }) {
+type PropsFooter = {
+  readonly children?: React.ReactNode;
+};
+
+function Footer({ children }: PropsFooter) {
   const [dialogOn, setDialogOn] = useState(false);
   return (
-    <StyledFooter {...rest}>
+    <StyledFooter>
       <StyledButton onClick={() => setDialogOn(true)}>
         테스트 모달 버튼
       </StyledButton>
 
-      <Dialog dialogOn={dialogOn} setDialogOn={setDialogOn} />
+      {/* <Dialog dialogOn={dialogOn} setDialogOn={setDialogOn} /> */}
     </StyledFooter>
   );
 }
