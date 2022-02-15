@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react';
-import styled from 'styled-components';
+import React, { useContext } from 'react';
+import styled from '@emotion/styled';
 import ToggleList from './ToggleList';
 import { BoxObject } from '../types';
 import { WorkStore } from '../WorkingSection';
@@ -10,10 +10,6 @@ type PropsRightControlPanel = {
 };
 
 const RightPanel = styled.section<PropsRightControlPanel>`
-  border: 2px solid azure;
-  border-radius: 3px;
-  color: white;
-  font: bold;
   /* 배치 */
   ${({ areaPercent }) => {
     if (!areaPercent) {
@@ -36,7 +32,6 @@ const RightPanel = styled.section<PropsRightControlPanel>`
 
 function RightControlPanel({ areaPercent }: PropsRightControlPanel) {
   const notNullStore = useContext(WorkStore);
-  // if (typeof workStore === 'object' && workStore === null) return null;
   if (notNullStore === null) return null;
 
   const [workState] = notNullStore;
