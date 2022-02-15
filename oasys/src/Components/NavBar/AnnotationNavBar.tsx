@@ -1,3 +1,4 @@
+import { Button } from '@mui/material';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -5,7 +6,16 @@ function AnnotationNavBar() {
   return (
     <>
       <nav>
-        <Link to={'/dataset'}>Back</Link>
+        <Link to={'/dataset'}>
+          <Button
+            sx={{
+              backgroundColor: (theme) => theme.palette.primary.main,
+              color: (theme) => theme.palette.text.primary,
+            }}
+          >
+            Home
+          </Button>
+        </Link>
       </nav>
     </>
   );

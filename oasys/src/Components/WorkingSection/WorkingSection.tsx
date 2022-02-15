@@ -6,7 +6,7 @@ import { LeftControlPanel } from './LeftControlPanel';
 import { MainViewPanel } from './MainViewPanel';
 import { RightControlPanel } from './RightControlPanel';
 
-const StyledWorkingSection = styled.div`
+const StyledWorkingSection = styled.article`
   /* 색상 */
   background-color: #26293b;
 

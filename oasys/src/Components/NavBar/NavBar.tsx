@@ -6,8 +6,10 @@ function NavBar() {
     <>
       <nav
         style={{
+          minHeight: '2rem',
+          padding: '10px',
+          width: '100vw',
           borderBottom: 'solid 1px',
-          paddingBottom: '1rem',
         }}
       >
         <Link to={'/home'}>Home</Link>
