@@ -1,8 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import React, { useState } from 'react';
-import { Accordion, AccordionDetails, Box, styled } from '@mui/material';
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionProps,
+  AccordionSummary,
+  Box,
+  styled,
+} from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { StyledListCover } from './ListItem';
 import { css } from '@emotion/react';
 
 type PropsStyled = {
@@ -10,7 +16,7 @@ type PropsStyled = {
   readonly expandRatio?: number;
 };
 
-const StyledToggleList = styled(Box)<PropsStyled>`
+const StyledToggleSection = styled(Box)<PropsStyled>`
   margin: 0;
   padding: 0;
   width: 100%;
@@ -29,6 +35,36 @@ const StyledToggleList = styled(Box)<PropsStyled>`
   }}
 `;
 
+const StyledToggleList = (props: AccordionProps) => (
+  <Accordion
+    disableGutters
+    defaultExpanded
+    sx={{ backgroundColor: 'transparent' }}
+    {...props}
+  />
+);
+
+const StyledToggleCover = styled(AccordionSummary)(({ theme }) => ({
+  backgroundColor: theme.palette.primary.main,
+  border: theme.palette.divider,
+  borderRadius: '3px',
+  minHeight: '1.5rem',
+  fontWeight: 'bold',
+  fontStyle: 'italic',
+  fontSize: '1rem',
+  margin: 0,
+  padding: '1px 4px',
+  alignItems: 'center',
+  /* 커버 상단 고정 */
+  position: 'sticky',
+  top: 0,
+  zIndex: 1,
+}));
+
+const StyledToggleContent = styled(AccordionDetails)(({ theme }) => ({
+  padding: '0',
+}));
+
 type Extractor<T> = (content: T, index: number) => string | React.ReactNode;
 
 type PropsToggleList<T> = {
@@ -45,29 +81,23 @@ function ToggleList<T>({
   upperFixed,
 }: PropsToggleList<T>) {
   const listCover = (
-    <StyledListCover expandIcon={<ExpandMoreIcon />} sx={{ margin: 0 }}>
+    <StyledToggleCover expandIcon={<ExpandMoreIcon />}>
       {title}
-    </StyledListCover>
+    </StyledToggleCover>
   );
-  const listElements =
-    // !fold &&
-    contentList.map((content, index) => ListItemGenerator(content, index));
+  const listContent = (
+    <StyledToggleContent>
+      {contentList.map((content, index) => ListItemGenerator(content, index))}
+    </StyledToggleContent>
+  );
 
   return (
-    <StyledToggleList expandRatio={expandRatio} upperFixed={upperFixed}>
-      <Accordion
-        disableGutters
-        sx={{ backgroundColor: 'transparent' }}
-        defaultExpanded
-        // expandIcon={<ExpandMoreIcon />}
-        aria-controls={`${title} object List`}
-        id={`${title} Accordion`}
-      >
+    <StyledToggleSection expandRatio={expandRatio} upperFixed={upperFixed}>
+      <StyledToggleList aria-controls={`${title} object list`}>
         {listCover}
-        <AccordionDetails sx={{ padding: 0 }}>{listElements}</AccordionDetails>
-        {/* <List sx={{ py: 0 }}>{listElements}</List> */}
-      </Accordion>
-    </StyledToggleList>
+        {listContent}
+      </StyledToggleList>
+    </StyledToggleSection>
   );
 }
 
