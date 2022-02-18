@@ -50,7 +50,7 @@ const StyledToggleCover = styled(AccordionSummary)(({ theme }) => ({
   fontStyle: 'italic',
   fontSize: '1rem',
   margin: 0,
-  padding: '1px 4px',
+  padding: '1px 6px',
   alignItems: 'center',
   /* 커버 상단 고정 */
   position: 'sticky',

@@ -11,14 +11,12 @@ type PropsRightControlPanel = {
 
 const RightPanel = styled.section<PropsRightControlPanel>`
   /* 배치 */
-  ${({ areaPercent }) => {
-    if (!areaPercent) {
-    } else {
-      return `
+  ${({ areaPercent }) =>
+    areaPercent
+      ? `
         flex: ${areaPercent} 0 0;
-      `;
-    }
-  }}
+      `
+      : null}
   /* 스크롤 설정 */
   overflow-y: scroll;
   &::-webkit-scrollbar {
