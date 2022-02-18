@@ -24,6 +24,7 @@ const preLoading: WorkState = {
   mouseMode: 'MOVE',
   imageURL: '',
   imageName: '',
+  imageSize: '340 453',
   objectListLength: 0,
   objectList: [],
   classList: [],
