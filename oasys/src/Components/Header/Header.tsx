@@ -15,9 +15,9 @@ type PropsHeader = {
 function Header({ children }: PropsHeader) {
   return (
     <StyledHeader>
-      <Button style={{ backgroundColor: 'azure' }} variant="outlined">
-        <AnnotationNavBar />
-      </Button>
+      <AnnotationNavBar />
+      {/* <Button style={{ backgroundColor: 'azure' }} variant="outlined">
+        </Button> */}
     </StyledHeader>
   );
 }

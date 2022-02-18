@@ -1,39 +1,36 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Accordion,
   AccordionDetails,
   AccordionProps,
   AccordionSummary,
-  Box,
   styled,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { css } from '@emotion/react';
+import Box, { BoxProps } from '@mui/system/Box/Box';
 
-type PropsStyled = {
+type SectionProps = {
   readonly upperFixed?: boolean;
   readonly expandRatio?: number;
 };
 
-const StyledToggleSection = styled(Box)<PropsStyled>`
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  overflow-y: auto;
-  min-height: 2rem;
-  /* 스크롤바 숨기기 */
-  &::-webkit-scrollbar {
-    display: none;
-  }
-  ${({ upperFixed }) => {
-    return upperFixed
-      ? css`
-          margin-bottom: auto;
-        `
-      : null;
-  }}
-`;
+const StyledToggleSection = (props: SectionProps & BoxProps) => {
+  const StyledToggleBox = styled(Box)<SectionProps>`
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-y: auto;
+    min-height: 2rem;
+    margin-bottom: ${({ upperFixed }) => (upperFixed ? 'auto' : null)};
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  `;
+  return (
+    <StyledToggleBox id={'toggle-section'} component={'section'} {...props} />
+  );
+};
 
 const StyledToggleList = (props: AccordionProps) => (
   <Accordion
@@ -71,7 +68,7 @@ type PropsToggleList<T> = {
   readonly title: string;
   readonly contentList: Array<T>;
   readonly ListItemGenerator: Extractor<T>;
-} & PropsStyled;
+} & SectionProps;
 
 function ToggleList<T>({
   title,

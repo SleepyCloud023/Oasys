@@ -8,6 +8,7 @@ function AnnotationNavBar() {
       <nav>
         <Link to={'/dataset'}>
           <Button
+            variant="contained"
             sx={{
               backgroundColor: (theme) => theme.palette.primary.main,
               color: (theme) => theme.palette.text.primary,
