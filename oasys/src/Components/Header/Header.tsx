@@ -1,7 +1,7 @@
 import React from 'react';
-import styled from 'styled-components';
 import Button from '@mui/material/Button';
 import { AnnotationNavBar } from '../NavBar';
+import styled from '@emotion/styled';
 
 const StyledHeader = styled.header`
   background-color: #2d2f42;

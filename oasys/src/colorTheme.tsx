@@ -12,7 +12,7 @@ export const appTheme = createTheme({
       dark: '#c48b9f',
     },
     background: {
-      default: '#ffccbc',
+      default: '#ffeeff',
       paper: '#e1f5fe',
     },
   },
