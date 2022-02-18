@@ -43,8 +43,9 @@ def get_object(id):
     anno_json_object = json.loads(anno_json)
     imageURL = result_set[0]["image_url"]
     imageName = result_set[0]["image_name"]
+    imageSize = result_set[0]["image_size"]
 
-    result_json = {"imageURL": imageURL, "imageName": imageName, "annotation": anno_json_object}
+    result_json = {"imageURL": imageURL, "imageName": imageName, "imageSize": imageSize, "annotation": anno_json_object}
 
     return jsonify(result_json)
 

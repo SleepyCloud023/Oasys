@@ -25,6 +25,7 @@ export type WorkState = {
   statusText: string;
   imageURL: string;
   imageName: string;
+  imageSize: string;
   objectListLength: number;
   objectList: Array<BoxObject>;
   classList: Array<string>;

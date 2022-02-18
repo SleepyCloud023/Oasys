@@ -29,6 +29,7 @@ function ImageCanvas({ boxes, imageURL, canvasState }: PropsImageCanvse) {
   const notNullStore = useContext(WorkStore);
   if (notNullStore === null) return null;
   const [workState, workDispatch] = notNullStore;
+  const [imgWidth, imgHeight] = workState.imageSize.split(' ').map((sizeNum)=>{return parseInt(sizeNum);})
 
   const boxElements = boxes.map((objects, index) => {
     const points_ = PointToString(objects);
@@ -41,11 +42,11 @@ function ImageCanvas({ boxes, imageURL, canvasState }: PropsImageCanvse) {
       <svg
         version="1.1"
         baseProfile="full"
-        width={340 * imageZoomOut}
-        height={453 * imageZoomOut}
+        width={imgWidth * imageZoomOut}
+        height={imgHeight * imageZoomOut}
         x={imagePoint[0]}
         y={imagePoint[1]}
-        viewBox="0, 0, 340, 453"
+        viewBox={"0, 0, "+imgWidth+", "+imgHeight}
         onMouseDown={(e) => {
           if (workState.mouseMode == 'BOX') {
             onMouseDown(e, imageCanvasRef, imageZoomOut);

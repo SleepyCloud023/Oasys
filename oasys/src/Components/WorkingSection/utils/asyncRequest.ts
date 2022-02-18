@@ -12,7 +12,7 @@ function getImageInfo(imageID: number): Promise<WorkState> {
     .get(imageURL)
     .then((response: AxiosResponse) => {
       const { statusText } = response;
-      const { imageURL, imageName, annotation } = response.data;
+      const { imageURL, imageName, imageSize, annotation } = response.data;
       const { ObjectList, ClassList, TagList } = annotation;
       const objectListLength = ObjectList.length;
       return {
@@ -20,6 +20,7 @@ function getImageInfo(imageID: number): Promise<WorkState> {
         statusText,
         imageURL,
         imageName,
+        imageSize,
         objectListLength,
         objectList: ObjectList,
         classList: ClassList,
@@ -36,6 +37,7 @@ function getImageInfo(imageID: number): Promise<WorkState> {
         statusText: statusError,
         imageURL: imageURL404,
         imageName: 'File Not Found',
+        imageSize: '',
         objectListLength: 0,
         objectList: [],
         classList: [],
@@ -47,5 +49,5 @@ function getImageInfo(imageID: number): Promise<WorkState> {
 
 export function dummyFetchFileInfo() {
   // http://35.197.111.137:5000/image_info/<id>
-  return getImageInfo(1);
+  return getImageInfo(2);
 }
