@@ -23,9 +23,12 @@
                     93
                 ]
             ],
-            "Extra": {
-                "text": "이하수"
-            }
+            "Extra": [
+                {
+                    "key": "text",
+                    "value": "이하수"
+                }
+            ]
         },
         {
             "ObjectId": 1,
@@ -48,9 +51,12 @@
                     103
                 ]
             ],
-            "Extra": {
-                "text": "드 Special Menu 특별에뉴"
-            }
+            "Extra": [
+                {
+                    "key": "text",
+                    "value": "드 Special Menu 특별에뉴"
+                }
+            ]
         },
         {
             "ObjectId": 2,
@@ -73,9 +79,12 @@
                     145
                 ]
             ],
-            "Extra": {
-                "text": "모듬 수육 전골"
-            }
+            "Extra": [
+                {
+                    "key": "text",
+                    "value": "모듬 수육 전골"
+                }
+            ]
         },
         {
             "ObjectId": 3,
@@ -98,9 +107,12 @@
                     187
                 ]
             ],
-            "Extra": {
-                "text": "38,000"
-            }
+            "Extra": [
+                {
+                    "key": "text",
+                    "value": "38,000"
+                }
+            ]
         },
         {
             "ObjectId": 4,
@@ -123,9 +135,12 @@
                     184
                 ]
             ],
-            "Extra": {
-                "text": "32.000"
-            }
+            "Extra": [
+                {
+                    "key": "text",
+                    "value": "32.000"
+                }
+            ]
         },
         {
             "ObjectId": 5,
@@ -148,9 +163,12 @@
                     227
                 ]
             ],
-            "Extra": {
-                "text": "양지 옥개장 전골"
-            }
+            "Extra": [
+                {
+                    "key": "text",
+                    "value": "양지 옥개장 전골"
+                }
+            ]
         },
         {
             "ObjectId": 6,
@@ -173,9 +191,12 @@
                     227
                 ]
             ],
-            "Extra": {
-                "text": "전부 보쌈"
-            }
+            "Extra": [
+                {
+                    "key": "text",
+                    "value": "전부 보쌈"
+                }
+            ]
         },
         {
             "ObjectId": 7,
@@ -198,9 +219,12 @@
                     252
                 ]
             ],
-            "Extra": {
-                "text": ">.372.0C0"
-            }
+            "Extra": [
+                {
+                    "key": "text",
+                    "value": ">.372.0C0"
+                }
+            ]
         },
         {
             "ObjectId": 8,
@@ -223,9 +247,12 @@
                     335
                 ]
             ],
-            "Extra": {
-                "text": "거복수는 모든 예뉴를 징성껏 포함해 드합니다."
-            }
+            "Extra": [
+                {
+                    "key": "text",
+                    "value": "거복수는 모든 예뉴를 징성껏 포함해 드합니다."
+                }
+            ]
         }
     ]
 }

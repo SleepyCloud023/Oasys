@@ -23,9 +23,12 @@
                     34
                 ]
             ],
-            "Extra": {
-                "text": "Hwmoto"
-            }
+            "Extra": [
+                {
+                    "key": "text",
+                    "value": "Hwmoto"
+                }
+            ]
         },
         {
             "ObjectId": 1,
@@ -48,9 +51,12 @@
                     57
                 ]
             ],
-            "Extra": {
-                "text": "\"맛있는"
-            }
+            "Extra": [
+                {
+                    "key": "text",
+                    "value": "\"맛있는"
+                }
+            ]
         },
         {
             "ObjectId": 2,
@@ -73,9 +79,12 @@
                     149
                 ]
             ],
-            "Extra": {
-                "text": "메메뉴판 신화픽구OI <호T] | MAN VENU  철판볶음"
-            }
+            "Extra": [
+                {
+                    "key": "text",
+                    "value": "메메뉴판 신화픽구OI <호T] | MAN VENU  철판볶음"
+                }
+            ]
         },
         {
             "ObjectId": 3,
@@ -98,9 +107,12 @@
                     216
                 ]
             ],
-            "Extra": {
-                "text": "나하프'"
-            }
+            "Extra": [
+                {
+                    "key": "text",
+                    "value": "나하프'"
+                }
+            ]
         },
         {
             "ObjectId": 4,
@@ -123,9 +135,12 @@
                     218
                 ]
             ],
-            "Extra": {
-                "text": "주꾸미삽겹살"
-            }
+            "Extra": [
+                {
+                    "key": "text",
+                    "value": "주꾸미삽겹살"
+                }
+            ]
         },
         {
             "ObjectId": 5,
@@ -148,9 +163,12 @@
                     322
                 ]
             ],
-            "Extra": {
-                "text": "+바다주꾸D"
-            }
+            "Extra": [
+                {
+                    "key": "text",
+                    "value": "+바다주꾸D"
+                }
+            ]
         },
         {
             "ObjectId": 6,
@@ -173,9 +191,12 @@
                     356
                 ]
             ],
-            "Extra": {
-                "text": "M20m"
-            }
+            "Extra": [
+                {
+                    "key": "text",
+                    "value": "M20m"
+                }
+            ]
         },
         {
             "ObjectId": 7,
@@ -198,9 +219,12 @@
                     358
                 ]
             ],
-            "Extra": {
-                "text": "배2mm"
-            }
+            "Extra": [
+                {
+                    "key": "text",
+                    "value": "배2mm"
+                }
+            ]
         },
         {
             "ObjectId": 8,
@@ -223,9 +247,12 @@
                     376
                 ]
             ],
-            "Extra": {
-                "text": "나처즈끄이마'"
-            }
+            "Extra": [
+                {
+                    "key": "text",
+                    "value": "나처즈끄이마'"
+                }
+            ]
         }
     ]
 }

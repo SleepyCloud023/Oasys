@@ -6,18 +6,16 @@ export type Point = [number, number];
 export type BoundingBox = [lt: Point, rt: Point, rb: Point, lb: Point];
 
 // TODO: JSON 파일과 함께 구조 수정
-type Extra = {
-  text?: string;
-  others?: string;
+export type ExtraInfo = {
+  key: string;
+  value: string;
 };
-
-type ExtraInfo = Array<Extra>;
 
 export type BoxObject = {
   ObjectId: number;
   Bbox: BoundingBox;
   ClassName: Array<string>;
-  Extra: ExtraInfo;
+  Extra: Array<ExtraInfo>;
 };
 
 export type WorkState = {

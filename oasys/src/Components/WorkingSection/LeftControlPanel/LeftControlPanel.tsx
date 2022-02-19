@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { WorkStore } from '../WorkingSection';
 import { MouseMode } from '../types';
 import { ModeIcon } from './ModeIcon';
@@ -18,12 +18,11 @@ const StyledLeftPanel = styled.div<PropsLeftControlPanel>`
 
   /* 배치 */
   ${({ areaPercent }) => {
-    if (!areaPercent) {
-    } else {
-      return `
+    return areaPercent
+      ? `
         flex: ${areaPercent} 0 0;
-      `;
-    }
+      `
+      : null;
   }}
   display: flex;
   flex-flow: column;
