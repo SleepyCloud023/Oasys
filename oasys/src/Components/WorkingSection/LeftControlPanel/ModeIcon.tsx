@@ -5,8 +5,9 @@ import PanToolIcon from '@mui/icons-material/PanTool';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import { MouseMode } from '../types';
+import { Theme } from '@mui/material/styles';
 
-const colorSelected = 'lightgreen';
+const colorSelected = (theme: Theme) => theme.palette.primary.main;
 
 export const DefaultIconStyle = {
   color: 'azure',

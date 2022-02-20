@@ -9,7 +9,7 @@ const StyledNav = styled((props) => <nav {...props} />)(
     padding: 10px;
     width: 100vw;
     border-bottom: solid ${theme.palette.divider} 2px;
-    background-color: ${theme.palette.secondary.main};
+    background-color: ${theme.palette.secondary.light};
   `,
 );
 
@@ -19,7 +19,7 @@ const NavButton = (props: ButtonProps) => (
     // variant="outlined"
     variant="text"
     sx={{
-      backgroundColor: (theme) => theme.palette.secondary.main,
+      backgroundColor: (theme) => theme.palette.secondary.light,
       color: (theme) => theme.palette.text.primary,
     }}
     {...props}

@@ -1,10 +1,19 @@
 import React, { useState } from 'react';
 import { BoxObject, ExtraInfo } from '../types';
-import { Chip, Divider, ListItem, ListItemText } from '@mui/material';
+import {
+  Chip,
+  Divider,
+  IconButton,
+  ListItem,
+  ListItemText,
+  Tooltip,
+} from '@mui/material';
 import { styled } from '@mui/material/styles';
 import _ from 'lodash';
+import { BoxTooltip } from './ItemTooltip';
+import ZoomInIcon from '@mui/icons-material/ZoomIn';
 
-const StyledItemContainer = styled(ListItem)`
+const StyledListItemContainer = styled(ListItem)`
   background-color: white;
   border: 1px solid ${({ theme }) => theme.palette.divider};
   border-radius: 3px;
@@ -12,33 +21,36 @@ const StyledItemContainer = styled(ListItem)`
   padding: 4px 8px;
 `;
 
-const StyledItemText = styled(ListItemText)`
+const StyledListItemText = styled(ListItemText)`
   margin: auto 6px;
 `;
 
 export function BoxListItem(boxObject: BoxObject, index: number) {
   // const [hover, setHover] = useState(false);
-  const { ObjectId, ClassName, Bbox, Extra } = boxObject;
+  const { ObjectId, ClassName, Bbox } = boxObject;
 
   const optionalDivider = index > 0 && <Divider light />;
   const numberChip = <Chip label={ObjectId} size={'small'} />;
-  const textMainInfo = `
-    ${'Class: '}${ClassName.length > 0 ? ClassName : '[]'}
-    `;
-
-  // const textExtraInfo = Extra.map(
-  //   (extraObject: ExtraInfo) => `${extraObject.key}: ${extraObject.value}`,
-  // );
-
-  console.log(`Bbox: ${Bbox}`);
-  console.log(`Extra: `, Extra);
+  const textMainInfo = (
+    <StyledListItemText
+      primary={`
+  ${'Class: '}${ClassName.length > 0 ? ClassName : '[]'}
+  `}
+    />
+  );
+  const detailsIcon = (
+    <IconButton sx={{ padding: 0, marginLeft: 'auto' }}>
+      <ZoomInIcon />
+    </IconButton>
+  );
 
   return (
-    <StyledItemContainer key={index}>
+    <StyledListItemContainer key={index}>
       {optionalDivider}
       {numberChip}
-      <StyledItemText primary={textMainInfo} />
-    </StyledItemContainer>
+      {textMainInfo}
+      <BoxTooltip boxObject={boxObject}>{detailsIcon}</BoxTooltip>
+    </StyledListItemContainer>
   );
 }
 
