@@ -1,18 +1,18 @@
 import React, { useRef, useContext } from 'react';
 import { WorkStore } from '../WorkingSection';
-import { BoundingBox, Point } from '../types';
+import { BoundingBox, PointXY } from '../types';
 import { CanvasState } from './types/canvasStore';
 import { PointToString } from './utils/mainViewUtil';
 import { onMouseMove, onMouseDown, onMouseUp } from './utils/eventLogic';
 import Box from './Box';
 
-type PropsImageCanvse = {
+type PropsImageCanvas = {
   boxes: Array<BoundingBox>;
   imageURL: string;
   canvasState: CanvasState;
 };
 
-function ImageCanvas({ boxes, imageURL, canvasState }: PropsImageCanvse) {
+function ImageCanvas({ boxes, imageURL, canvasState }: PropsImageCanvas) {
   const { imagePoint, imageZoomOut, imgDragEvent } = canvasState;
 
   const imageCanvas = useRef<SVGSVGElement>(null);
@@ -29,7 +29,11 @@ function ImageCanvas({ boxes, imageURL, canvasState }: PropsImageCanvse) {
   const notNullStore = useContext(WorkStore);
   if (notNullStore === null) return null;
   const [workState, workDispatch] = notNullStore;
-  const [imgWidth, imgHeight] = workState.imageSize.split(' ').map((sizeNum)=>{return parseInt(sizeNum);})
+  const [imgWidth, imgHeight] = workState.imageSize
+    .split(' ')
+    .map((sizeNum) => {
+      return parseInt(sizeNum);
+    });
 
   const boxElements = boxes.map((objects, index) => {
     const points_ = PointToString(objects);
@@ -46,7 +50,7 @@ function ImageCanvas({ boxes, imageURL, canvasState }: PropsImageCanvse) {
         height={imgHeight * imageZoomOut}
         x={imagePoint[0]}
         y={imagePoint[1]}
-        viewBox={"0, 0, "+imgWidth+", "+imgHeight}
+        viewBox={'0, 0, ' + imgWidth + ', ' + imgHeight}
         onMouseDown={(e) => {
           if (workState.mouseMode == 'BOX') {
             onMouseDown(e, imageCanvasRef, imageZoomOut);

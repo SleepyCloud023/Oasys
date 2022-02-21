@@ -2,8 +2,8 @@ import { ACTION, CanvasState, ImgDragEvent } from '../types/canvasStore';
 
 function reducer(state: CanvasState, action: ACTION): CanvasState {
   switch (action.type) {
-    case 'CANVAS_IMAGEZOOMOUT':
-      if (action.flag == 'zoom' && state.imageZoomOut <= 1.6) {
+    case 'CANVAS_IMAGEZOOM':
+      if (action.flag == 'in' && state.imageZoomOut <= 1.6) {
         const changedZoomOut = parseFloat(
           (state.imageZoomOut + 0.2).toFixed(2),
         );

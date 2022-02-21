@@ -1,7 +1,7 @@
-import { Point } from '../../types';
+import { PointXY } from '../../types';
 
 export type CanvasState = {
-  imagePoint: Point;
+  imagePoint: PointXY;
   imageZoomOut: number;
   imgDragEvent: ImgDragEvent;
 };
@@ -13,8 +13,8 @@ export type ImgDragEvent = {
 };
 
 type ACTION_IMAGEZOOM = {
-  type: 'CANVAS_IMAGEZOOMOUT';
-  flag: 'zoom' | 'out';
+  type: 'CANVAS_IMAGEZOOM';
+  flag: 'in' | 'out';
 };
 type ACTION_IMAGEDRAG = {
   type: 'CANVAS_IMAGEDRAG';

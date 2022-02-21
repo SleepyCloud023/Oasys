@@ -33,19 +33,19 @@ function RightControlPanel({ areaPercent }: PropsRightControlPanel) {
   if (notNullStore === null) return null;
 
   const [workState] = notNullStore;
-  const { objectList, classList, tagList } = workState;
+  const { box_object_list, categories, tag_list } = workState;
 
   return (
     <RightPanel areaPercent={areaPercent}>
       <ToggleList<BoxObject>
         title={'Bounding Box'}
-        contentList={objectList}
+        contentList={box_object_list}
         ListItemGenerator={BoxListItem}
         upperFixed
       />
       <ToggleList<string>
         title={'Class'}
-        contentList={classList}
+        contentList={categories}
         ListItemGenerator={ClassListItem}
         addButton
         onAddButton={(event) => {
@@ -55,7 +55,7 @@ function RightControlPanel({ areaPercent }: PropsRightControlPanel) {
       />
       <ToggleList<string>
         title={'Tag'}
-        contentList={tagList}
+        contentList={tag_list}
         ListItemGenerator={TagListItem}
         addButton
         onAddButton={(event) => {
