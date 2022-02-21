@@ -1,11 +1,11 @@
 {
-    "ClassList": [],
-    "TagList": [],
-    "ObjectList": [
+    "categories": [],
+    "tag_list": [],
+    "box_object_list": [
         {
-            "ObjectId": 0,
-            "ClassName": [],
-            "Bbox": [
+            "id": 0,
+            "category": [],
+            "bounding_box": [
                 [
                     272,
                     26
@@ -23,7 +23,7 @@
                     34
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "Hwmoto"
@@ -31,9 +31,9 @@
             ]
         },
         {
-            "ObjectId": 1,
-            "ClassName": [],
-            "Bbox": [
+            "id": 1,
+            "category": [],
+            "bounding_box": [
                 [
                     129,
                     43
@@ -51,7 +51,7 @@
                     57
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "\"맛있는"
@@ -59,9 +59,9 @@
             ]
         },
         {
-            "ObjectId": 2,
-            "ClassName": [],
-            "Bbox": [
+            "id": 2,
+            "category": [],
+            "bounding_box": [
                 [
                     28,
                     51
@@ -79,7 +79,7 @@
                     149
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "메메뉴판 신화픽구OI <호T] | MAN VENU  철판볶음"
@@ -87,9 +87,9 @@
             ]
         },
         {
-            "ObjectId": 3,
-            "ClassName": [],
-            "Bbox": [
+            "id": 3,
+            "category": [],
+            "bounding_box": [
                 [
                     32,
                     208
@@ -107,7 +107,7 @@
                     216
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "나하프'"
@@ -115,9 +115,9 @@
             ]
         },
         {
-            "ObjectId": 4,
-            "ClassName": [],
-            "Bbox": [
+            "id": 4,
+            "category": [],
+            "bounding_box": [
                 [
                     124,
                     210
@@ -135,7 +135,7 @@
                     218
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "주꾸미삽겹살"
@@ -143,9 +143,9 @@
             ]
         },
         {
-            "ObjectId": 5,
-            "ClassName": [],
-            "Bbox": [
+            "id": 5,
+            "category": [],
+            "bounding_box": [
                 [
                     26,
                     314
@@ -163,7 +163,7 @@
                     322
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "+바다주꾸D"
@@ -171,9 +171,9 @@
             ]
         },
         {
-            "ObjectId": 6,
-            "ClassName": [],
-            "Bbox": [
+            "id": 6,
+            "category": [],
+            "bounding_box": [
                 [
                     140,
                     350
@@ -191,7 +191,7 @@
                     356
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "M20m"
@@ -199,9 +199,9 @@
             ]
         },
         {
-            "ObjectId": 7,
-            "ClassName": [],
-            "Bbox": [
+            "id": 7,
+            "category": [],
+            "bounding_box": [
                 [
                     30,
                     352
@@ -219,7 +219,7 @@
                     358
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "배2mm"
@@ -227,9 +227,9 @@
             ]
         },
         {
-            "ObjectId": 8,
-            "ClassName": [],
-            "Bbox": [
+            "id": 8,
+            "category": [],
+            "bounding_box": [
                 [
                     106,
                     370
@@ -247,7 +247,7 @@
                     376
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "나처즈끄이마'"
