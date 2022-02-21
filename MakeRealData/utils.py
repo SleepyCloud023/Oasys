@@ -12,18 +12,18 @@ def convert_pos_style(arr, pos_type):
 
 def make_target_JSON(idx, classes, vertices, content_text):
     return {
-        "ObjectId": idx,
-        "ClassName": classes,
-        "Bbox": convert_pos_style(vertices, 'pororo_ocr'),
-        "Extra": [{'key': 'text', 'value': content_text}]
+        "id": idx,
+        "category": classes,
+        "bounding_box": convert_pos_style(vertices, 'pororo_ocr'),
+        "extra": [{'key': 'text', 'value': content_text}]
     }
 
 
 def pororo_to_json(pororo_result):
     result_DICT = {
-        "ClassList": [],
-        "TagList": [],
-        "ObjectList": []
+        "categories": [],
+        "tag_list": [],
+        "box_object_list": []
     }
     bbox_list = pororo_result['bounding_poly']
 
@@ -35,7 +35,7 @@ def pororo_to_json(pororo_result):
         target_JSON = make_target_JSON(
             idx, default_classes, vertices, content_text)
 
-        result_DICT['ObjectList'].append(target_JSON)
+        result_DICT['box_object_list'].append(target_JSON)
     return result_DICT
 
 
