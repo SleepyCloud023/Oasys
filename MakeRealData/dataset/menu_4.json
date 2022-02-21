@@ -23,9 +23,12 @@
                     29
                 ]
             ],
-            "Extra": {
-                "text": "PASTA"
-            }
+            "Extra": [
+                {
+                    "key": "text",
+                    "value": "PASTA"
+                }
+            ]
         },
         {
             "ObjectId": 1,
@@ -48,9 +51,12 @@
                     27
                 ]
             ],
-            "Extra": {
-                "text": "크림 - 뽀지"
-            }
+            "Extra": [
+                {
+                    "key": "text",
+                    "value": "크림 - 뽀지"
+                }
+            ]
         },
         {
             "ObjectId": 2,
@@ -73,9 +79,12 @@
                     93
                 ]
             ],
-            "Extra": {
-                "text": "S민MA닉으 OLIO PASTA"
-            }
+            "Extra": [
+                {
+                    "key": "text",
+                    "value": "S민MA닉으 OLIO PASTA"
+                }
+            ]
         },
         {
             "ObjectId": 3,
@@ -98,9 +107,12 @@
                     149
                 ]
             ],
-            "Extra": {
-                "text": "F000 TOMATO PASTA"
-            }
+            "Extra": [
+                {
+                    "key": "text",
+                    "value": "F000 TOMATO PASTA"
+                }
+            ]
         },
         {
             "ObjectId": 4,
@@ -123,9 +135,12 @@
                     213
                 ]
             ],
-            "Extra": {
-                "text": "섞됐R09M CREAM PASTA"
-            }
+            "Extra": [
+                {
+                    "key": "text",
+                    "value": "섞됐R09M CREAM PASTA"
+                }
+            ]
         },
         {
             "ObjectId": 5,
@@ -148,9 +163,12 @@
                     267
                 ]
             ],
-            "Extra": {
-                "text": "CREAM PASTA"
-            }
+            "Extra": [
+                {
+                    "key": "text",
+                    "value": "CREAM PASTA"
+                }
+            ]
         },
         {
             "ObjectId": 6,
@@ -173,9 +191,12 @@
                     267
                 ]
             ],
-            "Extra": {
-                "text": "SPICY SHRI"
-            }
+            "Extra": [
+                {
+                    "key": "text",
+                    "value": "SPICY SHRI"
+                }
+            ]
         },
         {
             "ObjectId": 7,
@@ -198,9 +219,12 @@
                     331
                 ]
             ],
-            "Extra": {
-                "text": "달SEN ROSE PASTA"
-            }
+            "Extra": [
+                {
+                    "key": "text",
+                    "value": "달SEN ROSE PASTA"
+                }
+            ]
         },
         {
             "ObjectId": 8,
@@ -223,9 +247,12 @@
                     389
                 ]
             ],
-            "Extra": {
-                "text": "목습노든요 SHRIMP PASTA"
-            }
+            "Extra": [
+                {
+                    "key": "text",
+                    "value": "목습노든요 SHRIMP PASTA"
+                }
+            ]
         },
         {
             "ObjectId": 9,
@@ -248,9 +275,12 @@
                     385
                 ]
             ],
-            "Extra": {
-                "text": "155"
-            }
+            "Extra": [
+                {
+                    "key": "text",
+                    "value": "155"
+                }
+            ]
         },
         {
             "ObjectId": 10,
@@ -273,9 +303,12 @@
                     436
                 ]
             ],
-            "Extra": {
-                "text": "사회자 실재 떡뉴는 다를 수 '있습'"
-            }
+            "Extra": [
+                {
+                    "key": "text",
+                    "value": "사회자 실재 떡뉴는 다를 수 '있습'"
+                }
+            ]
         }
     ]
 }

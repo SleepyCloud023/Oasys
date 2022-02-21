@@ -1,18 +1,23 @@
 /** @jsxImportSource @emotion/react */
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Accordion,
   AccordionDetails,
   AccordionProps,
   AccordionSummary,
+  css,
+  IconButton,
   styled,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Box, { BoxProps } from '@mui/system/Box/Box';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 type SectionProps = {
   readonly upperFixed?: boolean;
   readonly expandRatio?: number;
+  readonly addButton?: boolean;
+  readonly onAddButton?: React.MouseEventHandler<HTMLButtonElement>;
 };
 
 const StyledToggleSection = (props: SectionProps & BoxProps) => {
@@ -41,22 +46,24 @@ const StyledToggleList = (props: AccordionProps) => (
   />
 );
 
-const StyledToggleCover = styled(AccordionSummary)(({ theme }) => ({
-  backgroundColor: theme.palette.primary.main,
-  border: theme.palette.divider,
-  borderRadius: '3px',
-  minHeight: '1.5rem',
-  fontWeight: 'bold',
-  fontStyle: 'italic',
-  fontSize: '1rem',
-  margin: 0,
-  padding: '1px 6px',
-  alignItems: 'center',
-  /* 커버 상단 고정 */
-  position: 'sticky',
-  top: 0,
-  zIndex: 1,
-}));
+const StyledToggleCover = styled(AccordionSummary)(
+  ({ theme }) => css`
+    background-color: ${theme.palette.primary.main};
+    border-bottom: solid ${theme.palette.divider} 1px;
+    border-radius: 3px;
+    min-height: 1.5rem;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 1rem;
+    margin: 0;
+    padding: 1px 6px;
+    align-items: center;
+    /* 커버 상단 고정 */
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  `,
+);
 
 const StyledToggleContent = styled(AccordionDetails)(({ theme }) => ({
   padding: '0',
@@ -76,10 +83,18 @@ function ToggleList<T>({
   ListItemGenerator,
   expandRatio,
   upperFixed,
+  addButton,
+  onAddButton: onAddClick,
 }: PropsToggleList<T>) {
+  const optinalAddButton = addButton && (
+    <IconButton onClick={onAddClick} sx={{ padding: 0, marginLeft: 'auto' }}>
+      <AddCircleOutlineIcon fontSize="small" />
+    </IconButton>
+  );
   const listCover = (
     <StyledToggleCover expandIcon={<ExpandMoreIcon />}>
       {title}
+      {optinalAddButton}
     </StyledToggleCover>
   );
   const listContent = (

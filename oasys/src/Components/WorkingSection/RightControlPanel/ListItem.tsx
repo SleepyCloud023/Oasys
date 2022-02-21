@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
-import { BoxObject } from '../types';
-import { Chip, Divider, ListItem, ListItemText } from '@mui/material';
+import { BoxObject, ExtraInfo } from '../types';
+import {
+  Chip,
+  Divider,
+  IconButton,
+  ListItem,
+  ListItemText,
+  Tooltip,
+} from '@mui/material';
 import { styled } from '@mui/material/styles';
+import _ from 'lodash';
+import { BoxTooltip } from './ItemTooltip';
+import ZoomInIcon from '@mui/icons-material/ZoomIn';
 
-export const StyledListElement_legacy = styled(ListItem)(({ theme }) => ({
-  backgroundColor: 'white',
-  border: `1px solid ${theme.palette.divider}`,
-  borderRadius: '3px',
-  fontSize: '0.75rem',
-  padding: '0 4px',
-}));
-
-const StyledItemContainer = styled(ListItem)`
+const StyledListItemContainer = styled(ListItem)`
   background-color: white;
   border: 1px solid ${({ theme }) => theme.palette.divider};
   border-radius: 3px;
@@ -19,30 +21,37 @@ const StyledItemContainer = styled(ListItem)`
   padding: 4px 8px;
 `;
 
-const StyledItemText = styled(ListItemText)`
+const StyledListItemText = styled(ListItemText)`
   margin: auto 6px;
 `;
 
 export function BoxListItem(boxObject: BoxObject, index: number) {
   // const [hover, setHover] = useState(false);
-  const { ObjectId, ClassName, Bbox, Extra } = boxObject;
-  const text_primary = `
-    ${'Class: '}${ClassName.length > 0 ? ClassName : '[]'}
-    `;
+  const { ObjectId, ClassName, Bbox } = boxObject;
+
   const optionalDivider = index > 0 && <Divider light />;
   const numberChip = <Chip label={ObjectId} size={'small'} />;
-  console.log(`Bbox: ${Bbox}`);
-  console.log(`Extra: `, Extra);
+  const textMainInfo = (
+    <StyledListItemText
+      primary={`
+  ${'Class: '}${ClassName.length > 0 ? ClassName : '[]'}
+  `}
+    />
+  );
+  const detailsIcon = (
+    <IconButton sx={{ padding: 0, marginLeft: 'auto' }}>
+      <ZoomInIcon />
+    </IconButton>
+  );
 
-  // const text_extra = true && Extra.map((extraObject) => extraObject.text);
-  const new_content = (
-    <StyledItemContainer key={index}>
+  return (
+    <StyledListItemContainer key={index}>
       {optionalDivider}
       {numberChip}
-      <StyledItemText primary={text_primary} />
-    </StyledItemContainer>
+      {textMainInfo}
+      <BoxTooltip boxObject={boxObject}>{detailsIcon}</BoxTooltip>
+    </StyledListItemContainer>
   );
-  return new_content;
 }
 
 export function ClassListItem(className: string, index: number) {

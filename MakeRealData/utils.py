@@ -10,12 +10,12 @@ def convert_pos_style(arr, pos_type):
         return arr
 
 
-def make_target_JSON(idx, classes, vertices, extra):
+def make_target_JSON(idx, classes, vertices, content_text):
     return {
         "ObjectId": idx,
         "ClassName": classes,
         "Bbox": convert_pos_style(vertices, 'pororo_ocr'),
-        "Extra": extra
+        "Extra": [{'key': 'text', 'value': content_text}]
     }
 
 
@@ -33,7 +33,7 @@ def pororo_to_json(pororo_result):
         content_text = target_bbox['description']
         # TODO: 하나의 JSON 엘리먼트 생성 부분 함수화
         target_JSON = make_target_JSON(
-            idx, default_classes, vertices, {"text": content_text})
+            idx, default_classes, vertices, content_text)
 
         result_DICT['ObjectList'].append(target_JSON)
     return result_DICT

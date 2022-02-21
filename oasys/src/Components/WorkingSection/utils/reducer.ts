@@ -14,7 +14,8 @@ function reducer(state: WorkState, action: ACTION): WorkState {
         Bbox: action.newPoint,
         Extra: [
           {
-            text: '',
+            key: 'text',
+            value: '',
           },
         ],
       };

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { WorkStore } from '../WorkingSection';
 import { MouseMode } from '../types';
 import { ModeIcon } from './ModeIcon';
@@ -11,19 +11,18 @@ type PropsLeftControlPanel = {
 const StyledLeftPanel = styled.div<PropsLeftControlPanel>`
   /* 색상 */
   color: white;
-  border: 2px solid azure;
-  border-radius: 4px;
+  border: 1px solid azure;
+  border-radius: 3px;
 
   font: bold;
 
   /* 배치 */
   ${({ areaPercent }) => {
-    if (!areaPercent) {
-    } else {
-      return `
+    return areaPercent
+      ? `
         flex: ${areaPercent} 0 0;
-      `;
-    }
+      `
+      : null;
   }}
   display: flex;
   flex-flow: column;
@@ -44,6 +43,7 @@ function LeftControlPanel({ areaPercent }: PropsLeftControlPanel) {
   };
 
   const defaultMouseMode = 'MOVE';
+
   const onIconClick = (targetMode: MouseMode) =>
     targetMode === mouseMode
       ? changeMouseMode(defaultMouseMode)
