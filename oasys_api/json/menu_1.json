@@ -1,11 +1,11 @@
 {
-    "ClassList": [],
-    "TagList": [],
-    "ObjectList": [
+    "categories": [],
+    "tag_list": [],
+    "box_object_list": [
         {
-            "ObjectId": 0,
-            "ClassName": [],
-            "Bbox": [
+            "id": 0,
+            "category": [],
+            "bounding_box": [
                 [
                     8,
                     0
@@ -23,7 +23,7 @@
                     28
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "Mow"
@@ -31,9 +31,9 @@
             ]
         },
         {
-            "ObjectId": 1,
-            "ClassName": [],
-            "Bbox": [
+            "id": 1,
+            "category": [],
+            "bounding_box": [
                 [
                     143,
                     31
@@ -51,7 +51,7 @@
                     49
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "3포장 숯불바베큐"
@@ -59,9 +59,9 @@
             ]
         },
         {
-            "ObjectId": 2,
-            "ClassName": [],
-            "Bbox": [
+            "id": 2,
+            "category": [],
+            "bounding_box": [
                 [
                     131,
                     63
@@ -79,7 +79,7 @@
                     79
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "Side Menu"
@@ -87,9 +87,9 @@
             ]
         },
         {
-            "ObjectId": 3,
-            "ClassName": [],
-            "Bbox": [
+            "id": 3,
+            "category": [],
+            "bounding_box": [
                 [
                     29,
                     78
@@ -107,7 +107,7 @@
                     144
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "안주류 Side Dtmh 곱뱅이무침소먼 (수입신) 무뼈닭밭양념바베큐 (국내선)"
@@ -115,9 +115,9 @@
             ]
         },
         {
-            "ObjectId": 4,
-            "ClassName": [],
-            "Bbox": [
+            "id": 4,
+            "category": [],
+            "bounding_box": [
                 [
                     205,
                     107
@@ -135,7 +135,7 @@
                     165
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "18,000  18,000 15,000"
@@ -143,9 +143,9 @@
             ]
         },
         {
-            "ObjectId": 5,
-            "ClassName": [],
-            "Bbox": [
+            "id": 5,
+            "category": [],
+            "bounding_box": [
                 [
                     33,
                     153
@@ -163,7 +163,7 @@
                     167
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "한치(마른안주) (베트남)"
@@ -171,9 +171,9 @@
             ]
         },
         {
-            "ObjectId": 6,
-            "ClassName": [],
-            "Bbox": [
+            "id": 6,
+            "category": [],
+            "bounding_box": [
                 [
                     215,
                     175
@@ -191,7 +191,7 @@
                     189
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "13,000"
@@ -199,9 +199,9 @@
             ]
         },
         {
-            "ObjectId": 7,
-            "ClassName": [],
-            "Bbox": [
+            "id": 7,
+            "category": [],
+            "bounding_box": [
                 [
                     33,
                     179
@@ -219,7 +219,7 @@
                     193
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "감자쭤김 (미국산)"
@@ -227,9 +227,9 @@
             ]
         },
         {
-            "ObjectId": 8,
-            "ClassName": [],
-            "Bbox": [
+            "id": 8,
+            "category": [],
+            "bounding_box": [
                 [
                     217,
                     199
@@ -247,7 +247,7 @@
                     237
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "13,000 000"
@@ -255,9 +255,9 @@
             ]
         },
         {
-            "ObjectId": 9,
-            "ClassName": [],
-            "Bbox": [
+            "id": 9,
+            "category": [],
+            "bounding_box": [
                 [
                     33,
                     203
@@ -275,7 +275,7 @@
                     217
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "노가리 대구포 (러시아)"
@@ -283,9 +283,9 @@
             ]
         },
         {
-            "ObjectId": 10,
-            "ClassName": [],
-            "Bbox": [
+            "id": 10,
+            "category": [],
+            "bounding_box": [
                 [
                     32,
                     227
@@ -303,7 +303,7 @@
                     247
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "닭모래집튀김 (국내신)"
@@ -311,9 +311,9 @@
             ]
         },
         {
-            "ObjectId": 11,
-            "ClassName": [],
-            "Bbox": [
+            "id": 11,
+            "category": [],
+            "bounding_box": [
                 [
                     225,
                     249
@@ -331,7 +331,7 @@
                     265
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "13,000"
@@ -339,9 +339,9 @@
             ]
         },
         {
-            "ObjectId": 12,
-            "ClassName": [],
-            "Bbox": [
+            "id": 12,
+            "category": [],
+            "bounding_box": [
                 [
                     33,
                     259
@@ -359,7 +359,7 @@
                     275
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "쥐포땅종 (베트남산)"
@@ -367,9 +367,9 @@
             ]
         },
         {
-            "ObjectId": 13,
-            "ClassName": [],
-            "Bbox": [
+            "id": 13,
+            "category": [],
+            "bounding_box": [
                 [
                     229,
                     275
@@ -387,7 +387,7 @@
                     291
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "15,000"
@@ -395,9 +395,9 @@
             ]
         },
         {
-            "ObjectId": 14,
-            "ClassName": [],
-            "Bbox": [
+            "id": 14,
+            "category": [],
+            "bounding_box": [
                 [
                     32,
                     285
@@ -415,7 +415,7 @@
                     306
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "번데기전골 (중국산)"
@@ -423,9 +423,9 @@
             ]
         },
         {
-            "ObjectId": 15,
-            "ClassName": [],
-            "Bbox": [
+            "id": 15,
+            "category": [],
+            "bounding_box": [
                 [
                     233,
                     303
@@ -443,7 +443,7 @@
                     319
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "15,000"
@@ -451,9 +451,9 @@
             ]
         },
         {
-            "ObjectId": 16,
-            "ClassName": [],
-            "Bbox": [
+            "id": 16,
+            "category": [],
+            "bounding_box": [
                 [
                     31,
                     317
@@ -471,7 +471,7 @@
                     337
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "오뎅탕"
@@ -479,9 +479,9 @@
             ]
         },
         {
-            "ObjectId": 17,
-            "ClassName": [],
-            "Bbox": [
+            "id": 17,
+            "category": [],
+            "bounding_box": [
                 [
                     243,
                     331
@@ -499,7 +499,7 @@
                     349
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "5,000"
@@ -507,9 +507,9 @@
             ]
         },
         {
-            "ObjectId": 18,
-            "ClassName": [],
-            "Bbox": [
+            "id": 18,
+            "category": [],
+            "bounding_box": [
                 [
                     247,
                     361
@@ -527,7 +527,7 @@
                     379
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "2.200"
@@ -535,9 +535,9 @@
             ]
         },
         {
-            "ObjectId": 19,
-            "ClassName": [],
-            "Bbox": [
+            "id": 19,
+            "category": [],
+            "bounding_box": [
                 [
                     33,
                     375
@@ -555,7 +555,7 @@
                     436
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "떡사리 라면사리 무튼 재료는 국내산입니디 위 원신지 포시품외의"

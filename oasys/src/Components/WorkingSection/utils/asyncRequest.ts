@@ -13,8 +13,8 @@ function getImageInfo(imageID: number): Promise<WorkState> {
     .then((response: AxiosResponse) => {
       const { statusText } = response;
       const { imageURL, imageName, imageSize, annotation } = response.data;
-      const { ObjectList, ClassList, TagList } = annotation;
-      const objectListLength = ObjectList.length;
+      const { categories, tag_list, box_object_list } = annotation;
+      const objectListLength = categories.length;
       return {
         mouseMode,
         statusText,
@@ -22,9 +22,9 @@ function getImageInfo(imageID: number): Promise<WorkState> {
         imageName,
         imageSize,
         objectListLength,
-        objectList: ObjectList,
-        classList: ClassList,
-        tagList: TagList,
+        box_object_list,
+        categories,
+        tag_list,
       };
     })
     .catch((error: AxiosError) => {
@@ -39,9 +39,9 @@ function getImageInfo(imageID: number): Promise<WorkState> {
         imageName: 'File Not Found',
         imageSize: '',
         objectListLength: 0,
-        objectList: [],
-        classList: [],
-        tagList: [],
+        box_object_list: [],
+        categories: [],
+        tag_list: [],
       };
     });
   return imagePromise;

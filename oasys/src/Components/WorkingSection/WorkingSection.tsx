@@ -26,9 +26,9 @@ const preLoading: WorkState = {
   imageName: '',
   imageSize: '340 453',
   objectListLength: 0,
-  objectList: [],
-  classList: [],
-  tagList: [],
+  box_object_list: [],
+  categories: [],
+  tag_list: [],
 };
 
 export const WorkStore = React.createContext<

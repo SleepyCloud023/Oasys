@@ -9,10 +9,10 @@ function reducer(state: WorkState, action: ACTION): WorkState {
     case 'ADD_OBJECT':
       const nextLength = state.objectListLength + 1;
       const new_object: BoxObject = {
-        ObjectId: nextLength,
-        ClassName: [],
-        Bbox: action.newPoint,
-        Extra: [
+        id: nextLength,
+        category: [],
+        bounding_box: action.newPoint,
+        extra: [
           {
             key: 'text',
             value: '',
@@ -22,7 +22,7 @@ function reducer(state: WorkState, action: ACTION): WorkState {
       return {
         ...state,
         objectListLength: nextLength,
-        objectList: [...state.objectList, new_object],
+        box_object_list: [...state.box_object_list, new_object],
       };
     default:
       throw new Error('undefined action type: WorkingSection/utils/reducer.ts');

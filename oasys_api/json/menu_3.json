@@ -1,11 +1,11 @@
 {
-    "ClassList": [],
-    "TagList": [],
-    "ObjectList": [
+    "categories": [],
+    "tag_list": [],
+    "box_object_list": [
         {
-            "ObjectId": 0,
-            "ClassName": [],
-            "Bbox": [
+            "id": 0,
+            "category": [],
+            "bounding_box": [
                 [
                     138,
                     15
@@ -23,7 +23,7 @@
                     46
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": ")계경순대국산"
@@ -31,9 +31,9 @@
             ]
         },
         {
-            "ObjectId": 1,
-            "ClassName": [],
-            "Bbox": [
+            "id": 1,
+            "category": [],
+            "bounding_box": [
                 [
                     156,
                     68
@@ -51,7 +51,7 @@
                     76
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "사이드(단주"
@@ -59,9 +59,9 @@
             ]
         },
         {
-            "ObjectId": 2,
-            "ClassName": [],
-            "Bbox": [
+            "id": 2,
+            "category": [],
+            "bounding_box": [
                 [
                     55,
                     151
@@ -79,7 +79,7 @@
                     176
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "계경찰순대 s0m의"
@@ -87,9 +87,9 @@
             ]
         },
         {
-            "ObjectId": 3,
-            "ClassName": [],
-            "Bbox": [
+            "id": 3,
+            "category": [],
+            "bounding_box": [
                 [
                     153,
                     151
@@ -107,7 +107,7 @@
                     178
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "모뜸순대 9,000원"
@@ -115,9 +115,9 @@
             ]
         },
         {
-            "ObjectId": 4,
-            "ClassName": [],
-            "Bbox": [
+            "id": 4,
+            "category": [],
+            "bounding_box": [
                 [
                     248,
                     151
@@ -135,7 +135,7 @@
                     176
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "찐만두 500원"
@@ -143,9 +143,9 @@
             ]
         },
         {
-            "ObjectId": 5,
-            "ClassName": [],
-            "Bbox": [
+            "id": 5,
+            "category": [],
+            "bounding_box": [
                 [
                     245,
                     247
@@ -163,7 +163,7 @@
                     274
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "모음수육 12000원"
@@ -171,9 +171,9 @@
             ]
         },
         {
-            "ObjectId": 6,
-            "ClassName": [],
-            "Bbox": [
+            "id": 6,
+            "category": [],
+            "bounding_box": [
                 [
                     47,
                     249
@@ -191,7 +191,7 @@
                     281
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "추가냉면불고기 4,000원"
@@ -199,9 +199,9 @@
             ]
         },
         {
-            "ObjectId": 7,
-            "ClassName": [],
-            "Bbox": [
+            "id": 7,
+            "category": [],
+            "bounding_box": [
                 [
                     156,
                     264
@@ -219,7 +219,7 @@
                     277
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "7,000원"
@@ -227,9 +227,9 @@
             ]
         },
         {
-            "ObjectId": 8,
-            "ClassName": [],
-            "Bbox": [
+            "id": 8,
+            "category": [],
+            "bounding_box": [
                 [
                     247,
                     301
@@ -247,7 +247,7 @@
                     317
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "소주"
@@ -255,9 +255,9 @@
             ]
         },
         {
-            "ObjectId": 9,
-            "ClassName": [],
-            "Bbox": [
+            "id": 9,
+            "category": [],
+            "bounding_box": [
                 [
                     229,
                     317
@@ -275,7 +275,7 @@
                     333
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "4,000편"
@@ -283,9 +283,9 @@
             ]
         },
         {
-            "ObjectId": 10,
-            "ClassName": [],
-            "Bbox": [
+            "id": 10,
+            "category": [],
+            "bounding_box": [
                 [
                     59,
                     353
@@ -303,7 +303,7 @@
                     383
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "감자탕 21,000원"
@@ -311,9 +311,9 @@
             ]
         },
         {
-            "ObjectId": 11,
-            "ClassName": [],
-            "Bbox": [
+            "id": 11,
+            "category": [],
+            "bounding_box": [
                 [
                     154,
                     366
@@ -331,7 +331,7 @@
                     380
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "12,000원"
@@ -339,9 +339,9 @@
             ]
         },
         {
-            "ObjectId": 12,
-            "ClassName": [],
-            "Bbox": [
+            "id": 12,
+            "category": [],
+            "bounding_box": [
                 [
                     252,
                     368
@@ -359,7 +359,7 @@
                     374
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "스"
@@ -367,9 +367,9 @@
             ]
         },
         {
-            "ObjectId": 13,
-            "ClassName": [],
-            "Bbox": [
+            "id": 13,
+            "category": [],
+            "bounding_box": [
                 [
                     236,
                     380
@@ -387,7 +387,7 @@
                     404
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "다음화면>"
@@ -395,9 +395,9 @@
             ]
         },
         {
-            "ObjectId": 14,
-            "ClassName": [],
-            "Bbox": [
+            "id": 14,
+            "category": [],
+            "bounding_box": [
                 [
                     25,
                     419
@@ -415,7 +415,7 @@
                     431
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": ""

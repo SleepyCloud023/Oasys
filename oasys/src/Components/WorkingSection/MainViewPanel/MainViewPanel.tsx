@@ -2,7 +2,7 @@ import React, { useState, useRef, useContext, useReducer } from 'react';
 import styled, { css } from 'styled-components';
 import Button from '@mui/material/Button';
 import { WorkStore } from '../WorkingSection';
-import { BoxObject, Point } from '../types';
+import { BoxObject, PointXY } from '../types';
 import { CanvasState } from './types/canvasStore';
 import reducer from './utils/reducer';
 import ImageCanvas from './ImageCanvas';
@@ -39,11 +39,6 @@ const MainViewSvg = styled.svg`
   flex: 1 0 0;
 `;
 
-function objectExtractor(element: BoxObject, index: number) {
-  const { Bbox, ...rest } = element;
-  return Bbox;
-}
-
 const baseImageState: CanvasState = {
   imagePoint: [50, 50],
   imageZoomOut: 1,
@@ -59,28 +54,32 @@ function MainViewCanvas({ areaPercent }: PropsMainViewPanel) {
 
   const notNullStore = useContext(WorkStore);
   if (notNullStore === null) return null;
-  const [workState, workDispatch] = notNullStore;
-  const { imageURL, mouseMode, objectList, classList, tagList } = workState;
+  const [workState] = notNullStore;
+  const { imageURL, box_object_list } = workState;
 
-  const boxList = objectList.map((content, index) => {
-    const objects = objectExtractor(content, index);
-    return objects;
+  const boxList = box_object_list.map((content, index) => {
+    const { bounding_box, ...rest } = content;
+    return bounding_box;
   });
+
+  const ZoomButton = ({ type }: { type: 'in' | 'out' }) => (
+    <Button
+      variant="outlined"
+      onClick={() => {
+        canvasDispatch({
+          type: 'CANVAS_IMAGEZOOM',
+          flag: type,
+        });
+      }}
+    >
+      {type == 'in' ? '+' : '-'}
+    </Button>
+  );
 
   return (
     <StyledMainView areaPercent={areaPercent}>
       <MainViewUtil>
-        <Button
-          variant="outlined"
-          onClick={() => {
-            canvasDispatch({
-              type: 'CANVAS_IMAGEZOOMOUT',
-              flag: 'zoom',
-            });
-          }}
-        >
-          +
-        </Button>
+        <ZoomButton type="in" />
         <div style={{ marginLeft: 7, marginRight: 7 }}>
           {canvasState.imageZoomOut * 100}%
         </div>
@@ -88,7 +87,7 @@ function MainViewCanvas({ areaPercent }: PropsMainViewPanel) {
           variant="outlined"
           onClick={() => {
             canvasDispatch({
-              type: 'CANVAS_IMAGEZOOMOUT',
+              type: 'CANVAS_IMAGEZOOM',
               flag: 'out',
             });
           }}

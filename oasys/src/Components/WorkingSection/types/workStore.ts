@@ -2,20 +2,20 @@
 
 export type MouseMode = 'MOVE' | 'BOX' | 'POLYGON';
 
-export type Point = [number, number];
-export type BoundingBox = [lt: Point, rt: Point, rb: Point, lb: Point];
+export type PointXY = [number, number];
+export type BoundingBox = [lt: PointXY, rt: PointXY, rb: PointXY, lb: PointXY];
 
 // TODO: JSON 파일과 함께 구조 수정
-export type ExtraInfo = {
+export type ExtraInfoPair = {
   key: string;
   value: string;
 };
 
 export type BoxObject = {
-  ObjectId: number;
-  Bbox: BoundingBox;
-  ClassName: Array<string>;
-  Extra: Array<ExtraInfo>;
+  id: number;
+  bounding_box: BoundingBox;
+  category: Array<string>;
+  extra: Array<ExtraInfoPair>;
 };
 
 export type WorkState = {
@@ -25,9 +25,9 @@ export type WorkState = {
   imageName: string;
   imageSize: string;
   objectListLength: number;
-  objectList: Array<BoxObject>;
-  classList: Array<string>;
-  tagList: Array<string>;
+  box_object_list: Array<BoxObject>;
+  categories: Array<string>;
+  tag_list: Array<string>;
 };
 
 // 아래 두가지는 다르다.

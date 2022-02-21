@@ -1,11 +1,11 @@
 {
-    "ClassList": [],
-    "TagList": [],
-    "ObjectList": [
+    "categories": [],
+    "tag_list": [],
+    "box_object_list": [
         {
-            "ObjectId": 0,
-            "ClassName": [],
-            "Bbox": [
+            "id": 0,
+            "category": [],
+            "bounding_box": [
                 [
                     25,
                     9
@@ -23,7 +23,7 @@
                     29
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "PASTA"
@@ -31,9 +31,9 @@
             ]
         },
         {
-            "ObjectId": 1,
-            "ClassName": [],
-            "Bbox": [
+            "id": 1,
+            "category": [],
+            "bounding_box": [
                 [
                     139,
                     15
@@ -51,7 +51,7 @@
                     27
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "크림 - 뽀지"
@@ -59,9 +59,9 @@
             ]
         },
         {
-            "ObjectId": 2,
-            "ClassName": [],
-            "Bbox": [
+            "id": 2,
+            "category": [],
+            "bounding_box": [
                 [
                     123,
                     73
@@ -79,7 +79,7 @@
                     93
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "S민MA닉으 OLIO PASTA"
@@ -87,9 +87,9 @@
             ]
         },
         {
-            "ObjectId": 3,
-            "ClassName": [],
-            "Bbox": [
+            "id": 3,
+            "category": [],
+            "bounding_box": [
                 [
                     49,
                     135
@@ -107,7 +107,7 @@
                     149
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "F000 TOMATO PASTA"
@@ -115,9 +115,9 @@
             ]
         },
         {
-            "ObjectId": 4,
-            "ClassName": [],
-            "Bbox": [
+            "id": 4,
+            "category": [],
+            "bounding_box": [
                 [
                     125,
                     193
@@ -135,7 +135,7 @@
                     213
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "섞됐R09M CREAM PASTA"
@@ -143,9 +143,9 @@
             ]
         },
         {
-            "ObjectId": 5,
-            "ClassName": [],
-            "Bbox": [
+            "id": 5,
+            "category": [],
+            "bounding_box": [
                 [
                     97,
                     253
@@ -163,7 +163,7 @@
                     267
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "CREAM PASTA"
@@ -171,9 +171,9 @@
             ]
         },
         {
-            "ObjectId": 6,
-            "ClassName": [],
-            "Bbox": [
+            "id": 6,
+            "category": [],
+            "bounding_box": [
                 [
                     33,
                     255
@@ -191,7 +191,7 @@
                     267
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "SPICY SHRI"
@@ -199,9 +199,9 @@
             ]
         },
         {
-            "ObjectId": 7,
-            "ClassName": [],
-            "Bbox": [
+            "id": 7,
+            "category": [],
+            "bounding_box": [
                 [
                     125,
                     313
@@ -219,7 +219,7 @@
                     331
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "달SEN ROSE PASTA"
@@ -227,9 +227,9 @@
             ]
         },
         {
-            "ObjectId": 8,
-            "ClassName": [],
-            "Bbox": [
+            "id": 8,
+            "category": [],
+            "bounding_box": [
                 [
                     35,
                     371
@@ -247,7 +247,7 @@
                     389
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "목습노든요 SHRIMP PASTA"
@@ -255,9 +255,9 @@
             ]
         },
         {
-            "ObjectId": 9,
-            "ClassName": [],
-            "Bbox": [
+            "id": 9,
+            "category": [],
+            "bounding_box": [
                 [
                     199,
                     373
@@ -275,7 +275,7 @@
                     385
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "155"
@@ -283,9 +283,9 @@
             ]
         },
         {
-            "ObjectId": 10,
-            "ClassName": [],
-            "Bbox": [
+            "id": 10,
+            "category": [],
+            "bounding_box": [
                 [
                     250,
                     428
@@ -303,7 +303,7 @@
                     436
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "사회자 실재 떡뉴는 다를 수 '있습'"

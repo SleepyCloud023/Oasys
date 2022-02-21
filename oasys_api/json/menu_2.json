@@ -1,11 +1,11 @@
 {
-    "ClassList": [],
-    "TagList": [],
-    "ObjectList": [
+    "categories": [],
+    "tag_list": [],
+    "box_object_list": [
         {
-            "ObjectId": 0,
-            "ClassName": [],
-            "Bbox": [
+            "id": 0,
+            "category": [],
+            "bounding_box": [
                 [
                     25,
                     77
@@ -23,7 +23,7 @@
                     93
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "이하수"
@@ -31,9 +31,9 @@
             ]
         },
         {
-            "ObjectId": 1,
-            "ClassName": [],
-            "Bbox": [
+            "id": 1,
+            "category": [],
+            "bounding_box": [
                 [
                     191,
                     89
@@ -51,7 +51,7 @@
                     103
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "드 Special Menu 특별에뉴"
@@ -59,9 +59,9 @@
             ]
         },
         {
-            "ObjectId": 2,
-            "ClassName": [],
-            "Bbox": [
+            "id": 2,
+            "category": [],
+            "bounding_box": [
                 [
                     207,
                     125
@@ -79,7 +79,7 @@
                     145
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "모듬 수육 전골"
@@ -87,9 +87,9 @@
             ]
         },
         {
-            "ObjectId": 3,
-            "ClassName": [],
-            "Bbox": [
+            "id": 3,
+            "category": [],
+            "bounding_box": [
                 [
                     271,
                     175
@@ -107,7 +107,7 @@
                     187
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "38,000"
@@ -115,9 +115,9 @@
             ]
         },
         {
-            "ObjectId": 4,
-            "ClassName": [],
-            "Bbox": [
+            "id": 4,
+            "category": [],
+            "bounding_box": [
                 [
                     222,
                     176
@@ -135,7 +135,7 @@
                     184
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "32.000"
@@ -143,9 +143,9 @@
             ]
         },
         {
-            "ObjectId": 5,
-            "ClassName": [],
-            "Bbox": [
+            "id": 5,
+            "category": [],
+            "bounding_box": [
                 [
                     109,
                     215
@@ -163,7 +163,7 @@
                     227
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "양지 옥개장 전골"
@@ -171,9 +171,9 @@
             ]
         },
         {
-            "ObjectId": 6,
-            "ClassName": [],
-            "Bbox": [
+            "id": 6,
+            "category": [],
+            "bounding_box": [
                 [
                     255,
                     215
@@ -191,7 +191,7 @@
                     227
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "전부 보쌈"
@@ -199,9 +199,9 @@
             ]
         },
         {
-            "ObjectId": 7,
-            "ClassName": [],
-            "Bbox": [
+            "id": 7,
+            "category": [],
+            "bounding_box": [
                 [
                     112,
                     246
@@ -219,7 +219,7 @@
                     252
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": ">.372.0C0"
@@ -227,9 +227,9 @@
             ]
         },
         {
-            "ObjectId": 8,
-            "ClassName": [],
-            "Bbox": [
+            "id": 8,
+            "category": [],
+            "bounding_box": [
                 [
                     97,
                     321
@@ -247,7 +247,7 @@
                     335
                 ]
             ],
-            "Extra": [
+            "extra": [
                 {
                     "key": "text",
                     "value": "거복수는 모든 예뉴를 징성껏 포함해 드합니다."

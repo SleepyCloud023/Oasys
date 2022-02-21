@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BoxObject, ExtraInfo } from '../types';
+import { BoxObject, ExtraInfoPair } from '../types';
 import {
   Chip,
   Divider,
@@ -27,14 +27,14 @@ const StyledListItemText = styled(ListItemText)`
 
 export function BoxListItem(boxObject: BoxObject, index: number) {
   // const [hover, setHover] = useState(false);
-  const { ObjectId, ClassName, Bbox } = boxObject;
+  const { id, category, bounding_box } = boxObject;
 
   const optionalDivider = index > 0 && <Divider light />;
-  const numberChip = <Chip label={ObjectId} size={'small'} />;
+  const numberChip = <Chip label={id} size={'small'} />;
   const textMainInfo = (
     <StyledListItemText
       primary={`
-  ${'Class: '}${ClassName.length > 0 ? ClassName : '[]'}
+  ${'Class: '}${category.length > 0 ? category : '[]'}
   `}
     />
   );

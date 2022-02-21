@@ -12,7 +12,7 @@ import {
   TooltipProps,
   CardProps,
 } from '@mui/material';
-import { BoxObject, Point } from '../types';
+import { BoxObject, PointXY } from '../types';
 import { styled } from '@mui/system';
 
 const StyledTooltip = styled(({ className, ...props }: TooltipProps) => (
@@ -63,7 +63,7 @@ type PropsBoxTooltip = {
 };
 
 export function BoxTooltip({ boxObject, ...props }: PropsBoxTooltip) {
-  const { ObjectId, ClassName, Bbox, Extra } = boxObject;
+  const { id, category, bounding_box, extra } = boxObject;
   const propertyLabel = (label: string) => (
     <Chip
       label={label}
@@ -82,7 +82,7 @@ export function BoxTooltip({ boxObject, ...props }: PropsBoxTooltip) {
       <StyledCardHeader
         avatar={
           <Chip
-            label={ObjectId}
+            label={id}
             size="small"
             sx={{ background: (theme) => theme.palette.secondary.light }}
           />
@@ -93,15 +93,17 @@ export function BoxTooltip({ boxObject, ...props }: PropsBoxTooltip) {
       <StyledCardContent>
         <Typography variant="body2">
           {propertyLabel('Class')}
-          {ClassName.length > 0 ? ClassName.join() : '[]'}
+          {category.length > 0 ? category.join() : '[]'}
         </Typography>
         <Typography variant="body2">
           {propertyLabel('Points')}
-          {Bbox.map((point: Point) => `(${point.toString()})`).join(',')}
+          {bounding_box
+            .map((point: PointXY) => `(${point.toString()})`)
+            .join(',')}
         </Typography>
         <Typography variant="body2">
           {propertyLabel('Extra')}
-          {Extra.map(({ key, value }) => `${key}: ${value}`)}
+          {extra.map(({ key, value }) => `${key}: ${value}`)}
         </Typography>
       </StyledCardContent>
     </StyledCard>
