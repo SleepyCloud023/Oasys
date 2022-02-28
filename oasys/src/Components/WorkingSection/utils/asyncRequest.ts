@@ -1,9 +1,24 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import { MouseMode, WorkState } from '../types';
+import {
+  BoxObject,
+  MouseMode,
+  WorkState,
+  ImageMetaDataResponse,
+} from '../types';
 
 const serverURL = `http://35.197.111.137:5000`;
 // const proxyURL = '';
-const imageURL404 = 'img/test_image.jpg';
+const errorImageInfo = {
+  imageURL: 'img/test_image.jpg',
+  imageName: 'File Not Found',
+  imageSize: '',
+};
+const errorAnnotation = {
+  box_object_list: [],
+  categories: [],
+  tag_list: [],
+};
+let errorStatusText = 'Cannot Parse Http Status Code';
 
 function getImageInfo(imageID: number): Promise<WorkState> {
   const imageURL = `${serverURL}/image_info/${imageID}`;
@@ -12,36 +27,26 @@ function getImageInfo(imageID: number): Promise<WorkState> {
     .get(imageURL)
     .then((response: AxiosResponse) => {
       const { statusText } = response;
-      const { imageURL, imageName, imageSize, annotation } = response.data;
-      const { categories, tag_list, box_object_list } = annotation;
-      const objectListLength = categories.length;
+      const { annotation, ...imageInfo }: ImageMetaDataResponse = response.data;
+      const selectedBoxObjectList: Array<BoxObject> = [];
       return {
         mouseMode,
         statusText,
-        imageURL,
-        imageName,
-        imageSize,
-        objectListLength,
-        box_object_list,
-        categories,
-        tag_list,
+        ...imageInfo,
+        ...annotation,
+        selectedBoxObjectList,
       };
     })
     .catch((error: AxiosError) => {
-      let statusError = 'Cannot Parse Http Status Code';
       if (axios.isAxiosError(error) && error.response) {
-        statusError = error.response.statusText;
+        errorStatusText = error.response.statusText;
       }
       return {
         mouseMode,
-        statusText: statusError,
-        imageURL: imageURL404,
-        imageName: 'File Not Found',
-        imageSize: '',
-        objectListLength: 0,
-        box_object_list: [],
-        categories: [],
-        tag_list: [],
+        statusText: errorStatusText,
+        ...errorImageInfo,
+        ...errorAnnotation,
+        selectedBoxObjectList: [],
       };
     });
   return imagePromise;

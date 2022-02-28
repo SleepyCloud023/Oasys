@@ -11,7 +11,9 @@ import {
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Box, { BoxProps } from '@mui/system/Box/Box';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
+import AddForm from './AddForm';
 
 type SectionProps = {
   readonly upperFixed?: boolean;
@@ -37,13 +39,15 @@ const StyledToggleSection = (props: SectionProps & BoxProps) => {
   );
 };
 
-const StyledToggleList = (props: AccordionProps) => (
-  <Accordion
-    disableGutters
-    defaultExpanded
-    sx={{ backgroundColor: 'transparent' }}
-    {...props}
-  />
+const StyledToggleList = styled((props: AccordionProps) => (
+  <Accordion disableGutters defaultExpanded {...props} />
+))(
+  ({ theme }) => css`
+    background-color: transparent;
+    /* & .MuiAccordionSummary-expandIconWrapper.Mui-expanded {
+      transform: rotate(90deg);
+    } */
+  `,
 );
 
 const StyledToggleCover = styled(AccordionSummary)(
@@ -56,12 +60,15 @@ const StyledToggleCover = styled(AccordionSummary)(
     font-style: italic;
     font-size: 1rem;
     margin: 0;
-    padding: 1px 6px;
+    padding: 0 6px;
     align-items: center;
     /* 커버 상단 고정 */
     position: sticky;
     top: 0;
     z-index: 1;
+    & .MuiAccordionSummary-content {
+      margin: 6px 0;
+    }
   `,
 );
 
@@ -86,17 +93,32 @@ function ToggleList<T>({
   addButton,
   onAddButton: onAddClick,
 }: PropsToggleList<T>) {
+  const [activateForm, setActivateForm] = useState(false);
+
   const optinalAddButton = addButton && (
-    <IconButton onClick={onAddClick} sx={{ padding: 0, marginLeft: 'auto' }}>
-      <AddCircleOutlineIcon fontSize="small" />
+    <IconButton
+      onClick={() => setActivateForm(!activateForm)}
+      sx={{ padding: 0, marginLeft: 'auto' }}
+    >
+      {activateForm ? (
+        <RemoveIcon fontSize="small" />
+      ) : (
+        <AddIcon fontSize="small" />
+      )}
     </IconButton>
   );
+
   const listCover = (
     <StyledToggleCover expandIcon={<ExpandMoreIcon />}>
       {title}
       {optinalAddButton}
     </StyledToggleCover>
   );
+
+  const optionalAddForm = addButton ? (
+    <AddForm title={title} activateForm={activateForm} />
+  ) : null;
+
   const listContent = (
     <StyledToggleContent>
       {contentList.map((content, index) => ListItemGenerator(content, index))}
@@ -107,6 +129,7 @@ function ToggleList<T>({
     <StyledToggleSection expandRatio={expandRatio} upperFixed={upperFixed}>
       <StyledToggleList aria-controls={`${title} object list`}>
         {listCover}
+        {optionalAddForm}
         {listContent}
       </StyledToggleList>
     </StyledToggleSection>

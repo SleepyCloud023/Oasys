@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { BoxObject, ExtraInfoPair } from '../types';
+import { BoxObject } from '../types';
 import {
   Chip,
   Divider,
   IconButton,
   ListItem,
   ListItemText,
-  Tooltip,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import _ from 'lodash';
@@ -17,23 +16,23 @@ const StyledListItemContainer = styled(ListItem)`
   background-color: white;
   border: 1px solid ${({ theme }) => theme.palette.divider};
   border-radius: 3px;
-  font-size: 0.75rem;
   padding: 4px 8px;
 `;
 
 const StyledListItemText = styled(ListItemText)`
   margin: auto 6px;
+  font-size: 0.8rem;
 `;
 
 export function BoxListItem(boxObject: BoxObject, index: number) {
   // const [hover, setHover] = useState(false);
-  const { id, category, bounding_box } = boxObject;
+  const { id, category } = boxObject;
 
   const optionalDivider = index > 0 && <Divider light />;
   const numberChip = <Chip label={id} size={'small'} />;
   const textMainInfo = (
     <StyledListItemText
-      primary={`
+      secondary={`
   ${'Class: '}${category.length > 0 ? category : '[]'}
   `}
     />
@@ -55,8 +54,16 @@ export function BoxListItem(boxObject: BoxObject, index: number) {
 }
 
 export function ClassListItem(className: string, index: number) {
-  const content = `[${index}]: ${className}`;
-  return content;
+  const optionalDivider = index > 0 && <Divider light />;
+  const numberChip = <Chip label={index} size={'small'} />;
+  const textMainInfo = <StyledListItemText secondary={className} />;
+  return (
+    <StyledListItemContainer key={index}>
+      {optionalDivider}
+      {numberChip}
+      {textMainInfo}
+    </StyledListItemContainer>
+  );
 }
 
 export function TagListItem(tagName: string, index: number) {

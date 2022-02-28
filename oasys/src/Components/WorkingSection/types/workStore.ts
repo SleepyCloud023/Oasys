@@ -5,7 +5,6 @@ export type MouseMode = 'MOVE' | 'BOX' | 'POLYGON';
 export type PointXY = [number, number];
 export type BoundingBox = [lt: PointXY, rt: PointXY, rb: PointXY, lb: PointXY];
 
-// TODO: JSON 파일과 함께 구조 수정
 export type ExtraInfoPair = {
   key: string;
   value: string;
@@ -18,17 +17,25 @@ export type BoxObject = {
   extra: Array<ExtraInfoPair>;
 };
 
-export type WorkState = {
-  mouseMode: MouseMode;
-  statusText: string;
-  imageURL: string;
-  imageName: string;
-  imageSize: string;
-  objectListLength: number;
+export type Annotation = {
   box_object_list: Array<BoxObject>;
+  // TODO: key name => category_list으로 변경하면 어떨지 판단
   categories: Array<string>;
   tag_list: Array<string>;
 };
+
+export type ImageInfo = {
+  imageName: string;
+  imageURL: string;
+  imageSize: string;
+};
+
+export type WorkState = {
+  mouseMode: MouseMode;
+  statusText: string;
+  selectedBoxObjectList: Array<BoxObject>;
+} & Annotation &
+  ImageInfo;
 
 // 아래 두가지는 다르다.
 // reducer에서 Union type에 대한 Narrowing(추론)을 가능하게 한다.
@@ -48,8 +55,23 @@ type ACTION_ADD_OBJECT = {
   type: 'ADD_OBJECT';
   newPoint: BoundingBox;
 };
+type ACTION_ADD_CATEGORY = {
+  type: 'ADD_CATEGORY';
+  newCategory: string;
+};
+type ACTION_ADD_TAG = {
+  type: 'ADD_TAG';
+  newTag: string;
+};
+type ACTION_UPDATE_SELECTED = {
+  type: 'UPDATE_SELECTED';
+  newSelected: Array<BoxObject>;
+};
 
 export type ACTION =
   | ACTION_CHANGE_MOUSEMODE
   | ACTION_INIT_STATE
-  | ACTION_ADD_OBJECT;
+  | ACTION_ADD_OBJECT
+  | ACTION_ADD_CATEGORY
+  | ACTION_ADD_TAG
+  | ACTION_UPDATE_SELECTED;
