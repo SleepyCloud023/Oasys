@@ -2,6 +2,7 @@ from flask import Flask
 from flask import jsonify
 from flask_cors import CORS, cross_origin
 import sqlalchemy as db
+from sqlalchemy import text
 import json
 
 # flask app
@@ -19,6 +20,11 @@ db_config = {
 }
 DB_URL = f"mysql+mysqlconnector://{db_config['user']}:{db_config['password']}@{db_config['host']}:{db_config['port']}/{db_config['database']}?charset=utf8"
 
+# db connect
+engine = db.create_engine(DB_URL, encoding='utf-8', max_overflow=0)
+connection = engine.connect()
+metadata = db.MetaData()
+
 
 @app.route('/')
 def hello_oasys():
@@ -35,11 +41,6 @@ def get_object(id):
     Returns:
         _type_: _description_
     """
-
-    # db connect
-    engine = db.create_engine(DB_URL, encoding='utf-8', max_overflow=0)
-    connection = engine.connect()
-    metadata = db.MetaData()
 
     # make query object
     table = db.Table('annotation_object', metadata,
@@ -75,11 +76,6 @@ def get_dataset(id):
         _type_: _description_
     """
 
-    # db connect
-    engine = db.create_engine(DB_URL, encoding='utf-8', max_overflow=0)
-    connection = engine.connect()
-    metadata = db.MetaData()
-
     # *** make result json format ***
     result_json = {"datasetName": "", "objects": []}
 
@@ -113,6 +109,33 @@ def get_dataset(id):
 
     # http response : application/json
     return jsonify(result_json)
+
+
+@app.route('/user/<id>', methods=['GET'])
+def get_user(id):
+    """_summary_
+
+    Args:
+        id (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
+
+    # *** make result json format ***
+    result_json = {"userName": "default", "dataset": []}
+
+    # make query object
+    table = db.Table('dataset', metadata,
+                     autoload=True, autoload_with=engine)
+    query = db.select([table])
+    # execute query
+    result_proxy = connection.execute(query)
+    result_set = result_proxy.fetchall()
+    result_list = [dict(row) for row in result_set]
+
+    # http response : application/json
+    return jsonify(result_list)
 
 
 if __name__ == '__main__':
