@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BoxObject } from '../types';
+import { ACTION, BoxObject } from '../types';
 import {
   Chip,
   Divider,
@@ -8,7 +8,6 @@ import {
   ListItemText,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import _ from 'lodash';
 import { BoxTooltip } from './ItemTooltip';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 
@@ -27,7 +26,21 @@ const StyledListItemText = styled(ListItemText)`
   font-size: 0.8rem;
 `;
 
-export function BoxListItem(boxObject: BoxObject, index: number) {
+const onSelect: (
+  newSelected: Set<number> | string,
+  dispatch: React.Dispatch<ACTION>,
+) => React.MouseEventHandler<HTMLLIElement> = (newSelected, dispatch) => (e) => {
+  dispatch({
+    type: 'UPDATE_SELECTED',
+    newSelected,
+  });
+};
+
+export function BoxListItem(
+  boxObject: BoxObject,
+  index: number,
+  dispatch: React.Dispatch<ACTION>,
+) {
   const { id, category } = boxObject;
 
   const optionalDivider = index > 0 && <Divider light />;
@@ -45,8 +58,13 @@ export function BoxListItem(boxObject: BoxObject, index: number) {
     </IconButton>
   );
 
+  const newSelected = new Set<number>([id]);
+
   return (
-    <StyledListItemContainer key={index}>
+    <StyledListItemContainer
+      key={index}
+      onClick={onSelect(newSelected, dispatch)}
+    >
       {optionalDivider}
       {numberChip}
       {textMainInfo}
@@ -55,12 +73,20 @@ export function BoxListItem(boxObject: BoxObject, index: number) {
   );
 }
 
-export function ClassListItem(className: string, index: number) {
+export function ClassListItem(
+  className: string,
+  index: number,
+  dispatch: React.Dispatch<ACTION>,
+) {
   const optionalDivider = index > 0 && <Divider light />;
   const numberChip = <Chip label={index} size={'small'} />;
   const textClassName = <StyledListItemText secondary={className} />;
+
   return (
-    <StyledListItemContainer key={index}>
+    <StyledListItemContainer
+      key={index}
+      onClick={onSelect(className, dispatch)}
+    >
       {optionalDivider}
       {numberChip}
       {textClassName}
@@ -68,12 +94,17 @@ export function ClassListItem(className: string, index: number) {
   );
 }
 
-export function TagListItem(tagName: string, index: number) {
+export function TagListItem(
+  tagName: string,
+  index: number,
+  dispatch: React.Dispatch<ACTION>,
+) {
   const optionalDivider = index > 0 && <Divider light />;
   const numberChip = <Chip label={index} size={'small'} />;
   const textTagName = <StyledListItemText secondary={tagName} />;
+
   return (
-    <StyledListItemContainer key={index}>
+    <StyledListItemContainer key={index} onClick={onSelect(tagName, dispatch)}>
       {optionalDivider}
       {numberChip}
       {textTagName}

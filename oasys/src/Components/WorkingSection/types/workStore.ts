@@ -65,7 +65,7 @@ type ACTION_ADD_TAG = {
 };
 type ACTION_UPDATE_SELECTED = {
   type: 'UPDATE_SELECTED';
-  newSelected: Set<number>;
+  newSelected: Set<number> | string;
 };
 
 export type ACTION =

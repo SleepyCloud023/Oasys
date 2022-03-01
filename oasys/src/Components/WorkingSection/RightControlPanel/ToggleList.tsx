@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   Accordion,
   AccordionDetails,
@@ -14,12 +14,13 @@ import Box, { BoxProps } from '@mui/system/Box/Box';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddForm from './AddForm';
+import { WorkStore } from '../WorkingSection';
+import { ACTION } from '../types';
 
 type SectionProps = {
   readonly upperFixed?: boolean;
   readonly expandRatio?: number;
   readonly addButton?: boolean;
-  readonly onAddButton?: React.MouseEventHandler<HTMLButtonElement>;
 };
 
 const StyledToggleSection = (props: SectionProps & BoxProps) => {
@@ -77,7 +78,11 @@ const StyledToggleContent = styled(AccordionDetails)(({ theme }) => ({
   padding: '0',
 }));
 
-type Extractor<T> = (content: T, index: number) => string | React.ReactNode;
+type Extractor<T> = (
+  content: T,
+  index: number,
+  workDispatch: React.Dispatch<ACTION>,
+) => string | React.ReactNode;
 
 type PropsToggleList<T> = {
   readonly title: string;
@@ -92,9 +97,12 @@ function ToggleList<T>({
   expandRatio,
   upperFixed,
   addButton,
-  onAddButton: onAddClick,
 }: PropsToggleList<T>) {
   const [activateForm, setActivateForm] = useState(false);
+  const notNullStore = useContext(WorkStore);
+  if (notNullStore === null) return null;
+
+  const [, workDispatch] = notNullStore;
 
   const optinalAddButton = addButton && (
     <IconButton
@@ -122,7 +130,9 @@ function ToggleList<T>({
 
   const listContent = (
     <StyledToggleContent>
-      {contentList.map((content, index) => ListItemGenerator(content, index))}
+      {contentList.map((content, index) =>
+        ListItemGenerator(content, index, workDispatch),
+      )}
     </StyledToggleContent>
   );
 

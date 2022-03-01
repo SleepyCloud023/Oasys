@@ -1,10 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import {
-  BoxObject,
-  MouseMode,
-  WorkState,
-  ImageMetaDataResponse,
-} from '../types';
+import { MouseMode, WorkState, ImageMetaDataResponse } from '../types';
 
 const serverURL = `http://35.197.111.137:5000`;
 // const proxyURL = '';
@@ -33,7 +28,7 @@ function getImageInfo(imageID: number): Promise<WorkState> {
         statusText,
         ...imageInfo,
         ...annotation,
-        selectedBoxList : new Set<number>(),
+        selectedBoxList: new Set<number>(),
       };
     })
     .catch((error: AxiosError) => {

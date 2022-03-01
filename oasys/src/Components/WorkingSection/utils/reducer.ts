@@ -32,7 +32,18 @@ function reducer(state: WorkState, action: ACTION): WorkState {
     case 'ADD_TAG':
       return { ...state, tag_list: [...state.tag_list, action.newTag] };
     case 'UPDATE_SELECTED':
-      return { ...state, selectedBoxList: action.newSelected };
+      if (typeof action.newSelected === 'string') {
+        const selectedBoxSet = new Set<number>(
+          state.box_object_list
+            .filter((boxObject) => {
+              return (action.newSelected as string) in boxObject.category;
+            })
+            .map((boxObject) => boxObject.id),
+        );
+        return { ...state, selectedBoxList: selectedBoxSet };
+      } else {
+        return { ...state, selectedBoxList: action.newSelected };
+      }
 
     default:
       throw new Error('undefined action type: WorkingSection/utils/reducer.ts');

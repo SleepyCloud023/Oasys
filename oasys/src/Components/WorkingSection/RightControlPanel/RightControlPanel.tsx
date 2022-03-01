@@ -48,20 +48,12 @@ function RightControlPanel({ areaPercent }: PropsRightControlPanel) {
         contentList={category_list}
         ListItemGenerator={ClassListItem}
         addButton
-        onAddButton={(event) => {
-          event.stopPropagation();
-          console.log(`add button clicked: `);
-        }}
       />
       <ToggleList<string>
         title={'Tag'}
         contentList={tag_list}
         ListItemGenerator={TagListItem}
         addButton
-        onAddButton={(event) => {
-          event.stopPropagation();
-          console.log(event.currentTarget);
-        }}
       />
     </RightPanel>
   );
