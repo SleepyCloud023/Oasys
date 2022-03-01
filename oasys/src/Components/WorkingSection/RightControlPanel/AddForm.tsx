@@ -6,30 +6,51 @@ import { css, styled } from '@mui/material/styles';
 import { BoxProps } from '@mui/system';
 import { WorkStore } from '../WorkingSection';
 import { ACTION } from '../types';
+import { lighten, darken } from 'polished';
 
 const StyledForm = styled((props: BoxProps) => (
   <Box component="form" noValidate autoComplete="off" {...props} />
 ))(
   ({ theme }) => css`
-    background-color: ${theme.palette.primary.light};
+    background-color: ${theme.palette.background.paper};
+    color: black;
     border-radius: 3px;
+    /* padding: 6px 0; */
+    z-index: 0;
+    display: flex;
+    align-items: center;
     /* & > :not(style) {
       margin: 1;
       width: 25ch;
     } */
+    &:focus {
+      /* background-color: ${darken(0.2, theme.palette.background.paper)}; */
+      background-color: ${darken(0.2, theme.palette.background.paper)};
+    }
   `,
 );
 
 const StyledTextField = styled((props: TextFieldProps) => (
-  <TextField type={'text'} fullWidth size="small" {...props} />
+  <TextField
+    autoFocus
+    variant="outlined"
+    type={'text'}
+    fullWidth
+    size="small"
+    {...props}
+  />
 ))(
   ({ theme }) => css`
     font-size: 0.8rem;
+    & :focus {
+      background-color: ${darken(0.1, theme.palette.background.paper)};
+    }
     /* border-radius: 3px; */
   `,
 );
 
 type PropsAddForm = { title: string; activateForm: boolean };
+
 function AddForm({ title, activateForm }: PropsAddForm) {
   const defaultUserInput = '';
   const [userInput, setUserinput] = React.useState(defaultUserInput);
@@ -64,8 +85,8 @@ function AddForm({ title, activateForm }: PropsAddForm) {
     <StyledForm onSubmit={onSubmit}>
       <StyledTextField
         name={`input-${lowercaseTitle}`}
-        label={`type new ${lowercaseTitle}, press enter`}
-        variant="filled"
+        placeholder={`type new ${lowercaseTitle}, press enter`}
+        // label={`type new ${lowercaseTitle}, press enter`}
         onChange={onChange}
         value={userInput}
       />

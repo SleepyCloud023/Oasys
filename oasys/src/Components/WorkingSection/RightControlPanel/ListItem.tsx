@@ -17,6 +17,9 @@ const StyledListItemContainer = styled(ListItem)`
   border: 1px solid ${({ theme }) => theme.palette.divider};
   border-radius: 3px;
   padding: 4px 8px;
+  &:hover {
+    background-color: ${({ theme }) => theme.palette.info.light};
+  }
 `;
 
 const StyledListItemText = styled(ListItemText)`
@@ -25,7 +28,6 @@ const StyledListItemText = styled(ListItemText)`
 `;
 
 export function BoxListItem(boxObject: BoxObject, index: number) {
-  // const [hover, setHover] = useState(false);
   const { id, category } = boxObject;
 
   const optionalDivider = index > 0 && <Divider light />;
@@ -39,7 +41,7 @@ export function BoxListItem(boxObject: BoxObject, index: number) {
   );
   const detailsIcon = (
     <IconButton sx={{ padding: 0, marginLeft: 'auto' }}>
-      <ZoomInIcon />
+      <ZoomInIcon fontSize="small" />
     </IconButton>
   );
 
@@ -56,17 +58,25 @@ export function BoxListItem(boxObject: BoxObject, index: number) {
 export function ClassListItem(className: string, index: number) {
   const optionalDivider = index > 0 && <Divider light />;
   const numberChip = <Chip label={index} size={'small'} />;
-  const textMainInfo = <StyledListItemText secondary={className} />;
+  const textClassName = <StyledListItemText secondary={className} />;
   return (
     <StyledListItemContainer key={index}>
       {optionalDivider}
       {numberChip}
-      {textMainInfo}
+      {textClassName}
     </StyledListItemContainer>
   );
 }
 
 export function TagListItem(tagName: string, index: number) {
-  const content = `[${index}]: ${tagName}`;
-  return content;
+  const optionalDivider = index > 0 && <Divider light />;
+  const numberChip = <Chip label={index} size={'small'} />;
+  const textTagName = <StyledListItemText secondary={tagName} />;
+  return (
+    <StyledListItemContainer key={index}>
+      {optionalDivider}
+      {numberChip}
+      {textTagName}
+    </StyledListItemContainer>
+  );
 }

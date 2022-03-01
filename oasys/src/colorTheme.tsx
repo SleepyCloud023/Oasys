@@ -13,7 +13,12 @@ export const appTheme = createTheme({
     },
     background: {
       default: 'white',
-      paper: '#e1f5fe',
+      paper: '#eeeeee',
+    },
+    info: {
+      main: '#a5d6a7',
+      light: '#d7ffd9',
+      dark: '#75a478',
     },
   },
 });

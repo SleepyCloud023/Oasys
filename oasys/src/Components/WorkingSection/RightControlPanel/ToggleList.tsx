@@ -65,7 +65,8 @@ const StyledToggleCover = styled(AccordionSummary)(
     /* 커버 상단 고정 */
     position: sticky;
     top: 0;
-    z-index: 1;
+    /* NOTE: MuiInputLabel의 css속성 중 z-index: 1이 설정되어 있다 */
+    z-index: 10;
     & .MuiAccordionSummary-content {
       margin: 6px 0;
     }
