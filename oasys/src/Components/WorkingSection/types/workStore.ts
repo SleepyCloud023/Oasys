@@ -33,7 +33,7 @@ export type ImageInfo = {
 export type WorkState = {
   mouseMode: MouseMode;
   statusText: string;
-  selectedBoxObjectList: Array<BoxObject>;
+  selectedBoxList: Set<number>;
 } & Annotation &
   ImageInfo;
 
@@ -65,7 +65,7 @@ type ACTION_ADD_TAG = {
 };
 type ACTION_UPDATE_SELECTED = {
   type: 'UPDATE_SELECTED';
-  newSelected: Array<BoxObject>;
+  newSelected: Set<number>;
 };
 
 export type ACTION =

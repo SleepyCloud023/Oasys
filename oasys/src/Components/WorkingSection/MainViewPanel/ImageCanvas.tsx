@@ -37,8 +37,13 @@ function ImageCanvas({ boxes, imageURL, canvasState }: PropsImageCanvas) {
 
   const boxElements = boxes.map((objects, index) => {
     const points_ = PointToString(objects);
+    let color_= 'green'
 
-    return <Box points={points_} key={`customId${index}`} />;
+    if (workState.selectedBoxList.has(index)){
+      color_='red';
+    }
+
+    return <Box points={points_} key={`customId${index}`} color={color_}/>;
   });
 
   return (

@@ -27,12 +27,12 @@ function reducer(state: WorkState, action: ACTION): WorkState {
     case 'ADD_CATEGORY':
       return {
         ...state,
-        categories: [...state.categories, action.newCategory],
+        category_list: [...state.category_list, action.newCategory],
       };
     case 'ADD_TAG':
       return { ...state, tag_list: [...state.tag_list, action.newTag] };
     case 'UPDATE_SELECTED':
-      return { ...state, selectedBoxObjectList: action.newSelected };
+      return { ...state, selectedBoxList: action.newSelected };
 
     default:
       throw new Error('undefined action type: WorkingSection/utils/reducer.ts');

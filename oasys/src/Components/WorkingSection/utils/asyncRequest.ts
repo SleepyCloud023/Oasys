@@ -28,13 +28,12 @@ function getImageInfo(imageID: number): Promise<WorkState> {
     .then((response: AxiosResponse) => {
       const { statusText } = response;
       const { annotation, ...imageInfo }: ImageMetaDataResponse = response.data;
-      const selectedBoxObjectList: Array<BoxObject> = [];
       return {
         mouseMode,
         statusText,
         ...imageInfo,
         ...annotation,
-        selectedBoxObjectList,
+        selectedBoxList : new Set<number>(),
       };
     })
     .catch((error: AxiosError) => {
@@ -46,7 +45,7 @@ function getImageInfo(imageID: number): Promise<WorkState> {
         statusText: errorStatusText,
         ...errorImageInfo,
         ...errorAnnotation,
-        selectedBoxObjectList: [],
+        selectedBoxList: new Set<number>(),
       };
     });
   return imagePromise;
