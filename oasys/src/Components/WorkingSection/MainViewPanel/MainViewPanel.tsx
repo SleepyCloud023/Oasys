@@ -97,8 +97,11 @@ function MainViewCanvas({ areaPercent }: PropsMainViewPanel) {
       </MainViewUtil>
 
       <MainViewSvg
+        onContextMenu={(e: React.MouseEvent<SVGSVGElement>)=>{
+          e.preventDefault();
+        }}
         onMouseDown={(e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
-          if (workState.mouseMode == 'MOVE') {
+          if (e.nativeEvent.which==3) {
             canvasDispatch({
               type: 'CANVAS_IMAGEDRAG',
               flag: 'down',
@@ -108,7 +111,7 @@ function MainViewCanvas({ areaPercent }: PropsMainViewPanel) {
           }
         }}
         onMouseMove={(e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
-          if (workState.mouseMode == 'MOVE' && canvasState.imgDragEvent['on']) {
+          if (e.nativeEvent.which==3 && canvasState.imgDragEvent['on']) {
             canvasDispatch({
               type: 'CANVAS_IMAGEDRAG',
               flag: 'move',
@@ -118,7 +121,7 @@ function MainViewCanvas({ areaPercent }: PropsMainViewPanel) {
           }
         }}
         onMouseUp={(e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
-          if (workState.mouseMode == 'MOVE') {
+          if (e.nativeEvent.which==3) {
             canvasDispatch({
               type: 'CANVAS_IMAGEDRAG',
               flag: 'up',
