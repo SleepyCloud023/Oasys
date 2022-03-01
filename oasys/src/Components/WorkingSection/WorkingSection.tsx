@@ -27,7 +27,7 @@ const preLoading: WorkState = {
   imageSize: '340 453',
   box_object_list: [],
   selectedBoxObjectList: [],
-  categories: [],
+  category_list: [],
   tag_list: [],
 };
 

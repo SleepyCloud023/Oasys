@@ -6,7 +6,7 @@ import { css, styled } from '@mui/material/styles';
 import { BoxProps } from '@mui/system';
 import { WorkStore } from '../WorkingSection';
 import { ACTION } from '../types';
-import { lighten, darken } from 'polished';
+import { darken } from 'polished';
 
 const StyledForm = styled((props: BoxProps) => (
   <Box component="form" noValidate autoComplete="off" {...props} />
@@ -51,6 +51,8 @@ const StyledTextField = styled((props: TextFieldProps) => (
 
 type PropsAddForm = { title: string; activateForm: boolean };
 
+// TODO: 리팩토링 해야함!
+// 특히 사용자 입력 폼을 재사용한 컴포넌트로 전환
 function AddForm({ title, activateForm }: PropsAddForm) {
   const defaultUserInput = '';
   const [userInput, setUserinput] = React.useState(defaultUserInput);
@@ -71,6 +73,7 @@ function AddForm({ title, activateForm }: PropsAddForm) {
           type: 'ADD_CATEGORY',
           newCategory: userInput,
         };
+
   const onSubmit: React.FormEventHandler<HTMLDivElement> = (event) => {
     event.preventDefault();
     setUserinput(defaultUserInput);

@@ -15,7 +15,7 @@ const errorImageInfo = {
 };
 const errorAnnotation = {
   box_object_list: [],
-  categories: [],
+  category_list: [],
   tag_list: [],
 };
 let errorStatusText = 'Cannot Parse Http Status Code';

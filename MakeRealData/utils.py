@@ -21,7 +21,7 @@ def make_target_JSON(idx, classes, vertices, content_text):
 
 def pororo_to_json(pororo_result):
     result_DICT = {
-        "categories": [],
+        "category_list": [],
         "tag_list": [],
         "box_object_list": []
     }
