@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import ToggleList from './ToggleList';
 import { BoxObject } from '../types';
 import { WorkStore } from '../WorkingSection';
-import { BoxListItem, ClassListItem, TagListItem } from './ListItem';
+import { BoxListItem, CategoryListItem, TagListItem } from './ListItem';
 
 type PropsRightControlPanel = {
   readonly areaPercent?: number;
@@ -46,7 +46,7 @@ function RightControlPanel({ areaPercent }: PropsRightControlPanel) {
       <ToggleList<string>
         title={'Class'}
         contentList={category_list}
-        ListItemGenerator={ClassListItem}
+        ListItemGenerator={CategoryListItem}
         addButton
       />
       <ToggleList<string>

@@ -11,8 +11,12 @@ import { styled } from '@mui/material/styles';
 import { BoxTooltip } from './ItemTooltip';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 
-const StyledListItemContainer = styled(ListItem)`
+type ListItemContainerProps = { readonly isSelected: boolean };
+
+const StyledListItemContainer = styled(ListItem)<ListItemContainerProps>`
   background-color: white;
+  background-color: ${({ isSelected, theme }) =>
+    isSelected ? theme.palette.info.main : theme.palette.info.light};
   border: 1px solid ${({ theme }) => theme.palette.divider};
   border-radius: 3px;
   padding: 4px 8px;
@@ -29,18 +33,29 @@ const StyledListItemText = styled(ListItemText)`
 const onSelect: (
   newSelected: Set<number> | string,
   dispatch: React.Dispatch<ACTION>,
-) => React.MouseEventHandler<HTMLLIElement> = (newSelected, dispatch) => (e) => {
+) => React.MouseEventHandler<HTMLLIElement> = (newSelected, dispatch) => () => {
   dispatch({
     type: 'UPDATE_SELECTED',
     newSelected,
   });
 };
 
-export function BoxListItem(
-  boxObject: BoxObject,
-  index: number,
-  dispatch: React.Dispatch<ACTION>,
-) {
+type ListItemProps = {
+  readonly index: number;
+  readonly dispatch: React.Dispatch<ACTION>;
+  readonly isSelected: boolean;
+};
+
+type BoxListItemProps = ListItemProps & {
+  readonly content: BoxObject;
+};
+
+export function BoxListItem({
+  content: boxObject,
+  index,
+  dispatch,
+  isSelected,
+}: BoxListItemProps) {
   const { id, category } = boxObject;
 
   const optionalDivider = index > 0 && <Divider light />;
@@ -48,7 +63,7 @@ export function BoxListItem(
   const textMainInfo = (
     <StyledListItemText
       secondary={`
-  ${'Class: '}${category.length > 0 ? category : '[]'}
+  ${category.length > 0 ? category.join(',') : 'X'}
   `}
     />
   );
@@ -62,8 +77,8 @@ export function BoxListItem(
 
   return (
     <StyledListItemContainer
-      key={index}
       onClick={onSelect(newSelected, dispatch)}
+      isSelected={isSelected}
     >
       {optionalDivider}
       {numberChip}
@@ -73,18 +88,23 @@ export function BoxListItem(
   );
 }
 
-export function ClassListItem(
-  className: string,
-  index: number,
-  dispatch: React.Dispatch<ACTION>,
-) {
+type CategoryListItemProps = ListItemProps & {
+  readonly content: string;
+};
+
+export function CategoryListItem({
+  content: className,
+  index,
+  dispatch,
+  isSelected,
+}: CategoryListItemProps) {
   const optionalDivider = index > 0 && <Divider light />;
   const numberChip = <Chip label={index} size={'small'} />;
   const textClassName = <StyledListItemText secondary={className} />;
 
   return (
     <StyledListItemContainer
-      key={index}
+      isSelected={isSelected}
       onClick={onSelect(className, dispatch)}
     >
       {optionalDivider}
@@ -94,17 +114,25 @@ export function ClassListItem(
   );
 }
 
-export function TagListItem(
-  tagName: string,
-  index: number,
-  dispatch: React.Dispatch<ACTION>,
-) {
+type TagListItemProps = ListItemProps & {
+  readonly content: string;
+};
+
+export function TagListItem({
+  content: tagName,
+  index,
+  dispatch,
+  isSelected,
+}: TagListItemProps) {
   const optionalDivider = index > 0 && <Divider light />;
   const numberChip = <Chip label={index} size={'small'} />;
   const textTagName = <StyledListItemText secondary={tagName} />;
 
   return (
-    <StyledListItemContainer key={index} onClick={onSelect(tagName, dispatch)}>
+    <StyledListItemContainer
+      onClick={onSelect(tagName, dispatch)}
+      isSelected={isSelected}
+    >
       {optionalDivider}
       {numberChip}
       {textTagName}

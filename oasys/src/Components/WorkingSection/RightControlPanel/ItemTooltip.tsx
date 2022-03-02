@@ -93,7 +93,7 @@ export function BoxTooltip({ boxObject, ...props }: PropsBoxTooltip) {
       <StyledCardContent>
         <Typography variant="body2">
           {propertyLabel('Class')}
-          {category.length > 0 ? category.join() : '[]'}
+          {category.length > 0 ? category.join(',') : 'X'}
         </Typography>
         <Typography variant="body2">
           {propertyLabel('Points')}

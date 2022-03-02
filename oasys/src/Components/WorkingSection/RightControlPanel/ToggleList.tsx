@@ -36,7 +36,11 @@ const StyledToggleSection = (props: SectionProps & BoxProps) => {
     }
   `;
   return (
-    <StyledToggleBox id={'toggle-section'} component={'section'} {...props} />
+    <StyledToggleBox
+      className={'toggle-section'}
+      component={'section'}
+      {...props}
+    />
   );
 };
 
@@ -78,11 +82,14 @@ const StyledToggleContent = styled(AccordionDetails)(({ theme }) => ({
   padding: '0',
 }));
 
-type Extractor<T> = (
-  content: T,
-  index: number,
-  workDispatch: React.Dispatch<ACTION>,
-) => string | React.ReactNode;
+type ContentProps<T> = {
+  readonly content: T;
+  readonly index: number;
+  readonly dispatch: React.Dispatch<ACTION>;
+  readonly isSelected: boolean;
+};
+
+type Extractor<T> = (props: ContentProps<T>) => React.ReactElement;
 
 type PropsToggleList<T> = {
   readonly title: string;
@@ -102,7 +109,8 @@ function ToggleList<T>({
   const notNullStore = useContext(WorkStore);
   if (notNullStore === null) return null;
 
-  const [, workDispatch] = notNullStore;
+  const [workStore, workDispatch] = notNullStore;
+  const { selectedBoxList } = workStore;
 
   const optinalAddButton = addButton && (
     <IconButton
@@ -128,11 +136,18 @@ function ToggleList<T>({
     <AddForm title={title} activateForm={activateForm} />
   ) : null;
 
+  // TODO: isSelected 판단하는 로직 추가
   const listContent = (
     <StyledToggleContent>
-      {contentList.map((content, index) =>
-        ListItemGenerator(content, index, workDispatch),
-      )}
+      {contentList.map((content, index) => (
+        <ListItemGenerator
+          key={index}
+          content={content}
+          index={index}
+          dispatch={workDispatch}
+          isSelected
+        />
+      ))}
     </StyledToggleContent>
   );
 
