@@ -3,7 +3,7 @@ import { ACTION } from '../../types';
 import { PointToString } from './mainViewUtil';
 import { BoundingBox } from '../../types';
 
-export const onMouseDown = (
+export const boxModeDown = (
   e: React.MouseEvent<SVGSVGElement, MouseEvent>,
   imageCanvasRef: any,
   imageZoomOut: number,
@@ -36,7 +36,7 @@ export const onMouseDown = (
   cBoxMode.current = 'onMouseDown';
 };
 
-export const onMouseMove = (
+export const boxModeMove = (
   e: React.MouseEvent<SVGSVGElement, MouseEvent>,
   imageCanvasRef: any,
   imageZoomOut: number,
@@ -66,7 +66,7 @@ export const onMouseMove = (
   }
 };
 
-export const onMouseUp = (
+export const boxModeUp = (
   e: React.MouseEvent<SVGSVGElement, MouseEvent>,
   imageCanvasRef: any,
   imageZoomOut: number,
