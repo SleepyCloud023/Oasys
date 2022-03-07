@@ -29,7 +29,7 @@ export const boxModeDown = (
   if (cBox.current === null || cBox.current === undefined) {
     return null;
   }
-
+  cBox.current.setAttribute('stroke', '#16c997');
   cBox.current.setAttribute('points', PointToString(cPoint.current));
   cBox.current.setAttribute('stroke-width', '2');
 

@@ -1,24 +1,25 @@
-import {useContext} from 'react';
+import { useContext } from 'react';
+import { useWorkStore } from '../utils';
 import { WorkStore } from '../WorkingSection';
 
 type PropsBox = {
   index: number;
   points: string;
   color: string;
-  boxesRef : React.MutableRefObject<(SVGPolygonElement|null)[]>
+  boxesRef: React.MutableRefObject<(SVGPolygonElement | null)[]>;
 };
 
 function Box({ index, points, color, boxesRef }: PropsBox) {
-  const notNullStore = useContext(WorkStore);
-  if (notNullStore === null) return null;
-  const [workState, workDispatch] = notNullStore;
+  const [workState, workDispatch] = useWorkStore();
 
   const onClick = () => {
-    workDispatch({
-      type: 'UPDATE_SELECTED',
-      newSelected: new Set<number>([index])
-    });
-  }
+    if (workState.mouseMode == 'MOVE') {
+      workDispatch({
+        type: 'UPDATE_SELECTED',
+        newSelected: new Set<number>([index]),
+      });
+    }
+  };
 
   return (
     <polygon
@@ -28,7 +29,7 @@ function Box({ index, points, color, boxesRef }: PropsBox) {
       style={{ opacity: 0.5 }}
       strokeWidth="2"
       onClick={onClick}
-      ref={el => boxesRef.current[index] = el}
+      ref={(el) => (boxesRef.current[index] = el)}
     ></polygon>
   );
 }

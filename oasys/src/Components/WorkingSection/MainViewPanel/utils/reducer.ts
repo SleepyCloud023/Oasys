@@ -1,17 +1,23 @@
 import { ACTION, CanvasState, ImgDragEvent } from '../types/canvasStore';
 
+const zoomSensitivityB = 0.2;
+const zoomSensitivityC = 0.04;
+
 function reducer(state: CanvasState, action: ACTION): CanvasState {
   switch (action.type) {
     case 'CANVAS_IMAGEZOOM':
-      const quotient = Math.round(state.imageZoomOut / 0.2);
+      const quotient = Math.round(state.imageZoomOut / zoomSensitivityB);
 
       if (action.flag == 'in' && state.imageZoomOut < 2) {
-        const changedZoomOut = parseFloat(((quotient + 1) * 0.2).toFixed(2));
+        const changedZoomOut = parseFloat(
+          ((quotient + 1) * zoomSensitivityB).toFixed(2),
+        );
         return { ...state, imageZoomOut: changedZoomOut };
       } else if (action.flag == 'out' && state.imageZoomOut > 0.4) {
-        const changeFlag = (state.imageZoomOut * 100) % 20 == 0 ? 1 : 0;
+        const changeFlag =
+          (state.imageZoomOut * 100) % (zoomSensitivityB * 100) == 0 ? 1 : 0;
         const changedZoomOut = parseFloat(
-          ((quotient - changeFlag) * 0.2).toFixed(2),
+          ((quotient - changeFlag) * zoomSensitivityB).toFixed(2),
         );
         return { ...state, imageZoomOut: changedZoomOut };
       } else {
@@ -21,14 +27,16 @@ function reducer(state: CanvasState, action: ACTION): CanvasState {
     case 'CANVAS_IMAGEZOOMWHEEL':
       if (action.flag == 'in' && state.imageZoomOut < 2) {
         const changedZoomOut = parseFloat(
-          (state.imageZoomOut + 0.02).toFixed(2),
+          (state.imageZoomOut + zoomSensitivityC).toFixed(2),
         );
         return { ...state, imageZoomOut: changedZoomOut };
       } else if (action.flag == 'out' && state.imageZoomOut > 0.4) {
         const changedZoomOut = parseFloat(
-          (state.imageZoomOut - 0.02).toFixed(2),
+          (state.imageZoomOut - zoomSensitivityC).toFixed(2),
         );
         return { ...state, imageZoomOut: changedZoomOut };
+      } else {
+        return { ...state };
       }
 
     case 'CANVAS_IMAGEDRAG':
