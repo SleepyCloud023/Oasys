@@ -8,7 +8,7 @@ export const boxModeDown = (
   imageCanvasRef: any,
   imageZoomOut: number,
 ) => {
-  const { imageCanvas, cBox, cBoxPoint, cBoxMode } = imageCanvasRef;
+  const { imageCanvas, cBox, cPoint, cBoxMode } = imageCanvasRef;
 
   if (imageCanvas.current === null) {
     return null;
@@ -22,15 +22,15 @@ export const boxModeDown = (
 
   var step;
   for (step = 0; step < 4; step++) {
-    cBoxPoint.current[step][0] = offsetX;
-    cBoxPoint.current[step][1] = offsetY;
+    cPoint.current[step][0] = offsetX;
+    cPoint.current[step][1] = offsetY;
   }
 
   if (cBox.current === null || cBox.current === undefined) {
     return null;
   }
 
-  cBox.current.setAttribute('points', PointToString(cBoxPoint.current));
+  cBox.current.setAttribute('points', PointToString(cPoint.current));
   cBox.current.setAttribute('stroke-width', '2');
 
   cBoxMode.current = 'onMouseDown';
@@ -41,7 +41,7 @@ export const boxModeMove = (
   imageCanvasRef: any,
   imageZoomOut: number,
 ) => {
-  const { imageCanvas, cBox, cBoxPoint, cBoxMode } = imageCanvasRef;
+  const { imageCanvas, cBox, cPoint, cBoxMode } = imageCanvasRef;
 
   if (cBoxMode.current == 'onMouseDown') {
     if (imageCanvas.current === null || imageCanvas.current === undefined) {
@@ -54,15 +54,15 @@ export const boxModeMove = (
       (e.nativeEvent.offsetY - imageCanvas.current.y.baseVal.value) *
       (1 / imageZoomOut);
 
-    cBoxPoint.current[2][0] = offsetX;
-    cBoxPoint.current[2][1] = offsetY;
-    cBoxPoint.current[3][0] = offsetX;
-    cBoxPoint.current[1][1] = offsetY;
+    cPoint.current[2][0] = offsetX;
+    cPoint.current[2][1] = offsetY;
+    cPoint.current[3][0] = offsetX;
+    cPoint.current[1][1] = offsetY;
 
     if (cBox.current === null || cBox.current === undefined) {
       return null;
     }
-    cBox.current.setAttribute('points', PointToString(cBoxPoint.current));
+    cBox.current.setAttribute('points', PointToString(cPoint.current));
   }
 };
 
@@ -72,7 +72,7 @@ export const boxModeUp = (
   imageZoomOut: number,
   workDispatch: React.Dispatch<ACTION>,
 ) => {
-  const { imageCanvas, cBox, cBoxPoint, cBoxMode } = imageCanvasRef;
+  const { imageCanvas, cBox, cPoint, cBoxMode } = imageCanvasRef;
 
   if (imageCanvas.current === null || imageCanvas.current === undefined) {
     return null;
@@ -84,17 +84,17 @@ export const boxModeUp = (
     (e.nativeEvent.offsetY - imageCanvas.current.y.baseVal.value) *
     (1 / imageZoomOut);
 
-  cBoxPoint.current[2][0] = offsetX;
-  cBoxPoint.current[2][1] = offsetY;
-  cBoxPoint.current[3][0] = offsetX;
-  cBoxPoint.current[1][1] = offsetY;
+  cPoint.current[2][0] = offsetX;
+  cPoint.current[2][1] = offsetY;
+  cPoint.current[3][0] = offsetX;
+  cPoint.current[1][1] = offsetY;
 
   if (cBox.current === null || cBox.current === undefined) {
     return null;
   }
   cBox.current.setAttribute('stroke-width', '0');
 
-  const newPoint = _.cloneDeep(cBoxPoint.current);
+  const newPoint = _.cloneDeep(cPoint.current);
   onAdd(newPoint, workDispatch);
   cBoxMode.current = 'onMouseUp';
 };

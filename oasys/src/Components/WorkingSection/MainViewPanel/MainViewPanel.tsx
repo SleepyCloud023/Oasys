@@ -83,17 +83,7 @@ function MainViewCanvas({ areaPercent }: PropsMainViewPanel) {
         <div style={{ marginLeft: 7, marginRight: 7 }}>
           {canvasState.imageZoomOut * 100}%
         </div>
-        <Button
-          variant="outlined"
-          onClick={() => {
-            canvasDispatch({
-              type: 'CANVAS_IMAGEZOOM',
-              flag: 'out',
-            });
-          }}
-        >
-          -
-        </Button>
+        <ZoomButton type="out" />
       </MainViewUtil>
 
       <MainViewSvg
