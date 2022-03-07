@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { ACTION } from '../../types';
-import { PointToString } from './mainViewUtil';
+import { convertSVGPoint, PointToString } from './mainViewUtil';
 import { BoundingBox } from '../../types';
 
 export const boxModeDown = (
@@ -13,12 +13,7 @@ export const boxModeDown = (
   if (imageCanvas.current === null) {
     return null;
   }
-  const offsetX =
-    (e.nativeEvent.offsetX - imageCanvas.current.x.baseVal.value) *
-    (1 / imageZoomOut);
-  const offsetY =
-    (e.nativeEvent.offsetY - imageCanvas.current.y.baseVal.value) *
-    (1 / imageZoomOut);
+  const [offsetX, offsetY] = convertSVGPoint(e, imageZoomOut, imageCanvas);
 
   var step;
   for (step = 0; step < 4; step++) {
@@ -29,7 +24,7 @@ export const boxModeDown = (
   if (cBox.current === null || cBox.current === undefined) {
     return null;
   }
-
+  cBox.current.setAttribute('stroke', '#16c997');
   cBox.current.setAttribute('points', PointToString(cPoint.current));
   cBox.current.setAttribute('stroke-width', '2');
 
@@ -47,12 +42,7 @@ export const boxModeMove = (
     if (imageCanvas.current === null || imageCanvas.current === undefined) {
       return null;
     }
-    const offsetX =
-      (e.nativeEvent.offsetX - imageCanvas.current.x.baseVal.value) *
-      (1 / imageZoomOut);
-    const offsetY =
-      (e.nativeEvent.offsetY - imageCanvas.current.y.baseVal.value) *
-      (1 / imageZoomOut);
+    const [offsetX, offsetY] = convertSVGPoint(e, imageZoomOut, imageCanvas);
 
     cPoint.current[2][0] = offsetX;
     cPoint.current[2][1] = offsetY;
@@ -77,12 +67,7 @@ export const boxModeUp = (
   if (imageCanvas.current === null || imageCanvas.current === undefined) {
     return null;
   }
-  const offsetX =
-    (e.nativeEvent.offsetX - imageCanvas.current.x.baseVal.value) *
-    (1 / imageZoomOut);
-  const offsetY =
-    (e.nativeEvent.offsetY - imageCanvas.current.y.baseVal.value) *
-    (1 / imageZoomOut);
+  const [offsetX, offsetY] = convertSVGPoint(e, imageZoomOut, imageCanvas);
 
   cPoint.current[2][0] = offsetX;
   cPoint.current[2][1] = offsetY;
@@ -93,6 +78,13 @@ export const boxModeUp = (
     return null;
   }
   cBox.current.setAttribute('stroke-width', '0');
+
+  if (
+    cPoint.current[0][0] == cPoint.current[2][0] &&
+    cPoint.current[0][0] == cPoint.current[2][0]
+  ) {
+    return;
+  }
 
   const newPoint = _.cloneDeep(cPoint.current);
   onAdd(newPoint, workDispatch);

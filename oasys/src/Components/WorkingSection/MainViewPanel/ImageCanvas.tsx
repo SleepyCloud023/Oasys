@@ -131,7 +131,6 @@ function ImageCanvas({ boxes, imageURL, canvasState }: PropsImageCanvas) {
         <image href={imageURL} />
         <polygon
           points="100,100, 100,100 100,100 100,100"
-          stroke="#16c997"
           fill="transparent"
           strokeWidth="2"
           ref={cBox}

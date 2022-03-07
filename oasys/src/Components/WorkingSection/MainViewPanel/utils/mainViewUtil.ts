@@ -19,3 +19,22 @@ export function PointToString(point: BoundingBox) {
     point[3][1];
   return string_point;
 }
+
+export function convertSVGPoint(
+  e: React.MouseEvent<SVGSVGElement, MouseEvent>,
+  imageZoomOut: number,
+  imageCanvas: React.RefObject<SVGSVGElement>,
+) {
+  if (imageCanvas.current === null) {
+    return [0, 0];
+  }
+
+  const offsetX =
+    (e.nativeEvent.offsetX - imageCanvas.current.x.baseVal.value) *
+    (1 / imageZoomOut);
+  const offsetY =
+    (e.nativeEvent.offsetY - imageCanvas.current.y.baseVal.value) *
+    (1 / imageZoomOut);
+
+  return [offsetX, offsetY];
+}
