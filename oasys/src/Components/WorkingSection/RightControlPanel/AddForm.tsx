@@ -90,8 +90,8 @@ function AddForm({ title, activateForm }: PropsAddForm) {
         name={`input-${lowercaseTitle}`}
         placeholder={`type new ${lowercaseTitle}, press enter`}
         // label={`type new ${lowercaseTitle}, press enter`}
-        onChange={onChange}
         value={userInput}
+        onChange={onChange}
       />
     </StyledForm>
   ) : null;

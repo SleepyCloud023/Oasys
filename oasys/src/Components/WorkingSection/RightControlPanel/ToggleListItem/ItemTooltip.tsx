@@ -12,7 +12,7 @@ import {
   TooltipProps,
   CardProps,
 } from '@mui/material';
-import { BoxObject, PointXY } from '../types';
+import { BoxObject, PointXY } from '../../types';
 import { styled } from '@mui/system';
 
 const StyledTooltip = styled(({ className, ...props }: TooltipProps) => (

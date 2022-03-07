@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Accordion,
   AccordionDetails,
@@ -14,44 +14,38 @@ import Box, { BoxProps } from '@mui/system/Box/Box';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddForm from './AddForm';
-import { WorkStore } from '../WorkingSection';
 import { ACTION } from '../types';
+import { useWorkStore } from '../utils';
+import SelectedChecker, { ContentType } from './SelectedChecker';
 
 type SectionProps = {
   readonly upperFixed?: boolean;
   readonly expandRatio?: number;
-  readonly addButton?: boolean;
 };
 
-const StyledToggleSection = (props: SectionProps & BoxProps) => {
-  const StyledToggleBox = styled(Box)<SectionProps>`
+const StyledToggleSection = styled(
+  ({ upperFixed, expandRatio, ...props }: SectionProps & BoxProps) => (
+    <Box className={'toggle-section'} component={'section'} {...props} />
+  ),
+)(
+  ({ upperFixed, expandRatio }) => css`
     margin: 0;
     padding: 0;
     width: 100%;
     overflow-y: auto;
     min-height: 2rem;
-    margin-bottom: ${({ upperFixed }) => (upperFixed ? 'auto' : null)};
+    margin-bottom: ${upperFixed ? 'auto' : null};
     &::-webkit-scrollbar {
       display: none;
     }
-  `;
-  return (
-    <StyledToggleBox
-      className={'toggle-section'}
-      component={'section'}
-      {...props}
-    />
-  );
-};
+  `,
+);
 
 const StyledToggleList = styled((props: AccordionProps) => (
   <Accordion disableGutters defaultExpanded {...props} />
 ))(
   ({ theme }) => css`
     background-color: transparent;
-    /* & .MuiAccordionSummary-expandIconWrapper.Mui-expanded {
-      transform: rotate(90deg);
-    } */
   `,
 );
 
@@ -86,7 +80,7 @@ type ContentProps<T> = {
   readonly content: T;
   readonly index: number;
   readonly dispatch: React.Dispatch<ACTION>;
-  readonly isSelected: boolean;
+  readonly selectedChecker: SelectedChecker;
 };
 
 type Extractor<T> = (props: ContentProps<T>) => React.ReactElement;
@@ -94,23 +88,22 @@ type Extractor<T> = (props: ContentProps<T>) => React.ReactElement;
 type PropsToggleList<T> = {
   readonly title: string;
   readonly contentList: Array<T>;
+  readonly selectedChecker: SelectedChecker;
   readonly ListItemGenerator: Extractor<T>;
+  readonly addButton?: boolean;
 } & SectionProps;
 
-function ToggleList<T>({
+function ToggleList<T extends ContentType>({
   title,
   contentList,
+  selectedChecker,
   ListItemGenerator,
-  expandRatio,
   upperFixed,
+  expandRatio,
   addButton,
 }: PropsToggleList<T>) {
   const [activateForm, setActivateForm] = useState(false);
-  const notNullStore = useContext(WorkStore);
-  if (notNullStore === null) return null;
-
-  const [workStore, workDispatch] = notNullStore;
-  const { selectedBoxList } = workStore;
+  const [, workDispatch] = useWorkStore();
 
   const optinalAddButton = addButton && (
     <IconButton
@@ -139,15 +132,17 @@ function ToggleList<T>({
   // TODO: isSelected 판단하는 로직 추가
   const listContent = (
     <StyledToggleContent>
-      {contentList.map((content, index) => (
-        <ListItemGenerator
-          key={index}
-          content={content}
-          index={index}
-          dispatch={workDispatch}
-          isSelected
-        />
-      ))}
+      {contentList.map((content, index) => {
+        return (
+          <ListItemGenerator
+            key={index}
+            content={content}
+            index={index}
+            dispatch={workDispatch}
+            selectedChecker={selectedChecker}
+          />
+        );
+      })}
     </StyledToggleContent>
   );
 
