@@ -67,6 +67,7 @@ function ImageCanvas({ boxes, imageURL, canvasState }: PropsImageCanvas) {
   const cPointElement = [0, 0, 0, 0].map((_, index) => {
     return (
       <circle
+        key={`circle${index}`}
         cx="0"
         cy="0"
         r="0"

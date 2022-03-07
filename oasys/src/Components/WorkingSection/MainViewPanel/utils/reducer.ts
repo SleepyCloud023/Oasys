@@ -3,14 +3,30 @@ import { ACTION, CanvasState, ImgDragEvent } from '../types/canvasStore';
 function reducer(state: CanvasState, action: ACTION): CanvasState {
   switch (action.type) {
     case 'CANVAS_IMAGEZOOM':
-      if (action.flag == 'in' && state.imageZoomOut <= 1.6) {
+      const quotient = Math.round(state.imageZoomOut / 0.2);
+
+      if (action.flag == 'in' && state.imageZoomOut < 2) {
+        const changedZoomOut = parseFloat(((quotient + 1) * 0.2).toFixed(2));
+        return { ...state, imageZoomOut: changedZoomOut };
+      } else if (action.flag == 'out' && state.imageZoomOut > 0.4) {
+        const changeFlag = (state.imageZoomOut * 100) % 20 == 0 ? 1 : 0;
         const changedZoomOut = parseFloat(
-          (state.imageZoomOut + 0.2).toFixed(2),
+          ((quotient - changeFlag) * 0.2).toFixed(2),
         );
         return { ...state, imageZoomOut: changedZoomOut };
-      } else if (action.flag == 'out' && state.imageZoomOut >= 0.4) {
+      } else {
+        return { ...state };
+      }
+
+    case 'CANVAS_IMAGEZOOMWHEEL':
+      if (action.flag == 'in' && state.imageZoomOut < 2) {
         const changedZoomOut = parseFloat(
-          (state.imageZoomOut - 0.2).toFixed(2),
+          (state.imageZoomOut + 0.02).toFixed(2),
+        );
+        return { ...state, imageZoomOut: changedZoomOut };
+      } else if (action.flag == 'out' && state.imageZoomOut > 0.4) {
+        const changedZoomOut = parseFloat(
+          (state.imageZoomOut - 0.02).toFixed(2),
         );
         return { ...state, imageZoomOut: changedZoomOut };
       }

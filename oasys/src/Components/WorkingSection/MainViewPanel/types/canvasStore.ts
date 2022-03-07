@@ -16,6 +16,10 @@ type ACTION_IMAGEZOOM = {
   type: 'CANVAS_IMAGEZOOM';
   flag: 'in' | 'out';
 };
+type ACTION_IMAGEZOOMWHEEL = {
+  type: 'CANVAS_IMAGEZOOMWHEEL';
+  flag: 'in' | 'out';
+};
 type ACTION_IMAGEDRAG = {
   type: 'CANVAS_IMAGEDRAG';
   flag: 'down' | 'move' | 'up';
@@ -23,4 +27,7 @@ type ACTION_IMAGEDRAG = {
   offsetY: number;
 };
 
-export type ACTION = ACTION_IMAGEZOOM | ACTION_IMAGEDRAG;
+export type ACTION =
+  | ACTION_IMAGEZOOM
+  | ACTION_IMAGEZOOMWHEEL
+  | ACTION_IMAGEDRAG;
