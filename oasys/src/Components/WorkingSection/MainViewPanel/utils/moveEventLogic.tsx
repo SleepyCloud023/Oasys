@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import _ from 'lodash';
 import { ACTION } from '../../types';
-import { PointToString } from './mainViewUtil';
+import { convertSVGPoint, PointToString } from './mainViewUtil';
 import { BoundingBox } from '../../types';
 import { CanvasState } from '../types/canvasStore';
 import { Checkbox } from '@mui/material';
@@ -23,12 +23,7 @@ export const moveModeDown = (
   if (imageCanvas.current === null) {
     return null;
   }
-  const offsetX =
-    (e.nativeEvent.offsetX - imageCanvas.current.x.baseVal.value) *
-    (1 / imageZoomOut);
-  const offsetY =
-    (e.nativeEvent.offsetY - imageCanvas.current.y.baseVal.value) *
-    (1 / imageZoomOut);
+  const [offsetX, offsetY] = convertSVGPoint(e, imageZoomOut, imageCanvas);
 
   var step;
   for (step = 0; step < 4; step++) {
@@ -57,12 +52,7 @@ export const moveModeMove = (
     if (imageCanvas.current === null || imageCanvas.current === undefined) {
       return null;
     }
-    const offsetX =
-      (e.nativeEvent.offsetX - imageCanvas.current.x.baseVal.value) *
-      (1 / imageZoomOut);
-    const offsetY =
-      (e.nativeEvent.offsetY - imageCanvas.current.y.baseVal.value) *
-      (1 / imageZoomOut);
+    const [offsetX, offsetY] = convertSVGPoint(e, imageZoomOut, imageCanvas);
 
     cPoint.current[2][0] = offsetX;
     cPoint.current[2][1] = offsetY;
@@ -89,12 +79,7 @@ export const moveModeUp = (
   if (imageCanvas.current === null || imageCanvas.current === undefined) {
     return null;
   }
-  const offsetX =
-    (e.nativeEvent.offsetX - imageCanvas.current.x.baseVal.value) *
-    (1 / imageZoomOut);
-  const offsetY =
-    (e.nativeEvent.offsetY - imageCanvas.current.y.baseVal.value) *
-    (1 / imageZoomOut);
+  const [offsetX, offsetY] = convertSVGPoint(e, imageZoomOut, imageCanvas);
 
   cPoint.current[2][0] = offsetX;
   cPoint.current[2][1] = offsetY;
