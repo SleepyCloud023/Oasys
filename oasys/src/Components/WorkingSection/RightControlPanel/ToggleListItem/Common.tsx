@@ -3,7 +3,7 @@ import Divider from '@mui/material/Divider';
 import { ACTION } from '../../types';
 import { ListItem, ListItemProps, ListItemText } from '@mui/material';
 import { styled, css } from '@mui/material/styles';
-import SelectedChecker from '../SelectedChecker';
+import SelectedHandler from '../SelectedHandler';
 
 type ListItemContainerProps = { isSelected: boolean } & ListItemProps;
 
@@ -28,21 +28,7 @@ export const StyledListItemText = styled(ListItemText)`
 
 export type ToggleListItemProps = {
   readonly index: number;
-  readonly dispatch: React.Dispatch<ACTION>;
-  readonly selectedChecker: SelectedChecker;
-};
-
-export const onSelect: (
-  newSelected: Set<number> | string,
-  dispatch: React.Dispatch<ACTION>,
-) => React.MouseEventHandler<HTMLLIElement> = (newSelected, dispatch) => () => {
-  if (typeof newSelected === 'string') {
-    console.log('Class or Tag Seleceted');
-  }
-  dispatch({
-    type: 'UPDATE_SELECTED',
-    newSelected,
-  });
+  readonly selectedHandler: SelectedHandler;
 };
 
 type DividerProps = { index: number };

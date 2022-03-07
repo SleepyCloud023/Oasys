@@ -16,7 +16,10 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import AddForm from './AddForm';
 import { ACTION } from '../types';
 import { useWorkStore } from '../utils';
-import SelectedChecker, { ContentType } from './SelectedChecker';
+import SelectedHandler, {
+  ContentType,
+  ToggleListType,
+} from './SelectedHandler';
 
 type SectionProps = {
   readonly upperFixed?: boolean;
@@ -80,7 +83,7 @@ type ContentProps<T> = {
   readonly content: T;
   readonly index: number;
   readonly dispatch: React.Dispatch<ACTION>;
-  readonly selectedChecker: SelectedChecker;
+  readonly selectedHandler: SelectedHandler;
 };
 
 type Extractor<T> = (props: ContentProps<T>) => React.ReactElement;
@@ -88,16 +91,18 @@ type Extractor<T> = (props: ContentProps<T>) => React.ReactElement;
 type PropsToggleList<T> = {
   readonly title: string;
   readonly contentList: Array<T>;
-  readonly selectedChecker: SelectedChecker;
+  readonly type: ToggleListType;
   readonly ListItemGenerator: Extractor<T>;
+  readonly selectedHandler: SelectedHandler;
   readonly addButton?: boolean;
 } & SectionProps;
 
 function ToggleList<T extends ContentType>({
   title,
   contentList,
-  selectedChecker,
+  type,
   ListItemGenerator,
+  selectedHandler: selectedChecker,
   upperFixed,
   expandRatio,
   addButton,
@@ -105,11 +110,13 @@ function ToggleList<T extends ContentType>({
   const [activateForm, setActivateForm] = useState(false);
   const [, workDispatch] = useWorkStore();
 
+  const onAddButton: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.stopPropagation();
+    setActivateForm(!activateForm);
+  };
+
   const optinalAddButton = addButton && (
-    <IconButton
-      onClick={() => setActivateForm(!activateForm)}
-      sx={{ padding: 0, marginLeft: 'auto' }}
-    >
+    <IconButton onClick={onAddButton} sx={{ padding: 0, marginLeft: 'auto' }}>
       {activateForm ? (
         <RemoveIcon fontSize="small" />
       ) : (
@@ -139,7 +146,7 @@ function ToggleList<T extends ContentType>({
             content={content}
             index={index}
             dispatch={workDispatch}
-            selectedChecker={selectedChecker}
+            selectedHandler={selectedChecker}
           />
         );
       })}

@@ -4,7 +4,6 @@ import IconButton from '@mui/material/IconButton';
 import { BoxObject } from '../../types';
 import {
   NumberChip,
-  onSelect,
   OptionalDivider,
   StyledListItemContainer,
   StyledListItemText,
@@ -20,8 +19,7 @@ type BoxListItemProps = ToggleListItemProps & {
 function BoxListItem({
   content: boxObject,
   index,
-  dispatch,
-  selectedChecker,
+  selectedHandler,
 }: BoxListItemProps) {
   const { id, category } = boxObject;
 
@@ -38,15 +36,16 @@ function BoxListItem({
     </IconButton>
   );
 
-  const newSelected = new Set<number>([id]);
-  const isSelected = selectedChecker.checkSelected({
-    type: 'box',
+  const type = 'box';
+  const isSelected = selectedHandler.checkSelected({
+    type,
     boxObject,
   });
+  const newSelected = new Set<number>([id]);
 
   return (
     <StyledListItemContainer
-      onClick={onSelect(newSelected, dispatch)}
+      onClick={() => selectedHandler.onSelect({ type, newSelected })}
       isSelected={isSelected}
     >
       <OptionalDivider index={index} />

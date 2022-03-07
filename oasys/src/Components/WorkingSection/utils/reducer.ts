@@ -33,14 +33,17 @@ function reducer(state: WorkState, action: ACTION): WorkState {
       return { ...state, tag_list: [...state.tag_list, action.newTag] };
     case 'UPDATE_SELECTED':
       if (typeof action.newSelected === 'string') {
-        const newSelected = action.newSelected as string;
-        const selectedBoxSet = new Set<number>(
-          state.box_object_list
-            .filter((boxObject) => {
-              return boxObject.category.indexOf(newSelected) !== -1;
-            })
-            .map((boxObject) => boxObject.id),
-        );
+        const { newSelected } = action;
+        const isCategory = state.category_list.indexOf(newSelected) > -1;
+        const selectedBoxSet = isCategory
+          ? new Set<number>(
+              state.box_object_list
+                .filter((boxObject) => {
+                  return boxObject.category.indexOf(newSelected) !== -1;
+                })
+                .map((boxObject) => boxObject.id),
+            )
+          : new Set<number>();
         return { ...state, selectedBoxList: selectedBoxSet };
       } else {
         return { ...state, selectedBoxList: action.newSelected };

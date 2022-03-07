@@ -2,7 +2,6 @@
 import * as React from 'react';
 import {
   NumberChip,
-  onSelect,
   OptionalDivider,
   StyledListItemContainer,
   StyledListItemText,
@@ -16,18 +15,18 @@ type TagListItemProps = ToggleListItemProps & {
 export function TagListItem({
   content: tagName,
   index,
-  dispatch,
-  selectedChecker,
+  selectedHandler,
 }: TagListItemProps) {
   const textTagName = <StyledListItemText secondary={tagName} />;
-  const isSelected = selectedChecker.checkSelected({
-    type: 'tag',
+  const type = 'tag';
+  const isSelected = selectedHandler.checkSelected({
+    type,
     tagName,
   });
 
   return (
     <StyledListItemContainer
-      onClick={onSelect(tagName, dispatch)}
+      onClick={() => selectedHandler.onSelect({ type, tagName })}
       isSelected={isSelected}
     >
       <OptionalDivider index={index} />

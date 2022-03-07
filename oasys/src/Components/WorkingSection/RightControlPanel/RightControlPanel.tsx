@@ -4,7 +4,7 @@ import ToggleList from './ToggleList';
 import { BoxObject } from '../types';
 import { BoxListItem, CategoryListItem, TagListItem } from './ToggleListItem';
 import { useWorkStore } from '../utils';
-import SelectedChecker, { SelectedInfo } from './SelectedChecker';
+import SelectedHandler, { SelectedInfo } from './SelectedHandler';
 
 export type BoxContent = BoxObject;
 export type CategoryContent = string;
@@ -36,65 +36,82 @@ const RightPanel = styled.section<PropsRightControlPanel>`
 function RightControlPanel({ areaPercent }: PropsRightControlPanel) {
   // TODO: ToggleList에 selectedInfo를 전달해서 선택된 박스 오브젝트를 알 수 있는 기능
   // Working Section에서 받아온 State를 하위 컴포넌트로 내려줌
-  const [workState] = useWorkStore();
+  const [workState, workDispatch] = useWorkStore();
   const { box_object_list, category_list, tag_list, selectedBoxList } =
     workState;
 
-  const [selectedInfo, setSelectedInfo] = useState<SelectedInfo>({
-    selectedBoxSet: selectedBoxList,
-    selectedCategorySet: new Set<string>(),
-    selectedTagSet: new Set<string>(),
-  });
+  const defaultSelectedInfo = useMemo(
+    () => ({
+      selectedBoxSet: selectedBoxList,
+      selectedCategorySet: new Set<string>(),
+      selectedTagSet: new Set<string>(),
+      isOwnEvent: false,
+    }),
+    [selectedBoxList],
+  );
+
+  const [selectedInfo, setSelectedInfo] =
+    useState<SelectedInfo>(defaultSelectedInfo);
 
   useEffect(() => {
-    setSelectedInfo((prevSelectedInfo) => ({
-      ...prevSelectedInfo,
-      selectedBoxSet: selectedBoxList,
-    }));
+    setSelectedInfo((prevSelectedInfo) => {
+      const nextSelectedInfo = selectedInfo.isOwnEvent
+        ? prevSelectedInfo
+        : defaultSelectedInfo;
+      return {
+        ...nextSelectedInfo,
+        selectedBoxSet: selectedBoxList,
+        isOwnEvent: false,
+      };
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedBoxList]);
 
-  const selectedChecker = useMemo(
-    () => new SelectedChecker(selectedInfo),
-    [selectedInfo],
+  const selectedHandler = useMemo(
+    () => new SelectedHandler(selectedInfo, setSelectedInfo, workDispatch),
+    [selectedInfo, workDispatch],
   );
 
   const boundingBoxList = useMemo(
     () => (
       <ToggleList<BoxContent>
         title={'Bounding Box'}
+        type={'box'}
         contentList={box_object_list}
-        selectedChecker={selectedChecker}
         ListItemGenerator={BoxListItem}
+        selectedHandler={selectedHandler}
         upperFixed
       />
     ),
-    [box_object_list, selectedChecker],
+    [box_object_list, selectedHandler],
   );
 
   const categoryList = useMemo(
     () => (
       <ToggleList<CategoryContent>
         title={'Class'}
+        type={'category'}
         contentList={category_list}
-        selectedChecker={selectedChecker}
         ListItemGenerator={CategoryListItem}
+        selectedHandler={selectedHandler}
         addButton
       />
     ),
-    [category_list, selectedChecker],
+    [category_list, selectedHandler],
   );
 
   const tagList = useMemo(
     () => (
       <ToggleList<TagContent>
         title={'Tag'}
+        type={'tag'}
         contentList={tag_list}
-        selectedChecker={selectedChecker}
         ListItemGenerator={TagListItem}
+        selectedHandler={selectedHandler}
         addButton
       />
     ),
-    [selectedChecker, tag_list],
+    [selectedHandler, tag_list],
   );
 
   return (

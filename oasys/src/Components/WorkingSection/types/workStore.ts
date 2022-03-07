@@ -1,5 +1,3 @@
-// export
-
 export type MouseMode = 'MOVE' | 'BOX' | 'POLYGON';
 
 export type PointXY = [number, number];
@@ -19,7 +17,6 @@ export type BoxObject = {
 
 export type Annotation = {
   box_object_list: Array<BoxObject>;
-  // TODO: key name => category_list으로 변경하면 어떨지 판단
   category_list: Array<string>;
   tag_list: Array<string>;
 };
