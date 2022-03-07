@@ -87,11 +87,11 @@ function MainViewCanvas({ areaPercent }: PropsMainViewPanel) {
       </MainViewUtil>
 
       <MainViewSvg
-        onContextMenu={(e: React.MouseEvent<SVGSVGElement>)=>{
+        onContextMenu={(e: React.MouseEvent<SVGSVGElement>) => {
           e.preventDefault();
         }}
         onMouseDown={(e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
-          if (e.nativeEvent.which==3) {
+          if (e.nativeEvent.which == 3) {
             canvasDispatch({
               type: 'CANVAS_IMAGEDRAG',
               flag: 'down',
@@ -101,7 +101,7 @@ function MainViewCanvas({ areaPercent }: PropsMainViewPanel) {
           }
         }}
         onMouseMove={(e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
-          if (e.nativeEvent.which==3 && canvasState.imgDragEvent['on']) {
+          if (e.nativeEvent.which == 3 && canvasState.imgDragEvent['on']) {
             canvasDispatch({
               type: 'CANVAS_IMAGEDRAG',
               flag: 'move',
@@ -111,7 +111,7 @@ function MainViewCanvas({ areaPercent }: PropsMainViewPanel) {
           }
         }}
         onMouseUp={(e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
-          if (e.nativeEvent.which==3) {
+          if (e.nativeEvent.which == 3) {
             canvasDispatch({
               type: 'CANVAS_IMAGEDRAG',
               flag: 'up',
@@ -119,6 +119,12 @@ function MainViewCanvas({ areaPercent }: PropsMainViewPanel) {
               offsetY: e.nativeEvent.offsetY,
             });
           }
+        }}
+        onWheel={(e: React.WheelEvent<SVGSVGElement>) => {
+          canvasDispatch({
+            type: 'CANVAS_IMAGEZOOMWHEEL',
+            flag: e.deltaY < 0 ? 'in' : 'out',
+          });
         }}
       >
         <ImageCanvas
