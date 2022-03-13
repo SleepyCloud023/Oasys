@@ -1,7 +1,11 @@
 import { useContext } from 'react';
 import _ from 'lodash';
 import { ACTION } from '../../types';
-import { convertSVGPoint, PointToString } from './mainViewUtil';
+import {
+  convertMain2Image,
+  createSVGRect,
+  PointToString,
+} from './mainViewUtil';
 import { BoundingBox } from '../../types';
 import { CanvasState } from '../types/canvasStore';
 import { Checkbox } from '@mui/material';
@@ -23,7 +27,7 @@ export const moveModeDown = (
   if (imageCanvas.current === null) {
     return null;
   }
-  const [offsetX, offsetY] = convertSVGPoint(e, imageZoomOut, imageCanvas);
+  const [offsetX, offsetY] = convertMain2Image(e, imageZoomOut, imageCanvas);
 
   var step;
   for (step = 0; step < 4; step++) {
@@ -52,7 +56,7 @@ export const moveModeMove = (
     if (imageCanvas.current === null || imageCanvas.current === undefined) {
       return null;
     }
-    const [offsetX, offsetY] = convertSVGPoint(e, imageZoomOut, imageCanvas);
+    const [offsetX, offsetY] = convertMain2Image(e, imageZoomOut, imageCanvas);
 
     cPoint.current[2][0] = offsetX;
     cPoint.current[2][1] = offsetY;
@@ -79,7 +83,7 @@ export const moveModeUp = (
   if (imageCanvas.current === null || imageCanvas.current === undefined) {
     return null;
   }
-  const [offsetX, offsetY] = convertSVGPoint(e, imageZoomOut, imageCanvas);
+  const [offsetX, offsetY] = convertMain2Image(e, imageZoomOut, imageCanvas);
 
   cPoint.current[2][0] = offsetX;
   cPoint.current[2][1] = offsetY;
@@ -95,16 +99,17 @@ export const moveModeUp = (
   cBoxMode.current = 'onMouseUp';
   cBox.current.setAttribute('stroke-width', '0');
 
-  var rect = imageCanvas.current.createSVGRect();
-  rect.x = cPoint.current[0][0] * imageZoomOut + imagePoint[0];
-  rect.y = cPoint.current[0][1] * imageZoomOut + imagePoint[1];
-  rect.width = (cPoint.current[2][0] - cPoint.current[0][0]) * imageZoomOut;
-  rect.height = (cPoint.current[2][1] - cPoint.current[0][1]) * imageZoomOut;
+  var rect = createSVGRect(
+    cPoint.current,
+    imagePoint,
+    imageZoomOut,
+    imageCanvas,
+  );
 
   const newSelected = new Set<number>();
 
-  const boxElements = boxesRef.current.map((box, index) => {
-    if (box == null) return;
+  boxesRef.current.forEach((box, index) => {
+    if (box == null || rect == null) return;
     const check = imageCanvas.current?.checkIntersection(box, rect);
 
     if (check == true) newSelected.add(index);

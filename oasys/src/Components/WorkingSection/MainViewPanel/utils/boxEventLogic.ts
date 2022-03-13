@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { ACTION } from '../../types';
-import { convertSVGPoint, PointToString } from './mainViewUtil';
+import { convertMain2Image, PointToString } from './mainViewUtil';
 import { BoundingBox } from '../../types';
 
 export const boxModeDown = (
@@ -13,7 +13,7 @@ export const boxModeDown = (
   if (imageCanvas.current === null) {
     return null;
   }
-  const [offsetX, offsetY] = convertSVGPoint(e, imageZoomOut, imageCanvas);
+  const [offsetX, offsetY] = convertMain2Image(e, imageZoomOut, imageCanvas);
 
   var step;
   for (step = 0; step < 4; step++) {
@@ -42,7 +42,7 @@ export const boxModeMove = (
     if (imageCanvas.current === null || imageCanvas.current === undefined) {
       return null;
     }
-    const [offsetX, offsetY] = convertSVGPoint(e, imageZoomOut, imageCanvas);
+    const [offsetX, offsetY] = convertMain2Image(e, imageZoomOut, imageCanvas);
 
     cPoint.current[2][0] = offsetX;
     cPoint.current[2][1] = offsetY;
@@ -67,7 +67,7 @@ export const boxModeUp = (
   if (imageCanvas.current === null || imageCanvas.current === undefined) {
     return null;
   }
-  const [offsetX, offsetY] = convertSVGPoint(e, imageZoomOut, imageCanvas);
+  const [offsetX, offsetY] = convertMain2Image(e, imageZoomOut, imageCanvas);
 
   cPoint.current[2][0] = offsetX;
   cPoint.current[2][1] = offsetY;
