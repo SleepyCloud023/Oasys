@@ -43,7 +43,7 @@ def get_object(id):
     """
 
     # make query object
-    table = db.Table('annotation_object', metadata,
+    table = db.Table('image_metadata', metadata,
                      autoload=True, autoload_with=engine)
     query = db.select([table]).where(table.columns.id == id)
 
@@ -89,8 +89,8 @@ def get_dataset(id):
     # get query result : datasetName
     result_json["datasetName"] = result_set[0]["name"]
 
-    # make query object : annotation_object table
-    object_table = db.Table('annotation_object', metadata,
+    # make query object : image_metadata table
+    object_table = db.Table('image_metadata', metadata,
                             autoload=True, autoload_with=engine)
     query = db.select([object_table]).where(
         object_table.columns.dataset_id == id)

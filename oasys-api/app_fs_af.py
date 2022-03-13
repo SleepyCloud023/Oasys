@@ -6,18 +6,21 @@ import config
 
 db = SQLAlchemy()
 
+
 def create_app():
     app = Flask(__name__)
     CORS(app, resources={r'*': {'origins': ['*']}})
     app.config.from_object(config)
-    db.init_app(app)
 
+    db.init_app(app)
     import models
-    print(models.User.query.all())
 
     @app.route('/')
     def hello_pybo():
         return 'Hello, Pybo!'
+
+    import get_data
+    app.register_blueprint(get_data.bp)
 
     return app
 

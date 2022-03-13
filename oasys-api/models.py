@@ -1,7 +1,7 @@
-from app4 import db
+from app_fs_af import db
 
 
-class AnnotationObject(db.Model):
+class ImageMetadata(db.Model):
     __tablename__ = 'annotation_object'
 
     id = db.Column(db.Integer, primary_key=True)
