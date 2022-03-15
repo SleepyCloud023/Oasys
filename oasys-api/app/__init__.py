@@ -1,8 +1,7 @@
 from flask import Flask
-from flask import send_file
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
-import config
+from config import mysql
 
 db = SQLAlchemy()
 
@@ -10,21 +9,16 @@ db = SQLAlchemy()
 def create_app():
     app = Flask(__name__)
     CORS(app, resources={r'*': {'origins': ['*']}})
-    app.config.from_object(config)
+    app.config.from_object(mysql)
 
     db.init_app(app)
-    import models
+    from . import models
 
     @app.route('/')
     def hello_pybo():
-        return 'Hello, Pybo!'
+        return 'Test Channel _ '
 
-    import get_data
+    from . import get_data
     app.register_blueprint(get_data.bp)
 
     return app
-
-
-if __name__ == '__main__':
-    app = create_app()
-    app.run(host='0.0.0.0', port=5002, debug=True)
