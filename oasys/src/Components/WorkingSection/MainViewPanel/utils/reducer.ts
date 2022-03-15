@@ -8,14 +8,14 @@ function reducer(state: CanvasState, action: ACTION): CanvasState {
     case 'CANVAS_IMAGEZOOM':
       const quotient = Math.round(state.imageZoomOut / zoomSensitivityB);
 
-      if (action.flag == 'in' && state.imageZoomOut < 2) {
+      if (action.flag === 'in' && state.imageZoomOut < 2) {
         const changedZoomOut = parseFloat(
           ((quotient + 1) * zoomSensitivityB).toFixed(2),
         );
         return { ...state, imageZoomOut: changedZoomOut };
-      } else if (action.flag == 'out' && state.imageZoomOut > 0.4) {
+      } else if (action.flag === 'out' && state.imageZoomOut > 0.4) {
         const changeFlag =
-          (state.imageZoomOut * 100) % (zoomSensitivityB * 100) == 0 ? 1 : 0;
+          (state.imageZoomOut * 100) % (zoomSensitivityB * 100) === 0 ? 1 : 0;
         const changedZoomOut = parseFloat(
           ((quotient - changeFlag) * zoomSensitivityB).toFixed(2),
         );
@@ -25,12 +25,11 @@ function reducer(state: CanvasState, action: ACTION): CanvasState {
       }
 
     case 'CANVAS_IMAGEZOOMWHEEL':
-      if (action.flag == 'in' && state.imageZoomOut < 2) {
-        const changedZoomOut = parseFloat(
-          (state.imageZoomOut + zoomSensitivityC).toFixed(2),
-        );
+      if (action.flag === 'in' && state.imageZoomOut < 2) {
+        const changedZoomOut = state.imageZoomOut + zoomSensitivityC;
+
         return { ...state, imageZoomOut: changedZoomOut };
-      } else if (action.flag == 'out' && state.imageZoomOut > 0.4) {
+      } else if (action.flag === 'out' && state.imageZoomOut > 0.4) {
         const changedZoomOut = parseFloat(
           (state.imageZoomOut - zoomSensitivityC).toFixed(2),
         );
@@ -40,7 +39,7 @@ function reducer(state: CanvasState, action: ACTION): CanvasState {
       }
 
     case 'CANVAS_IMAGEDRAG':
-      if (action.flag == 'down') {
+      if (action.flag === 'down') {
         let newimgDragEvent: ImgDragEvent = {
           originPoint: [0, 0],
           clickPoint: [0, 0],
@@ -55,7 +54,7 @@ function reducer(state: CanvasState, action: ACTION): CanvasState {
         newimgDragEvent['on'] = true;
 
         return { ...state, imgDragEvent: newimgDragEvent };
-      } else if (action.flag == 'move') {
+      } else if (action.flag === 'move') {
         const newX =
           state.imgDragEvent['originPoint'][0] +
           (action.offsetX - state.imgDragEvent['clickPoint'][0]);
@@ -64,7 +63,7 @@ function reducer(state: CanvasState, action: ACTION): CanvasState {
           (action.offsetY - state.imgDragEvent['clickPoint'][1]);
 
         return { ...state, imagePoint: [newX, newY] };
-      } else if (action.flag == 'up') {
+      } else if (action.flag === 'up') {
         return { ...state, imgDragEvent: { ...state.imgDragEvent, on: false } };
       }
 

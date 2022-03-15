@@ -58,7 +58,7 @@ function MainViewCanvas({ areaPercent }: PropsMainViewPanel) {
   const { imageURL, box_object_list } = workState;
 
   const boxList = box_object_list.map((content, index) => {
-    const { bounding_box, ...rest } = content;
+    const { bounding_box } = content;
     return bounding_box;
   });
 
@@ -72,7 +72,7 @@ function MainViewCanvas({ areaPercent }: PropsMainViewPanel) {
         });
       }}
     >
-      {type == 'in' ? '+' : '-'}
+      {type === 'in' ? '+' : '-'}
     </Button>
   );
 
@@ -81,7 +81,7 @@ function MainViewCanvas({ areaPercent }: PropsMainViewPanel) {
       <MainViewUtil>
         <ZoomButton type="in" />
         <div style={{ marginLeft: 7, marginRight: 7 }}>
-          {canvasState.imageZoomOut * 100}%
+          {Math.round(canvasState.imageZoomOut * 100)}%
         </div>
         <ZoomButton type="out" />
       </MainViewUtil>
@@ -91,7 +91,7 @@ function MainViewCanvas({ areaPercent }: PropsMainViewPanel) {
           e.preventDefault();
         }}
         onMouseDown={(e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
-          if (e.nativeEvent.which == 3) {
+          if (e.nativeEvent.which === 3) {
             canvasDispatch({
               type: 'CANVAS_IMAGEDRAG',
               flag: 'down',
@@ -101,7 +101,7 @@ function MainViewCanvas({ areaPercent }: PropsMainViewPanel) {
           }
         }}
         onMouseMove={(e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
-          if (e.nativeEvent.which == 3 && canvasState.imgDragEvent['on']) {
+          if (e.nativeEvent.which === 3 && canvasState.imgDragEvent['on']) {
             canvasDispatch({
               type: 'CANVAS_IMAGEDRAG',
               flag: 'move',
@@ -111,7 +111,7 @@ function MainViewCanvas({ areaPercent }: PropsMainViewPanel) {
           }
         }}
         onMouseUp={(e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
-          if (e.nativeEvent.which == 3) {
+          if (e.nativeEvent.which === 3) {
             canvasDispatch({
               type: 'CANVAS_IMAGEDRAG',
               flag: 'up',
