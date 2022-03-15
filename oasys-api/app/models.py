@@ -1,8 +1,8 @@
-from app_fs_af import db
+from app import db
 
 
 class ImageMetadata(db.Model):
-    __tablename__ = 'annotation_object'
+    __tablename__ = 'image_metadata'
 
     id = db.Column(db.Integer, primary_key=True)
     annotation = db.Column(db.JSON)
@@ -13,7 +13,7 @@ class ImageMetadata(db.Model):
         'dataset.id', onupdate='CASCADE'), index=True)
 
     dataset = db.relationship(
-        'Dataset', primaryjoin='AnnotationObject.dataset_id == Dataset.id', backref='annotation_objects')
+        'Dataset', primaryjoin='ImageMetadata.dataset_id == Dataset.id', backref='image_metadata')
 
 
 class Dataset(db.Model):
@@ -21,6 +21,12 @@ class Dataset(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
+    user_id = db.Column(db.ForeignKey('user.id'), index=True)
+    creation_date = db.Column(db.DateTime)
+    modification_date = db.Column(db.DateTime)
+
+    user = db.relationship(
+        'User', primaryjoin='Dataset.user_id == User.id', backref='datasets')
 
 
 class User(db.Model):
