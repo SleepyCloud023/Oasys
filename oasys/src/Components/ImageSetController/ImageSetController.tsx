@@ -1,11 +1,18 @@
 import React from 'react';
+import { DatasetInfo } from '../../Pages/ListImageSet';
+import Link from '../CustomElement/Link';
 
-function ImageSet() {
+export type ImageSetControllerProps = {
+  id: number;
+  data: Promise<DatasetInfo>;
+};
+
+function ImageSetController({ id }: ImageSetControllerProps) {
   return (
     <>
-      <div>ImageSet</div>
+      <Link to={`/annotation/${id}`}>image_1</Link>
     </>
   );
 }
 
-export default ImageSet;
+export default ImageSetController;
