@@ -1,7 +1,8 @@
 import React from 'react';
 import { Box, css } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import styled from '@mui/system/styled';
+import { ImageSetController, ImageSet } from '../Components';
 
 const StyledBox = styled(Box)(
   ({ theme }) => css`
@@ -11,15 +12,16 @@ const StyledBox = styled(Box)(
   `,
 );
 
-function ListDataset() {
+function ListImageSet() {
+  const parmas = useParams();
+  const id = parmas.id;
+
   return (
     <StyledBox>
-      <h1>Display list of Dataset Here</h1>
-      <Link to={'/imageSet/1'}>ImageSet 1</Link>
-      <br></br>
-      <Link to={'/imageSet/2'}>ImageSet 2</Link>
+      <ImageSetController></ImageSetController>
+      <ImageSet></ImageSet>
     </StyledBox>
   );
 }
 
-export default ListDataset;
+export default ListImageSet;
