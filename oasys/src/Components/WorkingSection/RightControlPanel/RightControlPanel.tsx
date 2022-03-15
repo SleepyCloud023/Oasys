@@ -114,8 +114,12 @@ function RightControlPanel({ areaPercent }: PropsRightControlPanel) {
     [selectedHandler, tag_list],
   );
 
+  const onKeyDownTest = () => {
+    console.log('key down event!');
+  };
+
   return (
-    <RightPanel areaPercent={areaPercent}>
+    <RightPanel areaPercent={areaPercent} onKeyDown={onKeyDownTest}>
       {boundingBoxList}
       {categoryList}
       {tagList}
