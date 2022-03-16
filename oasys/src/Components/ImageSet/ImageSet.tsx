@@ -4,20 +4,16 @@ import styled, { css } from 'styled-components';
 import ImageCard from './ImageCard';
 import { DatasetInfo } from '../../Pages/ListImageSet';
 
-const StyledImageSetPanel = styled(Box)(
-  () => css`
-    overflow-y: scroll;
-    &::-webkit-scrollbar {
-      display: none;
-    }
-  `,
-);
+const StyledImageSetPanel = styled(Box)`
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
 
-const StyledImageSet = styled(Box)(
-  () => css`
-    padding: 20pt;
-  `,
-);
+const StyledImageSet = styled(Box)`
+  padding: 20pt;
+`;
 
 export type ImageSetProps = {
   id: number;
