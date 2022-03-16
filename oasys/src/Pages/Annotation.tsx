@@ -2,7 +2,6 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { Footer, Header, WorkingSection } from '../Components';
 import { useParams } from 'react-router-dom';
-import { lte } from 'lodash';
 
 const AnnotationBlock = styled.div`
   display: flex;
@@ -21,7 +20,7 @@ function Annotation() {
   return (
     <AnnotationBlock>
       <Header />
-      <WorkingSection index={id} />
+      <WorkingSection id={parseInt(id)} />
       <Footer />
     </AnnotationBlock>
   );

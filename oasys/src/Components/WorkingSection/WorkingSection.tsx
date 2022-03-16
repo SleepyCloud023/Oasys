@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer } from 'react';
 import styled from 'styled-components';
 import { ACTION, WorkState } from './types';
-import { dummyFetchFileInfo, reducer } from './utils';
+import { getImageInfo, reducer } from './utils';
 import { LeftControlPanel } from './LeftControlPanel';
 import { MainViewPanel } from './MainViewPanel';
 import { RightControlPanel } from './RightControlPanel';
@@ -35,22 +35,24 @@ export const WorkStore = React.createContext<
   [WorkState, React.Dispatch<ACTION>] | null
 >(null);
 
-function WorkingSection({ index }: { index: string }) {
+type WorkingSectionProps = {
+  id: number;
+};
+
+function WorkingSection({ id }: WorkingSectionProps) {
   const [workState, workDispatch] = useReducer(reducer, preLoading);
-  // TODO: 선택된 파일 로딩, async API call
+
   useEffect(() => {
-    // mount될 때 수행할 작업
-    const initStateFromAPI = dummyFetchFileInfo(parseInt(index));
-    // TODO: 컴포넌트 인자로 요청할 이미지 파일 id를 받아 처리
-    // const initStateFromAPI_goal = await axios.get(imageID);
-    initStateFromAPI.then((response) => {
+    async function fetchInitStateFromAPI() {
+      const initState = await getImageInfo(id);
       workDispatch({
         type: 'INIT_STATE',
-        initState: response,
+        initState: initState,
       });
-    });
-    // unmount될 때 수행할 작업
-  }, []);
+    }
+
+    fetchInitStateFromAPI();
+  }, [id]);
 
   return (
     <WorkStore.Provider value={[workState, workDispatch]}>
