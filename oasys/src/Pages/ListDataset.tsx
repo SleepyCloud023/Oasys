@@ -11,7 +11,7 @@ const StyledBox = styled(Box)(
   `,
 );
 
-function ListDataset() {
+function ListDataset({}) {
   return (
     <StyledBox>
       <h1>Display list of Dataset Here</h1>

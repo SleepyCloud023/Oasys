@@ -3,7 +3,7 @@ import React from 'react';
 function ImageSet() {
   return (
     <>
-      <div>ImageSet</div>
+      <div>ImageSetController</div>
     </>
   );
 }

@@ -35,12 +35,12 @@ export const WorkStore = React.createContext<
   [WorkState, React.Dispatch<ACTION>] | null
 >(null);
 
-function WorkingSection() {
+function WorkingSection({ index }: { index: string }) {
   const [workState, workDispatch] = useReducer(reducer, preLoading);
   // TODO: 선택된 파일 로딩, async API call
   useEffect(() => {
     // mount될 때 수행할 작업
-    const initStateFromAPI = dummyFetchFileInfo();
+    const initStateFromAPI = dummyFetchFileInfo(parseInt(index));
     // TODO: 컴포넌트 인자로 요청할 이미지 파일 id를 받아 처리
     // const initStateFromAPI_goal = await axios.get(imageID);
     initStateFromAPI.then((response) => {

@@ -46,7 +46,7 @@ function getImageInfo(imageID: number): Promise<WorkState> {
   return imagePromise;
 }
 
-export function dummyFetchFileInfo() {
+export function dummyFetchFileInfo(index: number) {
   // http://35.197.111.137:5000/image_info/<id>
-  return getImageInfo(2);
+  return getImageInfo(index);
 }
