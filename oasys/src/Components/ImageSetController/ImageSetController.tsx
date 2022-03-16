@@ -6,7 +6,7 @@ export type ImageSetControllerProps = {
   data: DatasetInfo;
 };
 
-function ImageSetController({ id }: ImageSetControllerProps) {
+function ImageSetController({ id, data }: ImageSetControllerProps) {
   return (
     <>
       <div>ImageSetController</div>
