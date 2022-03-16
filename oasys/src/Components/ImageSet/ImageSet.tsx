@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Grid, Card } from '@mui/material';
 import styled, { css } from 'styled-components';
 import ImageCard from './ImageCard';
+import { DatasetInfo } from '../../Pages/ListImageSet';
 
 const baseImageSet = {
   datasetName: 'test_dataset1',
@@ -48,7 +49,12 @@ const StyledImageSet = styled(Box)(
   `,
 );
 
-function ImageSet() {
+export type ImageSetProps = {
+  id: number;
+  data: Promise<DatasetInfo>;
+};
+
+function ImageSet({ id, data }: ImageSetProps) {
   const cardElements = baseImageSet.image_metadata.map((objects, index) => {
     return (
       <Grid item xs={4} sm={3} md={3} lg={2} key={`imageCard${index}`}>
