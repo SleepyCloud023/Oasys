@@ -4,36 +4,6 @@ import styled, { css } from 'styled-components';
 import ImageCard from './ImageCard';
 import { DatasetInfo } from '../../Pages/ListImageSet';
 
-const baseImageSet = {
-  datasetName: 'test_dataset1',
-  image_metadata: [
-    {
-      id: 1,
-      imageName: 'menu_1.png',
-      imageSize: '340 453',
-      imageURL: 'http://35.197.111.137:5001/img/menu_1.png',
-    },
-    {
-      id: 2,
-      imageName: 'menu_2.png',
-      imageSize: '340 340',
-      imageURL: 'http://35.197.111.137:5001/img/menu_2.png',
-    },
-    {
-      id: 3,
-      imageName: 'menu_3.png',
-      imageSize: '340 453',
-      imageURL: 'http://35.197.111.137:5001/img/menu_3.png',
-    },
-    {
-      id: 4,
-      imageName: 'menu_4.png',
-      imageSize: '340 454',
-      imageURL: 'http://35.197.111.137:5001/img/menu_4.png',
-    },
-  ],
-};
-
 const StyledImageSetPanel = styled(Box)(
   () => css`
     overflow-y: scroll;
@@ -51,17 +21,16 @@ const StyledImageSet = styled(Box)(
 
 export type ImageSetProps = {
   id: number;
-  data: Promise<DatasetInfo>;
+  data: DatasetInfo;
 };
 
 function ImageSet({ id, data }: ImageSetProps) {
-  const cardElements = baseImageSet.image_metadata.map((objects, index) => {
-    return (
-      <Grid item xs={4} sm={3} md={3} lg={2} key={`imageCard${index}`}>
-        <ImageCard imageInfo={objects}></ImageCard>
-      </Grid>
-    );
-  });
+  const { image_metadata } = data;
+  const cardElements = image_metadata.map((objects, index) => (
+    <Grid item xs={4} sm={3} md={3} lg={2} key={`imageCard${index}`}>
+      <ImageCard imageInfo={objects}></ImageCard>
+    </Grid>
+  ));
 
   return (
     <StyledImageSetPanel>

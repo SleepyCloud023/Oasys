@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, css } from '@mui/material';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import styled from '@mui/system/styled';
 import { ImageSetController, ImageSet } from '../Components';
 import axios, { AxiosResponse } from 'axios';
@@ -12,8 +12,6 @@ const StyledBox = styled(Box)(
     flex: 1 0 0;
   `,
 );
-
-const serverURL = `http://35.197.111.137:5000`;
 
 type ImageMetaData = {
   id: number;
@@ -27,28 +25,31 @@ export type DatasetInfo = {
   image_metadata: ImageMetaData[];
 };
 
-function ListImageSet() {
-  const parmas = useParams();
-  const id = parmas.id;
+const serverURL = 'http://35.197.111.137:5000';
 
-  if (typeof id === 'undefined') {
+function ListImageSet() {
+  const [data, setData] = useState<DatasetInfo | null>(null);
+  // const imageSetURL = useLocation().pathname;
+  const id = useParams().id;
+
+  useEffect(() => {
+    const imageSetURL = `${serverURL}/dataset/${id}`;
+    axios.get(imageSetURL).then((response: AxiosResponse) => {
+      // TODO: 에러처리 필요함
+      const data_response: DatasetInfo = response.data;
+      setData(data_response);
+    });
+  }, [id]);
+
+  if (typeof id === 'undefined' || data === null) {
     // TODO: 에러시 보여줄 페이지 작성
     return null;
   }
 
-  const imageSetURL = `${serverURL}/dataset/${id}`;
-  const imageSetData = axios
-    .get(imageSetURL)
-    .then((response: AxiosResponse) => {
-      // 에러처리 필요함
-      const data: DatasetInfo = response.data;
-      return data;
-    });
-
   return (
     <StyledBox>
-      <ImageSetController id={parseInt(id)} data={imageSetData} />
-      <ImageSet id={parseInt(id)} data={imageSetData} />
+      <ImageSetController id={parseInt(id)} data={data} />
+      <ImageSet id={parseInt(id)} data={data} />
     </StyledBox>
   );
 }

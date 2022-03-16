@@ -1,18 +1,20 @@
 /** @jsxImportSource @emotion/react */
 import * as React from 'react';
-import { ListImageSet } from '../../Pages';
-import ImageSet from '../ImageSet/ImageSet';
-import ImageSetController from '../ImageSetController/ImageSetController';
+import { ImageSetProps } from '../ImageSet/ImageSet';
+import { ImageSetControllerProps } from '../ImageSetController/ImageSetController';
 
 const serverURL = `http://35.197.111.137:5000`;
 
-type TargetElements = typeof ImageSet | typeof ImageSetController;
-type DataAdminProps<T extends TargetElements> = {
-  children: Array<T>;
+// type TargetPages = ImageSetProps | ImageSetControllerProps;
+type TargetProps = ImageSetProps;
+type DataAdminProps = {
+  children: React.ReactElement<TargetProps>[];
+  // children: JSX.Element[];
 };
 
-function DataAdmin<T extends TargetElements>({ children }: DataAdminProps<T>) {
-  return <>{children.map((Child, idx) => 1)}</>;
+function DataAdmin({ children }: DataAdminProps) {
+  const my_children = children.map((Component, index) => Component.props);
+  return <>{}</>;
 }
 
 export default DataAdmin;
