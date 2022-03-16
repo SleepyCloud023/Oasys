@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Grid, Card } from '@mui/material';
 import styled, { css } from 'styled-components';
 import ImageCard from './ImageCard';
-import { DatasetInfo } from '../../Pages/ListImageSet';
+import { DatasetInfo } from '../../Pages/ListImage';
 
 const StyledImageSetPanel = styled(Box)`
   overflow-y: scroll;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { DatasetInfo } from '../../Pages/ListImageSet';
+import { DatasetInfo } from '../../Pages/ListImage';
 
 export type ImageSetControllerProps = {
   id: number;
