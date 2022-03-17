@@ -16,9 +16,10 @@ def create_app():
 
     @app.route('/')
     def hello_pybo():
-        return 'Test Channel _ '
+        return 'Hello Oasys!'
 
-    from . import get_data
+    from . import get_data, update_data
     app.register_blueprint(get_data.bp)
+    app.register_blueprint(update_data.bp)
 
     return app

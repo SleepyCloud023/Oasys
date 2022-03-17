@@ -3,11 +3,11 @@ from flask import Blueprint
 from flask import jsonify
 from .models import User, Dataset, ImageMetadata
 
-bp = Blueprint('main', __name__, url_prefix='/')
+bp = Blueprint('get_data', __name__, url_prefix='/')
 
 
 @bp.route('/image_info/<id_>', methods=['GET'])
-def get_object(id_):
+def get_data(id_):
     """특정 image 에 대한 정보 반환
 
     Args:
@@ -18,8 +18,8 @@ def get_object(id_):
     """
 
     query = ImageMetadata.query.filter_by(id=id_).first()
-    anno_json = query.annotation
-    anno_json = json.loads(anno_json)
+    anno_str = query.annotation
+    anno_json = json.loads(anno_str)
 
     result_json = {"imageURL": query.image_url, "imageName": query.image_name,
                    "imageSize": query.image_size, "annotation": anno_json}
