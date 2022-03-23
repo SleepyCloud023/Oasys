@@ -1,14 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import * as React from 'react';
-import { ImageSetProps } from '../ImageSet/ImageSet';
-import { ImageSetControllerProps } from '../ImageSetController/ImageSetController';
 
-const serverURL = `http://35.197.111.137:5000`;
-
-// type TargetPages = ImageSetProps | ImageSetControllerProps;
-type TargetProps = ImageSetProps;
 type DataAdminProps = {
-  children: React.ReactElement<TargetProps>[];
+  children: React.ReactElement[];
   // children: JSX.Element[];
 };
 

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Box, css } from '@mui/material';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import styled from '@mui/system/styled';
-import { ImageSetController, ImageSet } from '../Components';
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
+import { DatasetInfo } from './types/list-image';
+import { ImageSetController } from './ImageSetController';
+import { ImageSet } from './ImageSet';
 
 const StyledBox = styled(Box)(
   ({ theme }) => css`
@@ -12,18 +14,6 @@ const StyledBox = styled(Box)(
     flex: 1 0 0;
   `,
 );
-
-type ImageMetaData = {
-  id: number;
-  imageName: string;
-  imageSize: string;
-  imageURL: string;
-};
-
-export type DatasetInfo = {
-  datasetName: string;
-  image_metadata: ImageMetaData[];
-};
 
 const serverURL = 'http://35.197.111.137:5000';
 
@@ -34,11 +24,10 @@ function ListImage() {
   const imageSetURL = `${serverURL}/dataset/${id}`;
 
   useEffect(() => {
-    async function fetchDataset() {
+    (async function () {
       const response = await axios.get(imageSetURL);
       setDataset(response.data);
-    }
-    fetchDataset();
+    })();
   }, [imageSetURL]);
 
   if (typeof id === 'undefined' || dataset === null) {

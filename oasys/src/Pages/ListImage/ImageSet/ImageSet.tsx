@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Grid, Card } from '@mui/material';
 import styled, { css } from 'styled-components';
 import ImageCard from './ImageCard';
-import { DatasetInfo } from '../../Pages/ListImage';
+import { DatasetInfo } from '../types/list-image';
 
 const StyledImageSetPanel = styled(Box)`
   overflow-y: scroll;
@@ -15,7 +15,7 @@ const StyledImageSet = styled(Box)`
   padding: 20pt;
 `;
 
-export type ImageSetProps = {
+type ImageSetProps = {
   id: number;
   data: DatasetInfo;
 };

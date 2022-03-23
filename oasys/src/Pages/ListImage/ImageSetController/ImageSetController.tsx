@@ -1,5 +1,6 @@
+/** @jsxImportSource @emotion/react */
 import React from 'react';
-import { DatasetInfo } from '../../Pages/ListImage';
+import { DatasetInfo } from '../types/list-image';
 
 export type ImageSetControllerProps = {
   id: number;

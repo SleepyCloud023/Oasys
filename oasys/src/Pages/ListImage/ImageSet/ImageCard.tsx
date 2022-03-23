@@ -5,12 +5,12 @@ import CardMedia from '@mui/material/CardMedia';
 import IconButton from '@mui/material/IconButton';
 import { grey } from '@mui/material/colors';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { ImageInfo } from './type/image';
 import { Box } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { ImageMetaData } from '../types/list-image';
 
 type PropsImageCard = {
-  imageInfo: ImageInfo;
+  imageInfo: ImageMetaData;
 };
 
 function ImageCard({ imageInfo }: PropsImageCard) {
