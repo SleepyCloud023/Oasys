@@ -7,6 +7,7 @@ import { BoxProps } from '@mui/system';
 import { WorkStore } from '../WorkingSection';
 import { ACTION } from '../types';
 import { darken } from 'polished';
+import { useWorkStore } from '../utils';
 
 const StyledForm = styled((props: BoxProps) => (
   <Box component="form" noValidate autoComplete="off" {...props} />
@@ -56,10 +57,7 @@ type PropsAddForm = { title: string; activateForm: boolean };
 function AddForm({ title, activateForm }: PropsAddForm) {
   const defaultUserInput = '';
   const [userInput, setUserinput] = React.useState(defaultUserInput);
-  const notNullStore = React.useContext(WorkStore);
-  if (notNullStore === null) return null;
-
-  const [, workDispatch] = notNullStore;
+  const [, workDispatch] = useWorkStore();
 
   const lowercaseTitle = title.toLowerCase();
   // TODO: variable key name 사용 가능한 지? ENUM type도 알아보기
@@ -74,24 +72,29 @@ function AddForm({ title, activateForm }: PropsAddForm) {
           newCategory: userInput,
         };
 
-  const onSubmit: React.FormEventHandler<HTMLDivElement> = (event) => {
+  const addCategory: React.FormEventHandler<HTMLDivElement> = (event) => {
     event.preventDefault();
     setUserinput(defaultUserInput);
     workDispatch(action);
   };
 
-  const onChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+  const updateState: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     setUserinput(event.target.value);
   };
 
+  const preventBubbling: React.KeyboardEventHandler<HTMLElement> = (event) => {
+    event.stopPropagation();
+  };
+
   return activateForm ? (
-    <StyledForm onSubmit={onSubmit}>
+    <StyledForm onSubmit={addCategory}>
       <StyledTextField
         name={`input-${lowercaseTitle}`}
         placeholder={`type new ${lowercaseTitle}, press enter`}
         // label={`type new ${lowercaseTitle}, press enter`}
         value={userInput}
-        onChange={onChange}
+        onChange={updateState}
+        onKeyDown={preventBubbling}
       />
     </StyledForm>
   ) : null;

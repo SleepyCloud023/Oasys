@@ -1,10 +1,11 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useMemo, useReducer } from 'react';
 import styled from 'styled-components';
 import { ACTION, WorkState } from './types';
 import { getImageInfo, reducer } from './utils';
 import { LeftControlPanel } from './LeftControlPanel';
 import { MainViewPanel } from './MainViewPanel';
 import { RightControlPanel } from './RightControlPanel';
+import KeyboardEventHandler from './keyboardEventHandler';
 
 const StyledWorkingSection = styled.article`
   /* 색상 */
@@ -41,6 +42,10 @@ type WorkingSectionProps = {
 
 function WorkingSection({ id }: WorkingSectionProps) {
   const [workState, workDispatch] = useReducer(reducer, preLoading);
+  const keyInputHandler = useMemo(
+    () => new KeyboardEventHandler(workState, workDispatch),
+    [workState],
+  );
 
   useEffect(() => {
     async function fetchInitStateFromAPI() {
@@ -56,7 +61,7 @@ function WorkingSection({ id }: WorkingSectionProps) {
 
   return (
     <WorkStore.Provider value={[workState, workDispatch]}>
-      <StyledWorkingSection>
+      <StyledWorkingSection onKeyDown={keyInputHandler.updateSelected}>
         <LeftControlPanel />
         <MainViewPanel areaPercent={80} />
         <RightControlPanel areaPercent={20} />
