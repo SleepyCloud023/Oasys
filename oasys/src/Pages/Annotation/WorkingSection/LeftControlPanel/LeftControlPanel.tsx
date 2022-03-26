@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
-import { WorkStore } from '../WorkingSection';
 import { MouseMode } from '../types';
 import { ModeIcon } from './ModeIcon';
+import { useWorkStore } from '../utils';
 
 type PropsLeftControlPanel = {
   readonly areaPercent?: number;
@@ -30,9 +30,7 @@ const StyledLeftPanel = styled.div<PropsLeftControlPanel>`
 `;
 
 function LeftControlPanel({ areaPercent }: PropsLeftControlPanel) {
-  const notNullStore = useContext(WorkStore);
-  if (notNullStore === null) return null;
-  const [workState, workDispatch] = notNullStore;
+  const [workState, workDispatch] = useWorkStore();
   const { mouseMode } = workState;
 
   const changeMouseMode = (nextMode: MouseMode) => {

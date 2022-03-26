@@ -34,13 +34,11 @@ const RightPanel = styled.section<PropsRightControlPanel>`
 `;
 
 function RightControlPanel({ areaPercent }: PropsRightControlPanel) {
-  // TODO: ToggleList에 selectedInfo를 전달해서 선택된 박스 오브젝트를 알 수 있는 기능
-  // Working Section에서 받아온 State를 하위 컴포넌트로 내려줌
   const [workState, workDispatch] = useWorkStore();
   const { box_object_list, category_list, tag_list, selectedBoxList } =
     workState;
 
-  const defaultSelectedInfo = useMemo(
+  const defaultSelectedInfo: SelectedInfo = useMemo(
     () => ({
       selectedBoxSet: selectedBoxList,
       selectedCategorySet: new Set<string>(),
@@ -114,12 +112,8 @@ function RightControlPanel({ areaPercent }: PropsRightControlPanel) {
     [selectedHandler, tag_list],
   );
 
-  const onKeyDownTest = () => {
-    console.log('key down event!');
-  };
-
   return (
-    <RightPanel areaPercent={areaPercent} onKeyDown={onKeyDownTest}>
+    <RightPanel areaPercent={areaPercent}>
       {boundingBoxList}
       {categoryList}
       {tagList}

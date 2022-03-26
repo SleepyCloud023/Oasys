@@ -136,7 +136,6 @@ function ToggleList<T extends ContentType>({
     <AddForm title={title} activateForm={activateForm} />
   ) : null;
 
-  // TODO: isSelected 판단하는 로직 추가
   const listContent = (
     <StyledToggleContent>
       {contentList.map((content, index) => {
