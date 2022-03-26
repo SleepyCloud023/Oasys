@@ -1,11 +1,11 @@
-import React, { useState, useRef, useContext, useReducer } from 'react';
-import styled, { css } from 'styled-components';
+import React, { useMemo, useReducer } from 'react';
+import styled from 'styled-components';
 import Button from '@mui/material/Button';
-import { WorkStore } from '../WorkingSection';
-import { BoxObject, PointXY } from '../types';
 import { CanvasState } from './types/canvasStore';
 import reducer from './utils/reducer';
 import ImageCanvas from './ImageCanvas';
+import { useWorkStore } from '../utils';
+import MainViewHandler from './mainViewHandler';
 
 type PropsMainViewPanel = { readonly areaPercent?: number };
 
@@ -51,13 +51,15 @@ const baseImageState: CanvasState = {
 
 function MainViewCanvas({ areaPercent }: PropsMainViewPanel) {
   const [canvasState, canvasDispatch] = useReducer(reducer, baseImageState);
-
-  const notNullStore = useContext(WorkStore);
-  if (notNullStore === null) return null;
-  const [workState] = notNullStore;
+  const [workState] = useWorkStore();
   const { imageURL, box_object_list } = workState;
 
-  const boxList = box_object_list.map((content, index) => {
+  const mainViewHandler = useMemo(
+    () => new MainViewHandler(canvasState, canvasDispatch),
+    [canvasState],
+  );
+
+  const boxList = box_object_list.map((content) => {
     const { bounding_box } = content;
     return bounding_box;
   });
@@ -65,67 +67,32 @@ function MainViewCanvas({ areaPercent }: PropsMainViewPanel) {
   const ZoomButton = ({ type }: { type: 'in' | 'out' }) => (
     <Button
       variant="outlined"
-      onClick={() => {
-        canvasDispatch({
-          type: 'CANVAS_IMAGEZOOM',
-          flag: type,
-        });
-      }}
+      onClick={() => mainViewHandler.onZoomClick(type)}
     >
       {type === 'in' ? '+' : '-'}
     </Button>
+  );
+
+  const ZoomPercent = ({ percent }: { percent: number }) => (
+    <div style={{ marginLeft: 7, marginRight: 7 }}>
+      {Math.round(percent * 100)}%
+    </div>
   );
 
   return (
     <StyledMainView areaPercent={areaPercent}>
       <MainViewUtil>
         <ZoomButton type="in" />
-        <div style={{ marginLeft: 7, marginRight: 7 }}>
-          {Math.round(canvasState.imageZoomOut * 100)}%
-        </div>
+        <ZoomPercent percent={canvasState.imageZoomOut} />
         <ZoomButton type="out" />
       </MainViewUtil>
 
       <MainViewSvg
-        onContextMenu={(e: React.MouseEvent<SVGSVGElement>) => {
-          e.preventDefault();
-        }}
-        onMouseDown={(e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
-          if (e.nativeEvent.which === 3) {
-            canvasDispatch({
-              type: 'CANVAS_IMAGEDRAG',
-              flag: 'down',
-              offsetX: e.nativeEvent.offsetX,
-              offsetY: e.nativeEvent.offsetY,
-            });
-          }
-        }}
-        onMouseMove={(e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
-          if (e.nativeEvent.which === 3 && canvasState.imgDragEvent['on']) {
-            canvasDispatch({
-              type: 'CANVAS_IMAGEDRAG',
-              flag: 'move',
-              offsetX: e.nativeEvent.offsetX,
-              offsetY: e.nativeEvent.offsetY,
-            });
-          }
-        }}
-        onMouseUp={(e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
-          if (e.nativeEvent.which === 3) {
-            canvasDispatch({
-              type: 'CANVAS_IMAGEDRAG',
-              flag: 'up',
-              offsetX: e.nativeEvent.offsetX,
-              offsetY: e.nativeEvent.offsetY,
-            });
-          }
-        }}
-        onWheel={(e: React.WheelEvent<SVGSVGElement>) => {
-          canvasDispatch({
-            type: 'CANVAS_IMAGEZOOMWHEEL',
-            flag: e.deltaY < 0 ? 'in' : 'out',
-          });
-        }}
+        onContextMenu={mainViewHandler.onContextMenu}
+        onMouseDown={mainViewHandler.onMouseDown}
+        onMouseMove={mainViewHandler.onMouseMove}
+        onMouseUp={mainViewHandler.onMouseUp}
+        onWheel={mainViewHandler.onWheel}
       >
         <ImageCanvas
           boxes={boxList}
