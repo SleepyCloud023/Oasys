@@ -18,8 +18,9 @@ def create_app():
     def hello_pybo():
         return 'Hello Oasys!'
 
-    from . import get_data, update_data
+    from . import get_data, update_data, image
     app.register_blueprint(get_data.bp)
     app.register_blueprint(update_data.bp)
+    app.register_blueprint(image.bp)
 
     return app
