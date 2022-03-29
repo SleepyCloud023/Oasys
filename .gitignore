@@ -133,3 +133,6 @@ my_credential.txt
 .vscode
 .tmp
 PlayGround
+
+# key file
+oasys-api/config/client_secret_.json
