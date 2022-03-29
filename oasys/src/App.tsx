@@ -4,7 +4,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { appTheme } from './colorTheme';
 import NavBar from './Components/NavBar/NavBar';
-import { Annotation, Home, ListDataset, ListImage } from './Pages';
+import { Annotation, Home, ListDataset, ListImage, Login } from './Pages';
 
 const StyledApp = styled.div`
   display: flex;
@@ -24,6 +24,7 @@ function App() {
             <Route path="imageSet/:id" element={<ListImage />} />
           </Route>
           <Route path="/annotation/:id" element={<Annotation />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </StyledApp>
     </ThemeProvider>
