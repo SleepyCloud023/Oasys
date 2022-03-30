@@ -25,6 +25,7 @@ export async function getImageInfo(imageID: number): Promise<WorkState> {
       const { statusText } = response;
       const { annotation, ...imageInfo }: ImageMetaDataResponse = response.data;
       return {
+        id: imageID,
         mouseMode,
         statusText,
         ...imageInfo,
@@ -37,6 +38,7 @@ export async function getImageInfo(imageID: number): Promise<WorkState> {
         errorStatusText = error.response.statusText;
       }
       return {
+        id: -1,
         mouseMode,
         statusText: errorStatusText,
         ...errorImageInfo,
