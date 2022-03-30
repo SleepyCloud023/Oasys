@@ -1,5 +1,3 @@
-import { useContext } from 'react';
-import _ from 'lodash';
 import { ACTION } from '../../types';
 import {
   convertMain2Image,
@@ -8,7 +6,6 @@ import {
 } from './mainViewUtil';
 import { BoundingBox } from '../../types';
 import { CanvasState } from '../types/canvasStore';
-import { Checkbox } from '@mui/material';
 
 type ParamImageCanvasRef = {
   imageCanvas: React.RefObject<SVGSVGElement>;
@@ -52,7 +49,7 @@ export const moveModeMove = (
 ) => {
   const { imageCanvas, cBox, cPoint, cBoxMode } = imageCanvasRef;
 
-  if (cBoxMode.current == 'onMouseDown') {
+  if (cBoxMode.current === 'onMouseDown') {
     if (imageCanvas.current === null || imageCanvas.current === undefined) {
       return null;
     }
@@ -77,7 +74,7 @@ export const moveModeUp = (
   workDispatch: React.Dispatch<ACTION>,
   boxesRef: React.MutableRefObject<(SVGPolygonElement | null)[]>,
 ) => {
-  const { imageCanvas, cBox, cPoint: cPoint, cBoxMode } = imageCanvasRef;
+  const { imageCanvas, cBox, cPoint, cBoxMode } = imageCanvasRef;
   const { imagePoint, imageZoomOut } = canvasState;
 
   if (imageCanvas.current === null || imageCanvas.current === undefined) {
@@ -112,7 +109,7 @@ export const moveModeUp = (
     if (box == null || rect == null) return;
     const check = imageCanvas.current?.checkIntersection(box, rect);
 
-    if (check == true) newSelected.add(index);
+    if (check === true) newSelected.add(index);
   });
 
   workDispatch({
@@ -137,7 +134,7 @@ export const moveModeClick = (
   e: React.MouseEvent<SVGImageElement, MouseEvent>,
   workDispatch: React.Dispatch<ACTION>,
 ) => {
-  if (e.target == e.currentTarget) {
+  if (e.target === e.currentTarget) {
     workDispatch({
       type: 'UPDATE_SELECTED',
       newSelected: new Set(),

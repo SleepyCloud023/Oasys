@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import { ACTION } from '../../types';
-import { PointToString } from './mainViewUtil';
 import { BoundingBox } from '../../types';
 
 type ParamImageCanvasRef = {
@@ -14,12 +13,13 @@ export const polygonModeClick = (
   e: React.MouseEvent<SVGSVGElement, MouseEvent>,
   imageCanvasRef: ParamImageCanvasRef,
   imageZoomOut: number,
+  nextId: number,
   workDispatch: React.Dispatch<ACTION>,
 ) => {
   const { imageCanvas, cPointRef, cPointState, cPoint } = imageCanvasRef;
   const cNum = cPointState.current;
 
-  if (cNum == 3) {
+  if (cNum === 3) {
     for (const cPointElement of cPointRef.current) {
       if (cPointElement == null) {
         continue;
@@ -44,6 +44,7 @@ export const polygonModeClick = (
     workDispatch({
       type: 'ADD_OBJECT',
       newPoint,
+      nextId,
     });
 
     cPointState.current = 0;

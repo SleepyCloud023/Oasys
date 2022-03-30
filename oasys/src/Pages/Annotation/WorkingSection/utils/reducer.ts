@@ -4,12 +4,13 @@ function reducer(state: WorkState, action: ACTION): WorkState {
   switch (action.type) {
     case 'CHANGE_MOUSEMODE':
       return { ...state, mouseMode: action.nextMode };
+
     case 'INIT_STATE':
       return { ...state, ...action.initState };
+
     case 'ADD_OBJECT':
-      const nextId = state.box_object_list.length;
       const new_object: BoxObject = {
-        id: nextId,
+        id: action.nextId,
         category: [],
         bounding_box: action.newPoint,
         extra: [
@@ -24,6 +25,7 @@ function reducer(state: WorkState, action: ACTION): WorkState {
         ...state,
         box_object_list: [...state.box_object_list, new_object],
       };
+
     case 'DELETE_OBJECT':
       const selectedBoxList = state.selectedBoxList;
       const new_boxt_object_list = state.box_object_list.filter(
@@ -38,8 +40,10 @@ function reducer(state: WorkState, action: ACTION): WorkState {
         ...state,
         category_list: [...state.category_list, action.newCategory],
       };
+
     case 'ADD_TAG':
       return { ...state, tag_list: [...state.tag_list, action.newTag] };
+
     case 'UPDATE_SELECTED':
       if (typeof action.newSelected === 'string') {
         const { newSelected } = action;
@@ -57,6 +61,18 @@ function reducer(state: WorkState, action: ACTION): WorkState {
       } else {
         return { ...state, selectedBoxList: action.newSelected };
       }
+
+    case 'EDIT_SELECTED':
+      const newBoxObjectList = state.box_object_list.map(
+        (boxObject: BoxObject) => ({
+          ...boxObject,
+          category:
+            boxObject.id in state.selectedBoxList
+              ? action.newCategory
+              : boxObject.category,
+        }),
+      );
+      return { ...state, box_object_list: newBoxObjectList };
 
     default:
       throw new Error('undefined action type: WorkingSection/utils/reducer.ts');

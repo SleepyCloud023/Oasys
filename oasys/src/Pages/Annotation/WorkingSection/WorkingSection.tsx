@@ -1,4 +1,10 @@
-import React, { useEffect, useMemo, useReducer } from 'react';
+import React, {
+  createContext,
+  useEffect,
+  useMemo,
+  useReducer,
+  useState,
+} from 'react';
 import styled from 'styled-components';
 import { ACTION, WorkState } from './types';
 import { getImageInfo, reducer } from './utils';
@@ -6,6 +12,8 @@ import { LeftControlPanel } from './LeftControlPanel';
 import { MainViewPanel } from './MainViewPanel';
 import { RightControlPanel } from './RightControlPanel';
 import KeyboardEventHandler from './keyboardEventHandler';
+import useEventListener from '../../../Utils/useEventListener';
+import idGenerator from '../../../Utils/idGenerator';
 
 const StyledWorkingSection = styled.article`
   /* 색상 */
@@ -15,6 +23,8 @@ const StyledWorkingSection = styled.article`
   flex: 70 0 0;
   display: flex;
   overflow-y: auto;
+
+  /* 포커스 지원: 키보드 이벤트 핸들러 사용하기 위함 */
   &::-webkit-scrollbar {
     display: none;
   }
@@ -37,36 +47,46 @@ export const WorkStore = React.createContext<
   [WorkState, React.Dispatch<ACTION>] | null
 >(null);
 
+type IdGenerator = () => number;
+export const ObjectIdGenerator = createContext<IdGenerator>(() => 0);
+
 type WorkingSectionProps = {
   id: number;
 };
 
 function WorkingSection({ id }: WorkingSectionProps) {
   const [workState, workDispatch] = useReducer(reducer, preLoading);
-  const keyInputHandler = useMemo(
-    () => new KeyboardEventHandler(workState, workDispatch),
-    [workState],
-  );
+  const [firstId, setFirstId] = useState(0);
+  const objectIdGenerator = useMemo(() => idGenerator(firstId), [firstId]);
+
+  const keyInputHandler = useMemo(() => {
+    return new KeyboardEventHandler(workState, workDispatch);
+  }, [workState]);
 
   useEffect(() => {
     async function fetchInitStateFromAPI() {
       const initState = await getImageInfo(id);
+
       workDispatch({
         type: 'INIT_STATE',
         initState: initState,
       });
+      setFirstId(() => initState.box_object_list.length);
     }
-
     fetchInitStateFromAPI();
   }, [id]);
 
+  useEventListener('keydown', keyInputHandler.editSelected);
+
   return (
     <WorkStore.Provider value={[workState, workDispatch]}>
-      <StyledWorkingSection onKeyDown={keyInputHandler.updateSelected}>
-        <LeftControlPanel />
-        <MainViewPanel areaPercent={80} />
-        <RightControlPanel areaPercent={20} />
-      </StyledWorkingSection>
+      <ObjectIdGenerator.Provider value={objectIdGenerator}>
+        <StyledWorkingSection>
+          <LeftControlPanel />
+          <MainViewPanel areaPercent={80} />
+          <RightControlPanel areaPercent={20} />
+        </StyledWorkingSection>
+      </ObjectIdGenerator.Provider>
     </WorkStore.Provider>
   );
 }

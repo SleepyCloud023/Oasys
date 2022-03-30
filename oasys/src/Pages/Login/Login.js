@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
 
 import './login.css';
 
@@ -72,7 +71,11 @@ function Login() {
           <input type="submit" />
         </div>
       </form>
-      <img className="oauth-google" src="img/btn_google_signin.png" />
+      <img
+        className="oauth-google"
+        src="img/btn_google_signin.png"
+        alt="google_signin"
+      />
     </div>
   );
 

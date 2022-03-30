@@ -35,12 +35,6 @@ export type WorkState = {
 } & Annotation &
   ImageInfo;
 
-// 아래 두가지는 다르다.
-// reducer에서 Union type에 대한 Narrowing(추론)을 가능하게 한다.
-// type ACTION_CHANGE_MOUSEMODE = {
-//   type: string;
-//   nextMode: string;
-// };
 type ACTION_CHANGE_MOUSEMODE = {
   type: 'CHANGE_MOUSEMODE';
   nextMode: MouseMode;
@@ -52,6 +46,7 @@ type ACTION_INIT_STATE = {
 type ACTION_ADD_OBJECT = {
   type: 'ADD_OBJECT';
   newPoint: BoundingBox;
+  nextId: number;
 };
 type ACTION_DELETE_OBJECT = {
   type: 'DELETE_OBJECT';
@@ -69,6 +64,11 @@ type ACTION_UPDATE_SELECTED = {
   newSelected: Set<number> | string;
 };
 
+type ACTION_EDIT_SELECTED = {
+  type: 'EDIT_SELECTED';
+  newCategory: Array<string>;
+};
+
 export type ACTION =
   | ACTION_CHANGE_MOUSEMODE
   | ACTION_INIT_STATE
@@ -76,4 +76,5 @@ export type ACTION =
   | ACTION_ADD_CATEGORY
   | ACTION_ADD_TAG
   | ACTION_UPDATE_SELECTED
-  | ACTION_DELETE_OBJECT;
+  | ACTION_DELETE_OBJECT
+  | ACTION_EDIT_SELECTED;

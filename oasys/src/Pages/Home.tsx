@@ -13,6 +13,7 @@ function Home() {
       <StyleHome>
         <h1>Oasys: Home Page</h1>
       </StyleHome>
+      <div className="g-signin2" data-onsuccess="onSignIn"></div>
     </>
   );
 }

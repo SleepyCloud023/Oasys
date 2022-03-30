@@ -38,7 +38,7 @@ export const boxModeMove = (
 ) => {
   const { imageCanvas, cBox, cPoint, cBoxMode } = imageCanvasRef;
 
-  if (cBoxMode.current == 'onMouseDown') {
+  if (cBoxMode.current === 'onMouseDown') {
     if (imageCanvas.current === null || imageCanvas.current === undefined) {
       return null;
     }
@@ -60,6 +60,7 @@ export const boxModeUp = (
   e: React.MouseEvent<SVGSVGElement, MouseEvent>,
   imageCanvasRef: any,
   imageZoomOut: number,
+  nextId: number,
   workDispatch: React.Dispatch<ACTION>,
 ) => {
   const { imageCanvas, cBox, cPoint, cBoxMode } = imageCanvasRef;
@@ -80,23 +81,25 @@ export const boxModeUp = (
   cBox.current.setAttribute('stroke-width', '0');
 
   if (
-    cPoint.current[0][0] == cPoint.current[2][0] &&
-    cPoint.current[0][0] == cPoint.current[2][0]
+    cPoint.current[0][0] === cPoint.current[2][0] &&
+    cPoint.current[0][0] === cPoint.current[2][0]
   ) {
     return;
   }
 
   const newPoint = _.cloneDeep(cPoint.current);
-  onAdd(newPoint, workDispatch);
+  onAdd(newPoint, nextId, workDispatch);
   cBoxMode.current = 'onMouseUp';
 };
 
 export const onAdd = (
   newPoint: BoundingBox,
+  nextId: number,
   workDispatch: React.Dispatch<ACTION>,
 ) => {
   workDispatch({
     type: 'ADD_OBJECT',
     newPoint,
+    nextId,
   });
 };

@@ -1,24 +1,59 @@
 import React from 'react';
 import { ACTION, WorkState } from './types';
 
-interface KeyboardInterface {
-  updateSelected: React.KeyboardEventHandler<HTMLElement>;
+interface KeyboardEventListener {
+  (event: KeyboardEvent): any;
 }
 
-class KeyboardEventHandler implements KeyboardInterface {
-  private workStore: WorkState;
+class KeyboardEventHandler {
+  private workState: WorkState;
   private workDispatch: React.Dispatch<ACTION>;
 
-  constructor(workStore: WorkState, workDispatch: React.Dispatch<ACTION>) {
-    this.workStore = workStore;
+  constructor(workState: WorkState, workDispatch: React.Dispatch<ACTION>) {
+    this.workState = workState;
     this.workDispatch = workDispatch;
   }
 
-  updateSelected: React.KeyboardEventHandler<HTMLElement> = (event) => {
-    console.log(`key: ${event.key} pressed`);
-    console.log(this.workStore.selectedBoxList);
-    console.log(this.workStore.category_list);
+  editSelected: KeyboardEventListener = (event) => {
+    const pushedCategory = this.getPushedCategory(event.key);
+    console.log(`key: ${event.key} => ${pushedCategory} pressed`);
+    console.log('box_list', this.workState.box_object_list);
   };
+
+  // return -1 when failed
+  getPushedNumber = (rawString: string) => {
+    if (isNotNumber(rawString)) {
+      return -1;
+    }
+
+    const pushedNumber = parseInt(rawString) - 1;
+    if (
+      pushedNumber < 0 ||
+      pushedNumber >= this.workState.category_list.length
+    ) {
+      return -1;
+    }
+
+    return pushedNumber;
+  };
+
+  getPushedCategory = (key: string) => {
+    const pushedNumber = this.getPushedNumber(key);
+    const category =
+      pushedNumber !== -1
+        ? this.workState.category_list[pushedNumber]
+        : undefined;
+
+    return category;
+  };
+}
+
+function isNotNumber(rawString: string) {
+  if (typeof rawString !== 'string' || isNaN(Number(rawString))) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 export default KeyboardEventHandler;

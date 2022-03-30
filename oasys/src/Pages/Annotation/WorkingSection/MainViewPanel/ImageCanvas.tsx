@@ -1,6 +1,5 @@
-import React, { useRef, useContext } from 'react';
-import { WorkStore } from '../WorkingSection';
-import { BoundingBox, PointXY } from '../types';
+import React, { useRef } from 'react';
+import { BoundingBox } from '../types';
 import { useWorkStore } from '../utils';
 import { CanvasState } from './types/canvasStore';
 import { PointToString } from './utils/mainViewUtil';
@@ -13,6 +12,7 @@ import {
 } from './utils/moveEventLogic';
 import Box from './Box';
 import { polygonModeClick } from './utils/polygonEventLogic';
+import useObjectIdGenerator from '../utils/useObjectIdGenerator';
 
 type PropsImageCanvas = {
   boxes: Array<{ id: number; bounding_box: BoundingBox }>;
@@ -46,6 +46,7 @@ function ImageCanvas({ boxes, imageURL, canvasState }: PropsImageCanvas) {
     cPoint,
   };
 
+  const objectIdGenerator = useObjectIdGenerator();
   const [workState, workDispatch] = useWorkStore();
   const [imgWidth, imgHeight] = workState.imageSize
     .split(' ')
@@ -69,6 +70,7 @@ function ImageCanvas({ boxes, imageURL, canvasState }: PropsImageCanvas) {
       />
     );
   });
+
   const cPointElement = [0, 0, 0, 0].map((_, index) => {
     return (
       <circle
@@ -93,28 +95,34 @@ function ImageCanvas({ boxes, imageURL, canvasState }: PropsImageCanvas) {
         y={imagePoint[1]}
         viewBox={'0, 0, ' + imgWidth + ', ' + imgHeight}
         onMouseDown={(e) => {
-          if (e.nativeEvent.which == 1) {
-            if (workState.mouseMode == 'BOX') {
+          if (e.nativeEvent.which === 1) {
+            if (workState.mouseMode === 'BOX') {
               boxModeDown(e, imageCanvasRef, imageZoomOut);
-            } else if (workState.mouseMode == 'MOVE') {
+            } else if (workState.mouseMode === 'MOVE') {
               moveModeDown(e, imageCanvasRef, imageZoomOut);
             }
           }
         }}
         onMouseMove={(e) => {
-          if (e.nativeEvent.which == 1) {
-            if (workState.mouseMode == 'BOX') {
+          if (e.nativeEvent.which === 1) {
+            if (workState.mouseMode === 'BOX') {
               boxModeMove(e, imageCanvasRef, imageZoomOut);
-            } else if (workState.mouseMode == 'MOVE') {
+            } else if (workState.mouseMode === 'MOVE') {
               moveModeMove(e, imageCanvasRef, imageZoomOut);
             }
           }
         }}
         onMouseUp={(e) => {
-          if (e.nativeEvent.which == 1) {
-            if (workState.mouseMode == 'BOX') {
-              boxModeUp(e, imageCanvasRef, imageZoomOut, workDispatch);
-            } else if (workState.mouseMode == 'MOVE') {
+          if (e.nativeEvent.which === 1) {
+            if (workState.mouseMode === 'BOX') {
+              boxModeUp(
+                e,
+                imageCanvasRef,
+                imageZoomOut,
+                objectIdGenerator(),
+                workDispatch,
+              );
+            } else if (workState.mouseMode === 'MOVE') {
               moveModeUp(
                 e,
                 imageCanvasRef,
@@ -126,8 +134,14 @@ function ImageCanvas({ boxes, imageURL, canvasState }: PropsImageCanvas) {
           }
         }}
         onClick={(e) => {
-          if (workState.mouseMode == 'POLYGON') {
-            polygonModeClick(e, imageCanvasRef, imageZoomOut, workDispatch);
+          if (workState.mouseMode === 'POLYGON') {
+            polygonModeClick(
+              e,
+              imageCanvasRef,
+              imageZoomOut,
+              objectIdGenerator(),
+              workDispatch,
+            );
           }
         }}
         ref={imageCanvas}
@@ -136,7 +150,7 @@ function ImageCanvas({ boxes, imageURL, canvasState }: PropsImageCanvas) {
         <image
           href={imageURL}
           onClick={(e) => {
-            if (workState.mouseMode == 'MOVE') {
+            if (workState.mouseMode === 'MOVE') {
               moveModeClick(e, workDispatch);
             }
           }}
