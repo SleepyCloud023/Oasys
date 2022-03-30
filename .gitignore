@@ -135,4 +135,7 @@ my_credential.txt
 PlayGround
 
 # key file
-oasys-api/config/client_secret_.json
+./oasys-api/config/client_secret.json
+
+# react package
+./oasys/package.json

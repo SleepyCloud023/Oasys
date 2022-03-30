@@ -38,6 +38,10 @@ function LeftControlPanel({ areaPercent }: PropsLeftControlPanel) {
       type: 'CHANGE_MOUSEMODE',
       nextMode,
     });
+    workDispatch({
+      type: 'UPDATE_SELECTED',
+      newSelected: new Set(),
+    });
   };
 
   const defaultMouseMode = 'MOVE';

@@ -132,3 +132,15 @@ export const moveModeUp = (
   //const check = imageCanvas.current?.checkIntersection(boxesRef.current[0], rect);
   //console.log('intersection : ', check);
 };
+
+export const moveModeClick = (
+  e: React.MouseEvent<SVGImageElement, MouseEvent>,
+  workDispatch: React.Dispatch<ACTION>,
+) => {
+  if (e.target == e.currentTarget) {
+    workDispatch({
+      type: 'UPDATE_SELECTED',
+      newSelected: new Set(),
+    });
+  }
+};
