@@ -24,6 +24,15 @@ function reducer(state: WorkState, action: ACTION): WorkState {
         ...state,
         box_object_list: [...state.box_object_list, new_object],
       };
+    case 'DELETE_OBJECT':
+      const selectedBoxList = state.selectedBoxList;
+      const new_boxt_object_list = state.box_object_list.filter(
+        (object) => !selectedBoxList.has(object.id),
+      );
+      return {
+        ...state,
+        box_object_list: new_boxt_object_list,
+      };
     case 'ADD_CATEGORY':
       return {
         ...state,
