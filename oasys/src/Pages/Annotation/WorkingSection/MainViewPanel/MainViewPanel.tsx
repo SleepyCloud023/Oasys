@@ -55,7 +55,11 @@ function MainViewCanvas({ areaPercent }: PropsMainViewPanel) {
   const [canvasState, canvasDispatch] = useReducer(reducer, baseImageState);
   const [workState, workDispatch] = useWorkStore();
   const { imageURL, box_object_list, category_list, tag_list } = workState;
-  const [alert, setAlert] = React.useState({ open: false, success: true });
+  const [alert, setAlert] = React.useState({
+    open: false,
+    success: true,
+    message: '',
+  });
 
   const mainViewHandler = useMemo(
     () => new MainViewHandler(canvasState, canvasDispatch),
@@ -110,9 +114,13 @@ function MainViewCanvas({ areaPercent }: PropsMainViewPanel) {
     const imageSetURL = `${serverURL}/image_info/${workState.id}`;
     const response = await axios.post(imageSetURL, annotation);
     if (response.data.success) {
-      setAlert({ open: true, success: true });
+      setAlert({ open: true, success: true, message: 'Save Success !!' });
     } else {
-      setAlert({ open: true, success: false });
+      setAlert({
+        open: true,
+        success: false,
+        message: 'Save Error : ' + response.data.error_msg,
+      });
     }
   }
   const SaveButton = () => (
@@ -138,14 +146,14 @@ function MainViewCanvas({ areaPercent }: PropsMainViewPanel) {
             color="inherit"
             size="small"
             onClick={() => {
-              setAlert({ open: false, success: true });
+              setAlert({ open: false, success: true, message: '' });
             }}
           >
             <CloseIcon fontSize="inherit" />
           </IconButton>
         }
       >
-        {alert.success ? 'Save Success !!' : 'Save Error !!'}
+        {alert.message}
       </Alert>
     </Collapse>
   );

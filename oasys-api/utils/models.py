@@ -1,4 +1,9 @@
-from app import db
+# coding: utf-8
+from flask_sqlalchemy import SQLAlchemy
+
+
+db = SQLAlchemy()
+
 
 
 class Dataset(db.Model):
@@ -11,11 +16,11 @@ class Dataset(db.Model):
     modification_date = db.Column(db.DateTime)
     rep_image = db.Column(db.String(300))
 
-    user = db.relationship(
-        'User', primaryjoin='Dataset.user_id == User.id', backref='datasets')
+    user = db.relationship('User', primaryjoin='Dataset.user_id == User.id', backref='datasets')
 
 
-class ImageMetadata(db.Model):
+
+class ImageMetadatum(db.Model):
     __tablename__ = 'image_metadata'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -23,14 +28,13 @@ class ImageMetadata(db.Model):
     image_url = db.Column(db.String(300))
     image_name = db.Column(db.String(50))
     image_size = db.Column(db.String(30))
-    dataset_id = db.Column(db.ForeignKey(
-        'dataset.id', onupdate='CASCADE'), index=True)
+    dataset_id = db.Column(db.ForeignKey('dataset.id', onupdate='CASCADE'), index=True)
     size = db.Column(db.String(20))
     creation_date = db.Column(db.DateTime)
     modification_date = db.Column(db.DateTime)
 
-    dataset = db.relationship(
-        'Dataset', primaryjoin='ImageMetadata.dataset_id == Dataset.id', backref='image_metadata')
+    dataset = db.relationship('Dataset', primaryjoin='ImageMetadatum.dataset_id == Dataset.id', backref='image_metadata')
+
 
 
 class User(db.Model):
