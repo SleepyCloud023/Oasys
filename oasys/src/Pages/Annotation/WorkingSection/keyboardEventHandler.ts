@@ -16,8 +16,16 @@ class KeyboardEventHandler {
 
   editSelected: KeyboardEventListener = (event) => {
     const pushedCategory = this.getPushedCategory(event.key);
-    console.log(`key: ${event.key} => ${pushedCategory} pressed`);
-    console.log('box_list', this.workState.box_object_list);
+
+    if (pushedCategory) {
+      this.workDispatch({
+        type: 'EDIT_SELECTED',
+        newCategory: pushedCategory,
+        isAppend: false,
+      });
+    }
+    console.log(`pushed key: ${pushedCategory}`);
+    console.log(this.workState.box_object_list);
   };
 
   // return -1 when failed

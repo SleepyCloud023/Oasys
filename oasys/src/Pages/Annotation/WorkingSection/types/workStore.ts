@@ -66,7 +66,8 @@ type ACTION_UPDATE_SELECTED = {
 
 type ACTION_EDIT_SELECTED = {
   type: 'EDIT_SELECTED';
-  newCategory: Array<string>;
+  newCategory: string;
+  isAppend: boolean;
 };
 
 export type ACTION =

@@ -71,6 +71,7 @@ function WorkingSection({ id }: WorkingSectionProps) {
         type: 'INIT_STATE',
         initState: initState,
       });
+
       setFirstId(() => initState.box_object_list.length);
     }
     fetchInitStateFromAPI();

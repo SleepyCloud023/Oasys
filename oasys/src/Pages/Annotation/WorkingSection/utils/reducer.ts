@@ -64,13 +64,18 @@ function reducer(state: WorkState, action: ACTION): WorkState {
 
     case 'EDIT_SELECTED':
       const newBoxObjectList = state.box_object_list.map(
-        (boxObject: BoxObject) => ({
-          ...boxObject,
-          category:
-            boxObject.id in state.selectedBoxList
-              ? action.newCategory
+        (boxObject: BoxObject) => {
+          const newCategory = action.isAppend
+            ? [...boxObject.category, action.newCategory]
+            : [action.newCategory];
+
+          return {
+            ...boxObject,
+            category: state.selectedBoxList.has(boxObject.id)
+              ? newCategory
               : boxObject.category,
-        }),
+          };
+        },
       );
       return { ...state, box_object_list: newBoxObjectList };
 
