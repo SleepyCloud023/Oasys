@@ -52,6 +52,9 @@ type ACTION_ADD_OBJECT = {
   type: 'ADD_OBJECT';
   newPoint: BoundingBox;
 };
+type ACTION_DELETE_OBJECT = {
+  type: 'DELETE_OBJECT';
+};
 type ACTION_ADD_CATEGORY = {
   type: 'ADD_CATEGORY';
   newCategory: string;
@@ -71,4 +74,5 @@ export type ACTION =
   | ACTION_ADD_OBJECT
   | ACTION_ADD_CATEGORY
   | ACTION_ADD_TAG
-  | ACTION_UPDATE_SELECTED;
+  | ACTION_UPDATE_SELECTED
+  | ACTION_DELETE_OBJECT;

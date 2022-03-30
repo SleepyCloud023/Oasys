@@ -51,7 +51,7 @@ const baseImageState: CanvasState = {
 
 function MainViewCanvas({ areaPercent }: PropsMainViewPanel) {
   const [canvasState, canvasDispatch] = useReducer(reducer, baseImageState);
-  const [workState] = useWorkStore();
+  const [workState, workDispatch] = useWorkStore();
   const { imageURL, box_object_list } = workState;
 
   const mainViewHandler = useMemo(
@@ -79,12 +79,31 @@ function MainViewCanvas({ areaPercent }: PropsMainViewPanel) {
     </div>
   );
 
+  const DeleteButton = () => (
+    <Button
+      sx={{ marginLeft: 'auto' }}
+      variant="outlined"
+      onClick={() => {
+        workDispatch({
+          type: 'DELETE_OBJECT',
+        });
+        workDispatch({
+          type: 'UPDATE_SELECTED',
+          newSelected: new Set(),
+        });
+      }}
+    >
+      Delete Selected Boxes
+    </Button>
+  );
+
   return (
     <StyledMainView areaPercent={areaPercent}>
       <MainViewUtil>
         <ZoomButton type="in" />
         <ZoomPercent percent={canvasState.imageZoomOut} />
         <ZoomButton type="out" />
+        <DeleteButton />
       </MainViewUtil>
 
       <MainViewSvg

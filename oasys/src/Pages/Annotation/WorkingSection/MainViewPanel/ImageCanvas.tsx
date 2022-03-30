@@ -5,7 +5,12 @@ import { useWorkStore } from '../utils';
 import { CanvasState } from './types/canvasStore';
 import { PointToString } from './utils/mainViewUtil';
 import { boxModeMove, boxModeDown, boxModeUp } from './utils/boxEventLogic';
-import { moveModeMove, moveModeDown, moveModeUp } from './utils/moveEventLogic';
+import {
+  moveModeMove,
+  moveModeDown,
+  moveModeUp,
+  moveModeClick,
+} from './utils/moveEventLogic';
 import Box from './Box';
 import { polygonModeClick } from './utils/polygonEventLogic';
 
@@ -128,7 +133,14 @@ function ImageCanvas({ boxes, imageURL, canvasState }: PropsImageCanvas) {
         ref={imageCanvas}
       >
         {/* TODO: public path to url of API server */}
-        <image href={imageURL} />
+        <image
+          href={imageURL}
+          onClick={(e) => {
+            if (workState.mouseMode == 'MOVE') {
+              moveModeClick(e, workDispatch);
+            }
+          }}
+        />
         <polygon
           points="100,100, 100,100 100,100 100,100"
           fill="transparent"
