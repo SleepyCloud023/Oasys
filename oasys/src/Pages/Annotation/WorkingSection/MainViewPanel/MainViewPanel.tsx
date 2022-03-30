@@ -63,8 +63,8 @@ function MainViewCanvas({ areaPercent }: PropsMainViewPanel) {
   );
 
   const boxList = box_object_list.map((content) => {
-    const { bounding_box } = content;
-    return bounding_box;
+    const { id, bounding_box } = content;
+    return { id, bounding_box };
   });
 
   const ZoomButton = ({ type }: { type: 'in' | 'out' }) => (

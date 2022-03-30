@@ -15,7 +15,7 @@ import Box from './Box';
 import { polygonModeClick } from './utils/polygonEventLogic';
 
 type PropsImageCanvas = {
-  boxes: Array<BoundingBox>;
+  boxes: Array<{ id: number; bounding_box: BoundingBox }>;
   imageURL: string;
   canvasState: CanvasState;
 };
@@ -53,16 +53,16 @@ function ImageCanvas({ boxes, imageURL, canvasState }: PropsImageCanvas) {
       return parseInt(sizeNum);
     });
 
-  const boxElements = boxes.map((objects, index) => {
-    const points_ = PointToString(objects);
+  const boxElements = boxes.map((objects) => {
+    const points_ = PointToString(objects.bounding_box);
     let color_ = 'green';
-    if (workState.selectedBoxList.has(index)) {
+    if (workState.selectedBoxList.has(objects.id)) {
       color_ = 'red';
     }
     return (
       <Box
-        key={`customId${index}`}
-        index={index}
+        key={`customId${objects.id}`}
+        index={objects.id}
         points={points_}
         color={color_}
         boxesRef={boxesRef}
