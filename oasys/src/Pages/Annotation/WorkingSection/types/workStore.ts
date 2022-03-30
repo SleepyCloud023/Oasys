@@ -28,6 +28,7 @@ export type ImageInfo = {
 };
 
 export type WorkState = {
+  id: number;
   mouseMode: MouseMode;
   statusText: string;
   selectedBoxList: Set<number>;

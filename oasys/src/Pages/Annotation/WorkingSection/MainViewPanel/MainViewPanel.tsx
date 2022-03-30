@@ -1,11 +1,13 @@
 import React, { useMemo, useReducer } from 'react';
 import styled from 'styled-components';
-import Button from '@mui/material/Button';
 import { CanvasState } from './types/canvasStore';
 import reducer from './utils/reducer';
 import ImageCanvas from './ImageCanvas';
 import { useWorkStore } from '../utils';
 import MainViewHandler from './mainViewHandler';
+import axios from 'axios';
+import { Button, Alert, Collapse, IconButton } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 
 type PropsMainViewPanel = { readonly areaPercent?: number };
 
@@ -52,7 +54,8 @@ const baseImageState: CanvasState = {
 function MainViewCanvas({ areaPercent }: PropsMainViewPanel) {
   const [canvasState, canvasDispatch] = useReducer(reducer, baseImageState);
   const [workState, workDispatch] = useWorkStore();
-  const { imageURL, box_object_list } = workState;
+  const { imageURL, box_object_list, category_list, tag_list } = workState;
+  const [alert, setAlert] = React.useState({ open: false, success: true });
 
   const mainViewHandler = useMemo(
     () => new MainViewHandler(canvasState, canvasDispatch),
@@ -97,13 +100,65 @@ function MainViewCanvas({ areaPercent }: PropsMainViewPanel) {
     </Button>
   );
 
+  async function SaveAnno() {
+    const annotation: any = {
+      category_list,
+      tag_list,
+      box_object_list,
+    };
+    const serverURL = 'http://35.197.111.137:5000';
+    const imageSetURL = `${serverURL}/image_info/${workState.id}`;
+    const response = await axios.post(imageSetURL, annotation);
+    if (response.data.success) {
+      setAlert({ open: true, success: true });
+    } else {
+      setAlert({ open: true, success: false });
+    }
+  }
+  const SaveButton = () => (
+    <Button
+      variant="outlined"
+      onClick={() => {
+        SaveAnno();
+      }}
+    >
+      Save Annotation
+    </Button>
+  );
+
+  const AlertBox = () => (
+    <Collapse in={alert.open}>
+      <Alert
+        sx={{ position: 'absolute', top: '70px', mb: 2 }}
+        variant="filled"
+        severity={alert.success ? 'success' : 'error'}
+        action={
+          <IconButton
+            aria-label="close"
+            color="inherit"
+            size="small"
+            onClick={() => {
+              setAlert({ open: false, success: true });
+            }}
+          >
+            <CloseIcon fontSize="inherit" />
+          </IconButton>
+        }
+      >
+        {alert.success ? 'Save Success !!' : 'Save Error !!'}
+      </Alert>
+    </Collapse>
+  );
+
   return (
     <StyledMainView areaPercent={areaPercent}>
+      <AlertBox />
       <MainViewUtil>
         <ZoomButton type="in" />
         <ZoomPercent percent={canvasState.imageZoomOut} />
         <ZoomButton type="out" />
         <DeleteButton />
+        <SaveButton />
       </MainViewUtil>
 
       <MainViewSvg

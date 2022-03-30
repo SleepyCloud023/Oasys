@@ -8,11 +8,10 @@ bp = Blueprint('update_data', __name__, url_prefix='/')
 
 @bp.route('/image_info/<id_>', methods=['POST'])
 def update_data(id_):
-    msg_false = jsonify({"succes": False})
+    msg_false = jsonify({"success": False})
     if request.is_json is False:
         return msg_false
 
-    value = request.get_json()
     target_data = ImageMetadata.query.get(id_)
     if target_data is None:
         return msg_false
@@ -22,4 +21,4 @@ def update_data(id_):
     target_data.annotation = anno_str
     db.session.commit()
 
-    return jsonify({"succes": True})
+    return jsonify({"success": True})

@@ -21,6 +21,7 @@ const StyledWorkingSection = styled.article`
 `;
 
 const preLoading: WorkState = {
+  id: -1,
   statusText: 'PRELOADING',
   mouseMode: 'MOVE',
   imageURL: '',
