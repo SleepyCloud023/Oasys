@@ -28,3 +28,9 @@ def optional():
 @oauth2.required
 def info():
     return "Hello, {} ({})".format(oauth2.email, oauth2.user_id)
+
+
+@app.route('/callback')
+@oauth2.required
+def callback():
+    return "callback"

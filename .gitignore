@@ -137,5 +137,5 @@ PlayGround
 # key file
 ./oasys-api/config/client_secret.json
 
-# react package
-./oasys/package.json
+# react env
+oasys/.env
