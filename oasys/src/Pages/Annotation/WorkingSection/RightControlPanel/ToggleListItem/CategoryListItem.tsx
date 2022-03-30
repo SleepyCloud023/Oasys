@@ -30,7 +30,7 @@ export function CategoryListItem({
       onClick={() => selectedHandler.onSelect({ type, categoryName })}
     >
       <OptionalDivider index={index} />
-      <NumberChip id={index} />
+      <NumberChip id={index + 1} />
       {textClassName}
     </StyledListItemContainer>
   );

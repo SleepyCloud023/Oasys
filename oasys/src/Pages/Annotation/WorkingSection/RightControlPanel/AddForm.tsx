@@ -50,11 +50,11 @@ const StyledTextField = styled((props: TextFieldProps) => (
   `,
 );
 
-type PropsAddForm = { title: string; activateForm: boolean };
+type PropsAddForm = { title: string };
 
-// TODO: 리팩토링 해야함!
+// TODO: 리팩토링
 // 특히 사용자 입력 폼을 재사용한 컴포넌트로 전환
-function AddForm({ title, activateForm }: PropsAddForm) {
+function AddForm({ title }: PropsAddForm) {
   const defaultUserInput = '';
   const [userInput, setUserinput] = React.useState(defaultUserInput);
   const [, workDispatch] = useWorkStore();
@@ -86,7 +86,7 @@ function AddForm({ title, activateForm }: PropsAddForm) {
     event.stopPropagation();
   };
 
-  return activateForm ? (
+  return (
     <StyledForm onSubmit={addCategory}>
       <StyledTextField
         name={`input-${lowercaseTitle}`}
@@ -97,7 +97,7 @@ function AddForm({ title, activateForm }: PropsAddForm) {
         onKeyDown={preventBubbling}
       />
     </StyledForm>
-  ) : null;
+  );
 }
 
 export default AddForm;

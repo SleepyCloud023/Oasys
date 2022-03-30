@@ -23,26 +23,41 @@ import SelectedHandler, {
 
 type SectionProps = {
   readonly upperFixed?: boolean;
-  readonly expandRatio?: number;
+  readonly contentLength: number;
+  readonly hasAddForm: boolean;
+  readonly spread: boolean;
 };
 
 const StyledToggleSection = styled(
-  ({ upperFixed, expandRatio, ...props }: SectionProps & BoxProps) => (
+  ({
+    upperFixed,
+    contentLength,
+    hasAddForm,
+    ...props
+  }: SectionProps & BoxProps) => (
     <Box className={'toggle-section'} component={'section'} {...props} />
   ),
-)(
-  ({ upperFixed, expandRatio }) => css`
+)(({ upperFixed, contentLength, hasAddForm, spread }) => {
+  const coverHeight = 2;
+  const formHeight = hasAddForm ? 2.2 : 0;
+  const itemHeight = 1.75;
+  const contentHeight = spread ? formHeight + contentLength * itemHeight : 0;
+  const listContainsFour = coverHeight + formHeight + itemHeight * 4;
+  const minHeight = Math.min(coverHeight + contentHeight, listContainsFour);
+
+  return css`
     margin: 0;
     padding: 0;
     width: 100%;
     overflow-y: auto;
-    min-height: 2rem;
+    min-height: ${minHeight + 'rem'};
+    /* max-height: 50%; */
     margin-bottom: ${upperFixed ? 'auto' : null};
     &::-webkit-scrollbar {
       display: none;
     }
-  `,
-);
+  `;
+});
 
 const StyledToggleList = styled((props: AccordionProps) => (
   <Accordion disableGutters defaultExpanded {...props} />
@@ -89,24 +104,25 @@ type ContentProps<T> = {
 type Extractor<T> = (props: ContentProps<T>) => React.ReactElement;
 
 type PropsToggleList<T> = {
+  readonly upperFixed?: boolean;
   readonly title: string;
   readonly contentList: Array<T>;
   readonly type: ToggleListType;
   readonly ListItemGenerator: Extractor<T>;
   readonly selectedHandler: SelectedHandler;
   readonly addButton?: boolean;
-} & SectionProps;
+};
 
 function ToggleList<T extends ContentType>({
   title,
   contentList,
   type,
   ListItemGenerator,
-  selectedHandler: selectedChecker,
+  selectedHandler,
   upperFixed,
-  expandRatio,
   addButton,
 }: PropsToggleList<T>) {
+  const [spread, setSpread] = useState(true);
   const [activateForm, setActivateForm] = useState(false);
   const [, workDispatch] = useWorkStore();
 
@@ -126,15 +142,16 @@ function ToggleList<T extends ContentType>({
   );
 
   const listCover = (
-    <StyledToggleCover expandIcon={<ExpandMoreIcon />}>
+    <StyledToggleCover
+      expandIcon={<ExpandMoreIcon />}
+      onClick={() => setSpread((state) => !state)}
+    >
       {title}
       {optinalAddButton}
     </StyledToggleCover>
   );
 
-  const optionalAddForm = addButton ? (
-    <AddForm title={title} activateForm={activateForm} />
-  ) : null;
+  const optionalAddForm = activateForm ? <AddForm title={title} /> : null;
 
   const listContent = (
     <StyledToggleContent>
@@ -145,7 +162,7 @@ function ToggleList<T extends ContentType>({
             content={content}
             index={index}
             dispatch={workDispatch}
-            selectedHandler={selectedChecker}
+            selectedHandler={selectedHandler}
           />
         );
       })}
@@ -153,7 +170,12 @@ function ToggleList<T extends ContentType>({
   );
 
   return (
-    <StyledToggleSection expandRatio={expandRatio} upperFixed={upperFixed}>
+    <StyledToggleSection
+      upperFixed={upperFixed}
+      contentLength={contentList.length}
+      hasAddForm={activateForm}
+      spread={spread}
+    >
       <StyledToggleList aria-controls={`${title} object list`}>
         {listCover}
         {optionalAddForm}
