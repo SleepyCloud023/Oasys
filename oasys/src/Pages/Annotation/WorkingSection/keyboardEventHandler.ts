@@ -14,7 +14,7 @@ class KeyboardEventHandler {
     this.workDispatch = workDispatch;
   }
 
-  editSelected: KeyboardEventListener = (event) => {
+  public editSelected: KeyboardEventListener = (event) => {
     const pushedCategory = this.getPushedCategory(event.key);
 
     if (pushedCategory) {
@@ -29,7 +29,7 @@ class KeyboardEventHandler {
   };
 
   // return -1 when failed
-  getPushedNumber = (rawString: string) => {
+  private getPushedNumber = (rawString: string) => {
     if (isNotNumber(rawString)) {
       return -1;
     }
@@ -45,7 +45,7 @@ class KeyboardEventHandler {
     return pushedNumber;
   };
 
-  getPushedCategory = (key: string) => {
+  private getPushedCategory = (key: string) => {
     const pushedNumber = this.getPushedNumber(key);
     const category =
       pushedNumber !== -1

@@ -4,7 +4,7 @@ import { ObjectIdGenerator } from '../WorkingSection';
 
 function useObjectIdGenerator() {
   const objectIdGenerator = React.useContext(ObjectIdGenerator);
-  // NOTE: 여기에서 예외처리, 디버그 등등 가능
+  // NOTE: 여기에서 예외처리, 디버그 가능
   return objectIdGenerator;
 }
 

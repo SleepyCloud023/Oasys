@@ -4,7 +4,6 @@ import Box from '@mui/material/Box';
 import TextField, { TextFieldProps } from '@mui/material/TextField';
 import { css, styled } from '@mui/material/styles';
 import { BoxProps } from '@mui/system';
-import { WorkStore } from '../WorkingSection';
 import { ACTION } from '../types';
 import { darken } from 'polished';
 import { useWorkStore } from '../utils';
@@ -35,7 +34,7 @@ const StyledTextField = styled((props: TextFieldProps) => (
   <TextField
     autoFocus
     variant="outlined"
-    type={'text'}
+    type="text"
     fullWidth
     size="small"
     {...props}
@@ -52,49 +51,47 @@ const StyledTextField = styled((props: TextFieldProps) => (
 
 type PropsAddForm = { title: string };
 
-// TODO: 리팩토링
-// 특히 사용자 입력 폼을 재사용한 컴포넌트로 전환
 function AddForm({ title }: PropsAddForm) {
   const defaultUserInput = '';
   const [userInput, setUserinput] = React.useState(defaultUserInput);
   const [, workDispatch] = useWorkStore();
 
   const lowercaseTitle = title.toLowerCase();
-  // TODO: variable key name 사용 가능한 지? ENUM type도 알아보기
-  const action: ACTION =
-    lowercaseTitle === 'tag'
-      ? {
-          type: 'ADD_TAG',
-          newTag: userInput,
-        }
-      : {
-          type: 'ADD_CATEGORY',
-          newCategory: userInput,
-        };
 
-  const addCategory: React.FormEventHandler<HTMLDivElement> = (event) => {
+  const classAction: ACTION = {
+    type: 'ADD_CATEGORY',
+    newCategory: userInput,
+  };
+  const tagAction: ACTION = {
+    type: 'ADD_TAG',
+    newTag: userInput,
+  };
+
+  const addItemAction: ACTION =
+    lowercaseTitle === 'tag' ? tagAction : classAction;
+
+  const addItem: React.FormEventHandler<HTMLDivElement> = (event) => {
     event.preventDefault();
     setUserinput(defaultUserInput);
-    workDispatch(action);
+    workDispatch(addItemAction);
   };
 
   const updateState: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     setUserinput(event.target.value);
   };
 
-  const preventBubbling: React.KeyboardEventHandler<HTMLElement> = (event) => {
+  const stopBubbling: React.KeyboardEventHandler<HTMLElement> = (event) => {
     event.stopPropagation();
   };
 
   return (
-    <StyledForm onSubmit={addCategory}>
+    <StyledForm onSubmit={addItem}>
       <StyledTextField
         name={`input-${lowercaseTitle}`}
         placeholder={`type new ${lowercaseTitle}, press enter`}
-        // label={`type new ${lowercaseTitle}, press enter`}
         value={userInput}
         onChange={updateState}
-        onKeyDown={preventBubbling}
+        onKeyDown={stopBubbling}
       />
     </StyledForm>
   );

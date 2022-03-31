@@ -1,3 +1,4 @@
+import Button from '@mui/material/Button/Button';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Dialog from './Dialog';
@@ -10,26 +11,20 @@ const StyledFooter = styled.footer`
   align-items: center;
 `;
 
-const StyledButton = styled.button`
-  border: 2px solid greenyellow;
-  border-radius: 4px;
-  background-color: azure;
-  margin: 16px;
-`;
-
 type PropsFooter = {
   readonly children?: React.ReactNode;
 };
 
 function Footer({ children }: PropsFooter) {
-  const [dialogOn, setDialogOn] = useState(false);
+  const SaveButton = () => (
+    <Button name="save-button" variant="outlined">
+      Save Annotation
+    </Button>
+  );
+
   return (
     <StyledFooter>
-      <StyledButton onClick={() => setDialogOn(true)}>
-        테스트 모달 버튼
-      </StyledButton>
-
-      {/* <Dialog dialogOn={dialogOn} setDialogOn={setDialogOn} /> */}
+      <SaveButton />
     </StyledFooter>
   );
 }
