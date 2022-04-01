@@ -109,7 +109,7 @@ function RightControlPanel({ areaPercent }: PropsRightControlPanel) {
         addButton
       />
     ),
-    [selectedHandler, tag_list],
+    [tag_list, selectedHandler],
   );
 
   return (

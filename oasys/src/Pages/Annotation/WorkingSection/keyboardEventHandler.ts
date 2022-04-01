@@ -24,8 +24,6 @@ class KeyboardEventHandler {
         isAppend: false,
       });
     }
-    console.log(`pushed key: ${pushedCategory}`);
-    console.log(this.workState.box_object_list);
   };
 
   // return -1 when failed

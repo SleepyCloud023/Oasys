@@ -35,14 +35,29 @@ function reducer(state: WorkState, action: ACTION): WorkState {
         ...state,
         box_object_list: new_boxt_object_list,
       };
+
     case 'ADD_CATEGORY':
       return {
         ...state,
         category_list: [...state.category_list, action.newCategory],
       };
 
+    case 'DELETE_CATEGORY':
+      return {
+        ...state,
+        category_list: state.category_list.filter(
+          (category) => category !== action.targetCategory,
+        ),
+      };
+
     case 'ADD_TAG':
       return { ...state, tag_list: [...state.tag_list, action.newTag] };
+
+    case 'DELETE_TAG':
+      return {
+        ...state,
+        tag_list: state.tag_list.filter((tag) => tag !== action.targetTag),
+      };
 
     case 'UPDATE_SELECTED':
       if (typeof action.newSelected === 'string') {

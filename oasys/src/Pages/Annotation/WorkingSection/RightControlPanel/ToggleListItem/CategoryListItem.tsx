@@ -1,6 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import * as React from 'react';
+import { useWorkStore } from '../../utils';
 import {
+  DeleteButton,
   NumberChip,
   OptionalDivider,
   StyledListItemContainer,
@@ -17,12 +19,24 @@ export function CategoryListItem({
   index,
   selectedHandler,
 }: CategoryListItemProps) {
-  const textClassName = <StyledListItemText secondary={categoryName} />;
+  // TODO: workDispatch를 직접 사용하기보다 selectedHandler와 비슷하게 해당 기능을 구현하는 클래스의 인터페이스 활용.
+  const [, workDispatch] = useWorkStore();
+  const TextCategoryName = () => (
+    <StyledListItemText secondary={categoryName} />
+  );
+
   const type = 'category';
   const isSelected = selectedHandler.checkSelected({
     type,
     categoryName,
   });
+
+  const removeItem = () => {
+    workDispatch({
+      type: 'DELETE_CATEGORY',
+      targetCategory: categoryName,
+    });
+  };
 
   return (
     <StyledListItemContainer
@@ -31,7 +45,8 @@ export function CategoryListItem({
     >
       <OptionalDivider index={index} />
       <NumberChip id={index + 1} />
-      {textClassName}
+      <TextCategoryName />
+      <DeleteButton onClick={removeItem} />
     </StyledListItemContainer>
   );
 }

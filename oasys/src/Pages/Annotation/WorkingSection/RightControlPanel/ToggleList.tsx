@@ -146,7 +146,7 @@ function ToggleList<T extends ContentType>({
       expandIcon={<ExpandMoreIcon />}
       onClick={() => setSpread((state) => !state)}
     >
-      {title}
+      {`${title} #${contentList.length}`}
       {optinalAddButton}
     </StyledToggleCover>
   );
