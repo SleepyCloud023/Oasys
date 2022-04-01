@@ -4,34 +4,42 @@ type ACTION_CHANGE_MOUSEMODE = {
   type: 'CHANGE_MOUSEMODE';
   nextMode: MouseMode;
 };
+
 type ACTION_INIT_STATE = {
   type: 'INIT_STATE';
   initState: WorkState;
 };
+
 type ACTION_ADD_OBJECT = {
   type: 'ADD_OBJECT';
   newPoint: BoundingBox;
   nextId: number;
 };
+
 type ACTION_DELETE_OBJECT = {
   type: 'DELETE_OBJECT';
 };
+
 type ACTION_ADD_CATEGORY = {
   type: 'ADD_CATEGORY';
   newCategory: string;
 };
+
 type ACTION_DELETE_CATEGORY = {
   type: 'DELETE_CATEGORY';
   targetCategory: string;
 };
+
 type ACTION_ADD_TAG = {
   type: 'ADD_TAG';
   newTag: string;
 };
+
 type ACTION_DELETE_TAG = {
   type: 'DELETE_TAG';
   targetTag: string;
 };
+
 type ACTION_UPDATE_SELECTED = {
   type: 'UPDATE_SELECTED';
   newSelected: Set<number> | string;
