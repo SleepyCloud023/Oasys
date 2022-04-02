@@ -23,5 +23,4 @@ def update_data(id_):
         anno_str = json.dumps(anno_json)
         target_data.annotation = anno_str
         db.session.commit()
-
-        return jsonify(result)
+    return jsonify(result)

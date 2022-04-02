@@ -1,7 +1,9 @@
+import { Box } from '@mui/material';
 import Button, { ButtonProps } from '@mui/material/Button';
 import { css, styled } from '@mui/material/styles';
-import React from 'react';
-import { Outlet } from 'react-router-dom';
+import axios from 'axios';
+import React, { useState } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
 import Link from './Link';
 
 const StyledNav = styled((props) => <nav {...props} />)(
@@ -18,6 +20,23 @@ const StyledNav = styled((props) => <nav {...props} />)(
 );
 
 function NavBar() {
+  const navigate = useNavigate();
+  const [userId, setUserId] = useState('');
+
+  async function loginCheck() {
+    const serverURL = 'http://35.197.111.137:5000';
+    const loginCheckURL = `${serverURL}/login_check`;
+    const response = await axios.get(loginCheckURL);
+
+    console.log(response.data);
+    // if (response.data.login) {
+    //   setUserId(response.data.user_id);
+    // } else {
+    //   navigate('/login');
+    // }
+  }
+  loginCheck();
+
   return (
     <>
       <StyledNav>
@@ -27,6 +46,7 @@ function NavBar() {
         <Link to={'/dataset'} buttonVariant="text">
           Dataset
         </Link>
+        <Box>{'User : ' + userId}</Box>
       </StyledNav>
       <Outlet />
     </>
