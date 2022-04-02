@@ -1,8 +1,14 @@
 import Chip from '@mui/material/Chip';
 import Divider from '@mui/material/Divider';
-import { ACTION } from '../../types';
-import { ListItem, ListItemProps, ListItemText } from '@mui/material';
+import {
+  IconButton,
+  IconButtonProps,
+  ListItem,
+  ListItemProps,
+  ListItemText,
+} from '@mui/material';
 import { styled, css } from '@mui/material/styles';
+import DeleteIcon from '@mui/icons-material/Delete';
 import SelectedHandler from '../SelectedHandler';
 
 type ListItemContainerProps = { isSelected: boolean } & ListItemProps;
@@ -38,4 +44,10 @@ export const OptionalDivider = ({ index }: DividerProps) =>
 type NumberChipProps = { id: number };
 export const NumberChip = ({ id }: NumberChipProps) => (
   <Chip label={id} size={'small'} />
+);
+
+export const DeleteButton = (props: IconButtonProps) => (
+  <IconButton sx={{ padding: 0 }} {...props}>
+    <DeleteIcon fontSize="small"></DeleteIcon>
+  </IconButton>
 );

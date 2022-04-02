@@ -1,6 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import * as React from 'react';
+import { useWorkStore } from '../../utils';
 import {
+  DeleteButton,
   NumberChip,
   OptionalDivider,
   StyledListItemContainer,
@@ -17,12 +19,21 @@ export function TagListItem({
   index,
   selectedHandler,
 }: TagListItemProps) {
-  const textTagName = <StyledListItemText secondary={tagName} />;
+  const [, workDispatch] = useWorkStore();
+
+  const TextTagName = () => <StyledListItemText secondary={tagName} />;
   const type = 'tag';
   const isSelected = selectedHandler.checkSelected({
     type,
     tagName,
   });
+
+  const removeItem = () => {
+    workDispatch({
+      type: 'DELETE_TAG',
+      targetTag: tagName,
+    });
+  };
 
   return (
     <StyledListItemContainer
@@ -31,7 +42,8 @@ export function TagListItem({
     >
       <OptionalDivider index={index} />
       <NumberChip id={index} />
-      {textTagName}
+      <TextTagName />
+      <DeleteButton onClick={removeItem} />
     </StyledListItemContainer>
   );
 }

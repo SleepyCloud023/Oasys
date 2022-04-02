@@ -1,5 +1,10 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import { MouseMode, WorkState, ImageMetaDataResponse } from '../types';
+import {
+  MouseMode,
+  WorkState,
+  ImageMetaDataResponse,
+  Annotation,
+} from '../types';
 
 const serverURL = `http://35.197.111.137:5000`;
 // const proxyURL = '';
@@ -47,4 +52,10 @@ export async function getImageInfo(imageID: number): Promise<WorkState> {
       };
     });
   return imagePromise;
+}
+
+export async function postNewAnnotation(id: number, annotation: Annotation) {
+  const imageSetURL = `${serverURL}/image_info/${id}`;
+  const response = await axios.post(imageSetURL, annotation);
+  return response;
 }

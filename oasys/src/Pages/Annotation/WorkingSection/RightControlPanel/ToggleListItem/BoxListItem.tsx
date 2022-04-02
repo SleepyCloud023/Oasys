@@ -23,13 +23,11 @@ function BoxListItem({
 }: BoxListItemProps) {
   const { id, category } = boxObject;
 
-  const textMainInfo = (
-    <StyledListItemText
-      secondary={`
-  ${category.length > 0 ? category.join(',') : 'X'}
-  `}
-    />
-  );
+  const TextMainInfo = ({ category }: { category: string[] }) => {
+    const content = category.length > 0 ? category.join(',') : '-';
+    return <StyledListItemText secondary={content} />;
+  };
+
   const detailsIcon = (
     <IconButton sx={{ padding: 0, marginLeft: 'auto' }}>
       <ZoomInIcon fontSize="small" />
@@ -50,7 +48,7 @@ function BoxListItem({
     >
       <OptionalDivider index={index} />
       <NumberChip id={index} />
-      {textMainInfo}
+      <TextMainInfo category={category} />
       <BoxTooltip boxObject={boxObject}>{detailsIcon}</BoxTooltip>
     </StyledListItemContainer>
   );

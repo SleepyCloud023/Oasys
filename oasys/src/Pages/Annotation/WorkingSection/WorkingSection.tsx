@@ -6,7 +6,7 @@ import React, {
   useState,
 } from 'react';
 import styled from 'styled-components';
-import { ACTION, WorkState } from './types';
+import { ACTION, Annotation, WorkState } from './types';
 import { getImageInfo, reducer } from './utils';
 import { LeftControlPanel } from './LeftControlPanel';
 import { MainViewPanel } from './MainViewPanel';
@@ -14,6 +14,8 @@ import { RightControlPanel } from './RightControlPanel';
 import KeyboardEventHandler from './keyboardEventHandler';
 import useEventListener from '../../../Utils/useEventListener';
 import idGenerator from '../../../Utils/idGenerator';
+import { AlertInfo } from '../../../Components/Alert/AlertBox';
+import { saveAndAlert } from './saveButtonHandler';
 
 const StyledWorkingSection = styled.article`
   /* 색상 */
@@ -52,13 +54,14 @@ export const ObjectIdGenerator = createContext<IdGenerator>(() => 0);
 
 type WorkingSectionProps = {
   id: number;
+  setAlert: React.Dispatch<AlertInfo>;
 };
 
-function WorkingSection({ id }: WorkingSectionProps) {
+function WorkingSection({ id, setAlert }: WorkingSectionProps) {
   const [workState, workDispatch] = useReducer(reducer, preLoading);
   const [firstId, setFirstId] = useState(0);
-  const objectIdGenerator = useMemo(() => idGenerator(firstId), [firstId]);
 
+  const objectIdGenerator = useMemo(() => idGenerator(firstId), [firstId]);
   const keyInputHandler = useMemo(() => {
     return new KeyboardEventHandler(workState, workDispatch);
   }, [workState]);
@@ -66,7 +69,6 @@ function WorkingSection({ id }: WorkingSectionProps) {
   useEffect(() => {
     async function fetchInitStateFromAPI() {
       const initState = await getImageInfo(id);
-
       workDispatch({
         type: 'INIT_STATE',
         initState: initState,
@@ -78,6 +80,11 @@ function WorkingSection({ id }: WorkingSectionProps) {
   }, [id]);
 
   useEventListener('keydown', keyInputHandler.editSelected);
+
+  const currentAnnotation: Annotation = workState;
+  useEventListener('click', (event) =>
+    saveAndAlert(event, id, currentAnnotation, setAlert),
+  );
 
   return (
     <WorkStore.Provider value={[workState, workDispatch]}>

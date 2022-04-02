@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import { CanvasState } from './types/canvasStore';
 import reducer from './utils/reducer';
 import ImageCanvas from './ImageCanvas';
-import { useWorkStore } from '../utils';
+import { postNewAnnotation, useWorkStore } from '../utils';
 import MainViewHandler from './mainViewHandler';
-import axios from 'axios';
-import { Button, Alert, Collapse, IconButton } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
+import { Button } from '@mui/material';
+import { Annotation } from '../types';
+import AlertBox from '../../../../Components/Alert/AlertBox';
 
 type PropsMainViewPanel = { readonly areaPercent?: number };
 
@@ -30,8 +30,9 @@ const StyledMainView = styled.div<PropsMainViewPanel>`
 `;
 
 const MainViewUtil = styled.div`
-  /* 색상 */
   display: flex;
+  padding: 0 0.5rem;
+  /* 색상 */
   color: white;
   font: bold;
   font-size: 1.25rem;
@@ -54,12 +55,7 @@ const baseImageState: CanvasState = {
 function MainViewCanvas({ areaPercent }: PropsMainViewPanel) {
   const [canvasState, canvasDispatch] = useReducer(reducer, baseImageState);
   const [workState, workDispatch] = useWorkStore();
-  const { imageURL, box_object_list, category_list, tag_list } = workState;
-  const [alert, setAlert] = React.useState({
-    open: false,
-    success: true,
-    message: '',
-  });
+  const { imageURL, box_object_list } = workState;
 
   const mainViewHandler = useMemo(
     () => new MainViewHandler(canvasState, canvasDispatch),
@@ -88,7 +84,7 @@ function MainViewCanvas({ areaPercent }: PropsMainViewPanel) {
 
   const DeleteButton = () => (
     <Button
-      sx={{ marginLeft: 'auto' }}
+      sx={{ marginLeft: 'auto', marginRight: '0.5rem' }}
       variant="outlined"
       onClick={() => {
         workDispatch({
@@ -161,13 +157,11 @@ function MainViewCanvas({ areaPercent }: PropsMainViewPanel) {
 
   return (
     <StyledMainView areaPercent={areaPercent}>
-      <AlertBox />
       <MainViewUtil>
         <ZoomButton type="in" />
         <ZoomPercent percent={canvasState.imageZoomOut} />
         <ZoomButton type="out" />
         <DeleteButton />
-        <SaveButton />
       </MainViewUtil>
 
       <MainViewSvg
