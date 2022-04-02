@@ -113,6 +113,7 @@ function MainViewCanvas({ areaPercent }: PropsMainViewPanel) {
     const serverURL = 'http://35.197.111.137:5000';
     const imageSetURL = `${serverURL}/image_info/${workState.id}`;
     const response = await axios.post(imageSetURL, annotation);
+
     if (response.data.success) {
       setAlert({ open: true, success: true, message: 'Save Success !!' });
     } else {
