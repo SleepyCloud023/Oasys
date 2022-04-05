@@ -21,7 +21,7 @@ function ListImage() {
   const [dataset, setDataset] = useState<DatasetInfo | null>(null);
   const id = useParams().id;
   // const imageSetURL = useLocation().pathname;
-  const imageSetURL = `${serverURL}/dataset/${id}`;
+  const imageSetURL = `/api/dataset/${id}`;
 
   useEffect(() => {
     (async function () {

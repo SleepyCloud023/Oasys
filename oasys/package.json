@@ -57,5 +57,6 @@
     "@types/styled-components": "^5.1.22",
     "source-map-loader": "^3.0.1",
     "ts-loader": "^9.2.6"
-  }
+  },
+  "proxy": "http://oasys.ml:5000"
 }

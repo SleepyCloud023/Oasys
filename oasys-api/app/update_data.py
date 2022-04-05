@@ -6,7 +6,7 @@ from app import db
 bp = Blueprint('update_data', __name__, url_prefix='/')
 
 
-@bp.route('/image_info/<id_>', methods=['POST'])
+@bp.route('api/image_info/<id_>', methods=['POST'])
 def update_data(id_):
     result = {"success": True}
     if request.is_json is False:

@@ -1,13 +1,12 @@
-from flask import Blueprint, Response, jsonify, request, session, make_response
-from flask_cors import cross_origin
+from flask import Blueprint, jsonify, request, session
 from .models import User
 from werkzeug.security import check_password_hash
 
 bp = Blueprint('auth', __name__, url_prefix='/')
 
 
-@bp.route('/login', methods=['POST'])
-@cross_origin(supports_credentials=True)
+# @cross_origin(supports_credentials=True)
+@bp.route('api/login', methods=['POST'])
 def login():
     result = {"success": True}
     if request.is_json is False:
@@ -25,23 +24,27 @@ def login():
 
     if result["success"] is True:
         session.clear()
-        session['user_id'] = {"db_id": target_user.id,
-                              "login_id": target_user.login_id}
-        result['id'] = login_req["id"]
+        session['id'] = {"db_id": target_user.id,
+                         "login_id": target_user.login_id}
+        result['login_id'] = login_req["id"]
 
-    resp = make_response(jsonify(result))
-    return resp
+    return result
 
 
-@bp.route('/login_check', methods=['GET'])
-@cross_origin(supports_credentials=True)
+# @cross_origin(supports_credentials=True)
+@bp.route('api/login_check', methods=['GET'])
 def login_check():
-    user_id = session.get('user_id')
+    user_id = session.get('id')
     if user_id is None:
-        return jsonify({"login": False})
+        return {"login": False}
     else:
-        return jsonify({"login": True, "user_id": user_id["login_id"]})
+        return {"login": True, "login_id": user_id["login_id"]}
 
+
+@bp.route('api/logout', methods=['GET'])
+def logout():
+    session.clear()
+    return {'logout': True}
 
 # @bp.before_app_request
 # def load_logged_in_user():

@@ -10,17 +10,17 @@ db = SQLAlchemy()
 def create_app():
     app = Flask(__name__)
     app.config.from_object(mysql)
-    app.config['SESSION_COOKIE_SAMESITE'] = 'None'
-    app.config["SESSION_COOKIE_SECURE"] = True
+    #app.config['SESSION_COOKIE_SAMESITE'] = 'None'
+    #app.config["SESSION_COOKIE_SECURE"] = True
     app.config["SECRET_KEY"] = "oasys_api_flask"
     #app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(minutes=1)
     CORS(app, supports_credentials=True, resources={
-         r'*': {'origins': ['http://oasys.ml']}})
+         r'*': {'origins': ['http://oasys.ml', 'http://localhost:3000']}})
 
     db.init_app(app)
     from . import models
 
-    @app.route('/')
+    @app.route('/api')
     def hello_pybo():
         return 'Hello Oasys!'
 

@@ -15,23 +15,15 @@ function Login() {
       id: uname,
       password: pass,
     };
-    const serverURL = 'http://35.197.111.137:5000';
-    const loginURL = `${serverURL}/login`;
-    const response = await axios.post(loginURL, login_req, {
-      withCredentials: true,
-    });
-    console.log(response.data);
+    const loginURL = `api/login`;
+    const response = await axios.post(loginURL, login_req);
 
     if (response.data.success) {
       setIsSubmitted(true);
-      //navigate('/home');
+      navigate('/home');
     } else {
       setErrorMessages(response.data.error_msg);
     }
-
-    const loginCheckURL = `${serverURL}/login_check`;
-    const response2 = await axios.get(loginCheckURL, { withCredentials: true });
-    console.log(response2.data);
   }
 
   const handleSubmit = (event) => {

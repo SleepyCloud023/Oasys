@@ -6,12 +6,12 @@ from .models import User, Dataset, ImageMetadata
 bp = Blueprint('get_data', __name__, url_prefix='/')
 
 
-@bp.route('/image_info/<id_>', methods=['GET'])
+@bp.route('api/image_info/<id_>', methods=['GET'])
 def get_data(id_):
     """특정 image 에 대한 정보 반환
 
     Args:
-        id (_type_): _description_
+        id_ (int): image file ID
 
     Returns:
         _type_: _description_
@@ -27,12 +27,12 @@ def get_data(id_):
     return jsonify(result_json)
 
 
-@bp.route('/dataset/<id_>', methods=['GET'])
+@bp.route('api/dataset/<id_>', methods=['GET'])
 def get_dataset(id_):
     """특정 dataset에 대한 정보 반환
 
     Args:
-        id (_type_): _description_
+        id_ (int): dataset ID
 
     Returns:
         _type_: _description_
@@ -51,7 +51,7 @@ def get_dataset(id_):
     return jsonify(result_json)
 
 
-@bp.route('/user', methods=['GET'])
+@bp.route('api/user', methods=['GET'])
 def get_user():
     """_summary_
 

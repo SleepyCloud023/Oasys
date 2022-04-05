@@ -22,7 +22,7 @@ let errorStatusText = 'Cannot Parse Http Status Code';
 
 // http://35.197.111.137:5000/image_info/<id>
 export async function getImageInfo(imageID: number): Promise<WorkState> {
-  const imageURL = `${serverURL}/image_info/${imageID}`;
+  const imageURL = `/api/image_info/${imageID}`;
   const mouseMode: MouseMode = 'MOVE';
   const imagePromise = axios
     .get(imageURL)
@@ -55,7 +55,7 @@ export async function getImageInfo(imageID: number): Promise<WorkState> {
 }
 
 export async function postNewAnnotation(id: number, annotation: Annotation) {
-  const imageSetURL = `${serverURL}/image_info/${id}`;
+  const imageSetURL = `/api/image_info/${id}`;
   const response = await axios.post(imageSetURL, annotation);
   return response;
 }
