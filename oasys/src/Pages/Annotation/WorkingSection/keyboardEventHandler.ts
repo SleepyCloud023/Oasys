@@ -55,11 +55,7 @@ class KeyboardEventHandler {
 }
 
 function isNotNumber(rawString: string) {
-  if (typeof rawString !== 'string' || isNaN(Number(rawString))) {
-    return true;
-  } else {
-    return false;
-  }
+  return typeof rawString !== 'string' || isNaN(Number(rawString));
 }
 
 export default KeyboardEventHandler;

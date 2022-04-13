@@ -54,6 +54,7 @@ export async function getImageInfo(imageID: number): Promise<WorkState> {
   return imagePromise;
 }
 
+// TODO: Runtime type check
 export async function postNewAnnotation(id: number, annotation: Annotation) {
   const imageSetURL = `/api/image_metadata/${id}`;
   const response = await axios.post(imageSetURL, annotation);

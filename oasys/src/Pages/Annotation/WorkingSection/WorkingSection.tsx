@@ -81,9 +81,14 @@ function WorkingSection({ id, setAlert }: WorkingSectionProps) {
 
   useEventListener('keydown', keyInputHandler.editSelected);
 
-  const currentAnnotation: Annotation = workState;
+  const { box_object_list, category_list, tag_list }: Annotation = workState;
   useEventListener('click', (event) =>
-    saveAndAlert(event, id, currentAnnotation, setAlert),
+    saveAndAlert(
+      event,
+      id,
+      { box_object_list, category_list, tag_list },
+      setAlert,
+    ),
   );
 
   return (
