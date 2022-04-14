@@ -24,17 +24,17 @@ function NavBar() {
   const [userId, setUserId] = useState('');
 
   async function loginCheck() {
-    const loginCheckURL = `api/login`;
+    const loginCheckURL = `/api/login`;
     const response = await axios.get(loginCheckURL);
 
     if (response.data.login) {
-      setUserId(response.data.login_id);
+      setUserId(response.data.username);
     } else {
       navigate('/login');
     }
   }
   async function logOut() {
-    const logoutURL = `api/login`;
+    const logoutURL = `/api/login`;
     const response = await axios.delete(logoutURL);
     if (response.data.logout) {
       navigate('/login');

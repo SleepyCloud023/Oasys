@@ -4,7 +4,7 @@ from werkzeug.security import check_password_hash
 from django.http.response import JsonResponse
 from rest_framework import status
 
-from dataCRUD.models import ImageMetadata, Dataset, User
+from dataCRUD.models import ImageMetadata, Dataset, DatasetPermission, User
 from rest_framework.decorators import api_view
 
 
@@ -54,6 +54,29 @@ def dataset(request, id):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
+def dataset_permission(request, id):
+    try:
+        target = User.objects.get(pk=id)
+    except ImageMetadata.DoesNotExist:
+        return JsonResponse({'message': 'user not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        result_json = {"userName": "root", "dataset": []}
+
+        permission = DatasetPermission.objects.filter(
+            user=id).values('dataset')
+
+        print(permission)
+        targets = Dataset.objects.filter(
+            id__in=permission)
+        print(targets)
+        for row in targets:
+            result_json["dataset"].append({"id": row.id, "name": row.name})
+
+        return JsonResponse(result_json, json_dumps_params={'indent': 2})
+
+
+@api_view(['GET', 'PUT', 'DELETE'])
 def user(request, id):
     try:
         target = User.objects.get(pk=id)
@@ -79,14 +102,16 @@ def login(request):
         if user_id is None:
             result = {"login": False}
         else:
-            result = {"login": True, "login_id": user_id["login_id"]}
+            result = {"login": True,
+                      "username": user_id["username"], "id": user_id["id"]}
         return JsonResponse(result, json_dumps_params={'indent': 2})
 
     elif request.method == "POST":
         result = {"success": True}
 
         login_req = json.loads(request.body.decode("utf-8"))
-        target_user = User.objects.filter(login_id=login_req["id"]).first()
+        target_user = User.objects.filter(
+            login_id=login_req["username"]).first()
         if target_user is None:
             result = {"success": False,
                       "error_msg": "invalid ID or Password"}
@@ -95,7 +120,11 @@ def login(request):
                       "error_msg": "invalid ID or Password"}
         else:
             request.session.clear()
-            request.session['id'] = {"db_id": target_user.id,
-                                     "login_id": target_user.login_id}
-            result['login_id'] = login_req["id"]
+            request.session['id'] = {"id": target_user.id,
+                                     "username": target_user.login_id}
+            result['uername'] = login_req["username"]
         return JsonResponse(result, json_dumps_params={'indent': 2})
+
+    elif request.method == "DELETE":
+        request.session.clear()
+        return JsonResponse({"logout": True}, json_dumps_params={'indent': 2})

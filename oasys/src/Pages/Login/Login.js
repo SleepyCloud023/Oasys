@@ -12,10 +12,10 @@ function Login() {
   // Login API
   async function loginApi(uname, pass) {
     const login_req = {
-      id: uname,
+      username: uname,
       password: pass,
     };
-    const loginURL = `api/login`;
+    const loginURL = `/api/login`;
     const response = await axios.post(loginURL, login_req);
 
     if (response.data.success) {
