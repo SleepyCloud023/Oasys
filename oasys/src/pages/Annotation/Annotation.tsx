@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import styled from '@emotion/styled';
 import { useParams } from 'react-router-dom';
+import styled from '@emotion/styled';
+import AlertBox, { AlertInfo } from '@components/Alert/AlertBox';
 import Header from './Header/Header';
 import WorkingSection from './WorkingSection/WorkingSection';
 import Footer from './Footer/Footer';
-import AlertBox, { AlertInfo } from '../../Components/Alert/AlertBox';
 
 const AnnotationBlock = styled.div`
   display: flex;

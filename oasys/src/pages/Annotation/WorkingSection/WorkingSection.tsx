@@ -12,9 +12,9 @@ import { LeftControlPanel } from './LeftControlPanel';
 import { MainViewPanel } from './MainViewPanel';
 import { RightControlPanel } from './RightControlPanel';
 import KeyboardEventHandler from './keyboardEventHandler';
-import useEventListener from '../../../Utils/useEventListener';
-import idGenerator from '../../../Utils/idGenerator';
-import { AlertInfo } from '../../../Components/Alert/AlertBox';
+import useEventListener from '@utils/useEventListener';
+import idGenerator from '@utils/idGenerator';
+import { AlertInfo } from '@components/Alert/AlertBox';
 import { saveAndAlert } from './saveButtonHandler';
 
 const StyledWorkingSection = styled.article`

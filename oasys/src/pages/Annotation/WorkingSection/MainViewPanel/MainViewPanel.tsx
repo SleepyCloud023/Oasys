@@ -3,11 +3,9 @@ import styled from 'styled-components';
 import { CanvasState } from './types/canvasStore';
 import reducer from './utils/reducer';
 import ImageCanvas from './ImageCanvas';
-import { postNewAnnotation, useWorkStore } from '../utils';
+import { useWorkStore } from '../utils';
 import MainViewHandler from './mainViewHandler';
 import { Button } from '@mui/material';
-import { Annotation } from '../types';
-import AlertBox from '../../../../Components/Alert/AlertBox';
 
 type PropsMainViewPanel = { readonly areaPercent?: number };
 

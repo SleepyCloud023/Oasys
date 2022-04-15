@@ -46,7 +46,7 @@ function Login() {
           <label>Password </label>
           <input type="password" name="pass" required />
         </div>
-        <div className="error"> {errorMessages != '' && errorMessages}</div>
+        <div className="error"> {errorMessages !== '' && errorMessages}</div>
         <div className="button-container">
           <input type="submit" />
         </div>
