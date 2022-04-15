@@ -6,8 +6,9 @@ import {
   Annotation,
 } from '../types';
 
-const serverURL = `http://35.197.111.137:5000`;
+// const serverURL = `http://35.197.111.137:5000`;
 // const proxyURL = '';
+
 const errorImageInfo = {
   imageURL: 'img/test_image.jpg',
   imageName: 'File Not Found',

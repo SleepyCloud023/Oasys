@@ -15,12 +15,9 @@ const StyledBox = styled(Box)(
   `,
 );
 
-const serverURL = 'http://35.197.111.137:5000';
-
 function ListImage() {
   const [dataset, setDataset] = useState<DatasetInfo | null>(null);
   const id = useParams().id;
-  // const imageSetURL = useLocation().pathname;
   const imageSetURL = `/api/dataset/${id}`;
 
   useEffect(() => {

@@ -1,7 +1,7 @@
 import Button from '@mui/material/Button/Button';
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import Dialog from './Dialog';
+// import Dialog from './Dialog';
 
 const StyledFooter = styled.footer`
   background-color: #2d2f42;

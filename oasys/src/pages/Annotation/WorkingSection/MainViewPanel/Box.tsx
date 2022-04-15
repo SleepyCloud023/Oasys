@@ -1,6 +1,4 @@
-import { useContext } from 'react';
 import { useWorkStore } from '../utils';
-import { WorkStore } from '../WorkingSection';
 
 type PropsBox = {
   index: number;
@@ -13,7 +11,7 @@ function Box({ index, points, color, boxesRef }: PropsBox) {
   const [workState, workDispatch] = useWorkStore();
 
   const onClick = () => {
-    if (workState.mouseMode == 'MOVE') {
+    if (workState.mouseMode === 'MOVE') {
       workDispatch({
         type: 'UPDATE_SELECTED',
         newSelected: new Set<number>([index]),

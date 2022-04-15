@@ -1,6 +1,5 @@
 import React from 'react';
-import { Box, Grid, Card } from '@mui/material';
-import styled, { css } from 'styled-components';
+import { Box, Grid, styled } from '@mui/material';
 import ImageCard from './ImageCard';
 import { DatasetInfo } from '../types/list-image';
 
