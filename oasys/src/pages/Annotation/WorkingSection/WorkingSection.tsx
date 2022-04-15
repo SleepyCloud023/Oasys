@@ -11,11 +11,11 @@ import { getImageInfo, reducer } from './utils';
 import { LeftControlPanel } from './LeftControlPanel';
 import { MainViewPanel } from './MainViewPanel';
 import { RightControlPanel } from './RightControlPanel';
-import KeyboardEventHandler from './keyboardEventHandler';
-import useEventListener from '@utils/useEventListener';
-import idGenerator from '@utils/idGenerator';
-import { AlertInfo } from '@components/Alert/AlertBox';
 import { saveAndAlert } from './saveButtonHandler';
+import KeyboardEventHandler from './keyboardEventHandler';
+import { AlertInfo } from '@components/Alert/AlertBox';
+import useEventListener from '@hooks/useEventListener';
+import idGenerator from '@utils/idGenerator';
 
 const StyledWorkingSection = styled.article`
   /* 색상 */
@@ -26,7 +26,6 @@ const StyledWorkingSection = styled.article`
   display: flex;
   overflow-y: auto;
 
-  /* 포커스 지원: 키보드 이벤트 핸들러 사용하기 위함 */
   &::-webkit-scrollbar {
     display: none;
   }
@@ -74,6 +73,7 @@ function WorkingSection({ id, setAlert }: WorkingSectionProps) {
         initState: initState,
       });
 
+      // TODO: 기존 object id들이 오름차순 정렬되어있는지 확인해야 함
       setFirstId(() => initState.box_object_list.length);
     }
     fetchInitStateFromAPI();

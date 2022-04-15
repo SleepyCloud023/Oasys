@@ -1,11 +1,13 @@
+import { Button, Link } from '@components';
 import React from 'react';
-import LinkButton from '@components/NavBar/LinkButton';
 
 function AnnotationNavBar() {
   return (
     <>
       <nav>
-        <LinkButton to={'/dataset'}>Home</LinkButton>
+        <Link to={'/dataset'}>
+          <Button>Home</Button>
+        </Link>
       </nav>
     </>
   );
