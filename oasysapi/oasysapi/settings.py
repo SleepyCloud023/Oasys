@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'dataCRUD.apps.DatacrudConfig',
     'image.apps.ImageConfig',
     'corsheaders',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [

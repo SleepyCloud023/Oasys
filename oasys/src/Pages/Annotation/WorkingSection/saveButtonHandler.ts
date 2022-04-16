@@ -1,6 +1,19 @@
 import { Annotation } from './types';
 import { postNewAnnotation } from './utils';
 
+function arrangeAnno(annotation: Annotation) {
+  const target = annotation.box_object_list;
+  target.sort(function (a, b) {
+    return a.id - b.id;
+  });
+  annotation.box_object_list = target.map((object, index) => ({
+    ...object,
+    id: index,
+  }));
+
+  return annotation;
+}
+
 export async function saveAndAlert(
   event: MouseEvent,
   id: number,
@@ -12,7 +25,7 @@ export async function saveAndAlert(
     return;
   }
 
-  const response = await postNewAnnotation(id, newAnnotation);
+  const response = await postNewAnnotation(id, arrangeAnno(newAnnotation));
 
   const successObject = {
     open: true,

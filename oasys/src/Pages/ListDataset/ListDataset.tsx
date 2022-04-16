@@ -39,12 +39,10 @@ function ListDataset() {
   }
 
   const datasetList = datasetPermission.dataset.map((objects) => (
-    <>
-      <Link key={`dataset${objects.id}`} to={`/imageSet/${objects.id}`}>
-        {objects.name}
-      </Link>
+    <div key={`dataset${objects.id}`}>
+      <Link to={`/imageSet/${objects.id}`}>{objects.name}</Link>
       <br />
-    </>
+    </div>
   ));
 
   return (

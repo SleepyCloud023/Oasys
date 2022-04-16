@@ -17,7 +17,6 @@ table = db.Table('image_metadata', metadata,
                  autoload=True, autoload_with=engine)
 query = db.insert(table)
 
-values_list = []
 for i in range(1, 8):
     with open("../json/menu_"+str(i)+".json", "r") as f:
         annotation_json = f.read()
