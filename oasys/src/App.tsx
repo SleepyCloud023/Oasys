@@ -1,16 +1,25 @@
-import { ThemeProvider } from '@mui/material';
-import styled from 'styled-components';
 import React from 'react';
+import { Box, ThemeProvider } from '@mui/material';
 import { Route, Routes } from 'react-router-dom';
 import { appTheme } from './colorTheme';
-import NavBar from './Components/NavBar/NavBar';
-import { Annotation, Home, ListDataset, ListImage, Login } from './Pages';
+import {
+  Annotation,
+  Home,
+  ListDataset,
+  ListImage,
+  Login,
+  Navigation,
+} from './pages';
+import { styled } from '@mui/material/styles';
 
-const StyledApp = styled.div`
+const StyledApp = styled(Box)`
   display: flex;
   flex-flow: column;
-  height: 100vh;
+  width: 100vw;
   color: black;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 function App() {
@@ -18,7 +27,7 @@ function App() {
     <ThemeProvider theme={appTheme}>
       <StyledApp>
         <Routes>
-          <Route path="/" element={<NavBar />}>
+          <Route path="/" element={<Navigation />}>
             <Route path="home" element={<Home />} />
             <Route path="dataset" element={<ListDataset />} />
             <Route path="imageSet/:id" element={<ListImage />} />
