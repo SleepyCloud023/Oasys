@@ -6,7 +6,7 @@ import React, {
   useState,
 } from 'react';
 import styled from 'styled-components';
-import { ACTION, Annotation, WorkState } from './types';
+import { ACTION, WorkState } from './types';
 import { getImageInfo, reducer } from './utils';
 import { LeftControlPanel } from './LeftControlPanel';
 import { MainViewPanel } from './MainViewPanel';
