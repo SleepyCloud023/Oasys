@@ -20,12 +20,6 @@ from drf_yasg import openapi
 from django.contrib import admin
 from django.urls import path, include
 
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/', include('dataCRUD.urls')),
-    path('res/', include('image.urls')),
-]
-
 
 schema_url_patterns = [
     path('api/', include('dataCRUD.urls'))]
@@ -44,7 +38,6 @@ schema_view_v1 = get_schema_view(
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('dataCRUD.urls')),
-    path('res/', include('image.urls')),
     url(r'^swagger(?P<format>\.json|\.yaml)$',
         schema_view_v1.without_ui(cache_timeout=0), name='schema-json'),
     url(r'^swagger/$', schema_view_v1.with_ui('swagger',

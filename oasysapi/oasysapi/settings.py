@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'dataCRUD.apps.DatacrudConfig',
-    'image.apps.ImageConfig',
     'corsheaders',
     'drf_yasg',
 ]

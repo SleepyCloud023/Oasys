@@ -1,11 +1,5 @@
-from django.http import HttpResponse, HttpResponseNotFound
-import os
-
-
 def image(request, image_file):
     file_location = 'img/'+image_file
-    print(os.getcwd())
-    print(file_location)
 
     try:
         with open(file_location, 'rb') as f:
