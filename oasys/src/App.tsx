@@ -17,9 +17,6 @@ const StyledApp = styled(Box)`
   flex-flow: column;
   width: 100vw;
   color: black;
-  &::-webkit-scrollbar {
-    display: none;
-  }
 `;
 
 function App() {

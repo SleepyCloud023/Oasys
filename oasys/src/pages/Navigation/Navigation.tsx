@@ -14,6 +14,7 @@ const StyledNav = styled((props) => <nav {...props} />)(
     border-bottom: solid ${theme.palette.divider} 2px;
     background-color: ${theme.palette.secondary.light};
     display: flex;
+    flex-flow: row;
     align-items: center;
   `,
 );

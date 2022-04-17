@@ -1,11 +1,8 @@
-import { Annotation } from './types';
+import { Annotation, WorkState } from './types';
 import { postNewAnnotation } from './utils';
 
-function arrangeAnno(annotation: Annotation) {
+function arrangeAnnotation(annotation: Annotation) {
   const target = annotation.box_object_list;
-  target.sort(function (a, b) {
-    return a.id - b.id;
-  });
   annotation.box_object_list = target.map((object, index) => ({
     ...object,
     id: index,
@@ -17,7 +14,7 @@ function arrangeAnno(annotation: Annotation) {
 export async function saveAndAlert(
   event: MouseEvent,
   id: number,
-  newAnnotation: Annotation,
+  workState: WorkState,
   setAlert: React.Dispatch<any>,
 ) {
   const name = (event.target as HTMLElement).getAttribute('name');
@@ -25,7 +22,13 @@ export async function saveAndAlert(
     return;
   }
 
-  const response = await postNewAnnotation(id, arrangeAnno(newAnnotation));
+  const { box_object_list, category_list, tag_list } = workState;
+  const newAnnotation = arrangeAnnotation({
+    box_object_list,
+    category_list,
+    tag_list,
+  });
+  const response = await postNewAnnotation(id, newAnnotation);
 
   const successObject = {
     open: true,

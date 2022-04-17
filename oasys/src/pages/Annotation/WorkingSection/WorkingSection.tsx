@@ -73,7 +73,6 @@ function WorkingSection({ id, setAlert }: WorkingSectionProps) {
         initState: initState,
       });
 
-      // TODO: 기존 object id들이 오름차순 정렬되어있는지 확인해야 함
       setFirstId(() => initState.box_object_list.length);
     }
     fetchInitStateFromAPI();
@@ -81,14 +80,8 @@ function WorkingSection({ id, setAlert }: WorkingSectionProps) {
 
   useEventListener('keydown', keyInputHandler.editSelected);
 
-  const { box_object_list, category_list, tag_list }: Annotation = workState;
   useEventListener('click', (event) =>
-    saveAndAlert(
-      event,
-      id,
-      { box_object_list, category_list, tag_list },
-      setAlert,
-    ),
+    saveAndAlert(event, id, workState, setAlert),
   );
 
   return (
