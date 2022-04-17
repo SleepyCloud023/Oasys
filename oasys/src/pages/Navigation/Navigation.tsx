@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom';
 import Explorer from './Explorer';
 import UserInfo from './UserInfo';
 import SearchBar from './SearchBar';
-import Logo from './Logo';
+import Logo from '@components/Logo/Logo';
 
 const StyledNav = styled((props) => <nav {...props} />)(
   ({ theme }) => css`
@@ -15,6 +15,7 @@ const StyledNav = styled((props) => <nav {...props} />)(
     border-radius: 3px;
     border-bottom: solid ${theme.palette.divider} 2px;
     background-color: ${theme.palette.secondary.light};
+    background-color: linear-gradient() ${theme.palette.secondary.light};
     display: flex;
     flex-flow: row nowrap;
     align-items: center;

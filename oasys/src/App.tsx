@@ -1,7 +1,7 @@
 import React from 'react';
-import { Box, ThemeProvider } from '@mui/material';
+import { Box, CssBaseline, ThemeProvider } from '@mui/material';
 import { Route, Routes } from 'react-router-dom';
-import { appTheme } from './colorTheme';
+import { appTheme } from './appTheme';
 import {
   Annotation,
   Home,
@@ -22,6 +22,7 @@ const StyledApp = styled(Box)`
 function App() {
   return (
     <ThemeProvider theme={appTheme}>
+      <CssBaseline enableColorScheme />
       <StyledApp>
         <Routes>
           <Route path="/" element={<Navigation />}>
