@@ -15,7 +15,6 @@ const StyledNav = styled((props) => <nav {...props} />)(
     border-radius: 3px;
     border-bottom: solid ${theme.palette.divider} 2px;
     background-color: ${theme.palette.secondary.light};
-    background-color: linear-gradient() ${theme.palette.secondary.light};
     display: flex;
     flex-flow: row nowrap;
     align-items: center;

@@ -4,7 +4,9 @@ import Box, { BoxProps } from '@mui/material/Box';
 import { Button } from '@components';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { styled } from '@mui/material/styles';
+import { css, styled, Theme, useTheme } from '@mui/material/styles';
+import { IconButton } from '@mui/material';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const StyledSection = styled((props: BoxProps) => (
   <Box component="section" {...props} />
@@ -16,11 +18,22 @@ const StyledSection = styled((props: BoxProps) => (
   align-items: center;
 `;
 
+const styleButtonIcon = (theme: Theme) => css`
+  padding: ${0.2}rem;
+`;
+
+const styleIcon = (theme: Theme) => css`
+  width: 2rem;
+  height: 2rem;
+  color: ${theme.palette.primary.main};
+`;
+
 // type UserInfoProps = {};
 
 function UserInfo() {
   const navigate = useNavigate();
   const [userId, setUserId] = React.useState('');
+  const theme = useTheme();
 
   async function loginCheck() {
     const loginCheckURL = `/api/login`;
@@ -44,7 +57,13 @@ function UserInfo() {
     loginCheck();
   }, []);
 
-  const UserNameBox = () => <Box>{'User : ' + userId}</Box>;
+  const UserAvatar = (
+    <IconButton css={styleButtonIcon(theme)}>
+      <AccountCircleIcon css={styleIcon(theme)} />
+    </IconButton>
+  );
+
+  // () => <Box>{'User : ' + userId}</Box>;
 
   const LogOutButton = () => (
     <Button onClick={logOut} sx={{ marginLeft: '0.5rem' }}>
@@ -54,7 +73,7 @@ function UserInfo() {
 
   return (
     <StyledSection>
-      <UserNameBox />
+      {UserAvatar}
       <LogOutButton />
     </StyledSection>
   );

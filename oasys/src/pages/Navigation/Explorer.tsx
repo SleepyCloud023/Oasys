@@ -11,6 +11,10 @@ const StyledSection = styled((props: BoxProps) => (
   flex: 30 1 0;
 `;
 
+const styleButton = css`
+  font-weight: 400;
+`;
+
 type TabItem = [route: To, title: string, fullHeight: boolean];
 
 // type ExplorerProps = {};
@@ -19,6 +23,8 @@ function Explorer() {
   const tabList: Array<TabItem> = [
     ['/home', 'Home', true],
     ['/dataset', 'Dataset', true],
+    ['/home', 'Image', true],
+    ['/dataset', 'Upload', true],
   ];
 
   return (
@@ -28,6 +34,7 @@ function Explorer() {
           const [route, title, fullHeight] = tabItem;
           return (
             <Button
+              css={styleButton}
               key={title}
               fullHeight={fullHeight}
               onClick={() => navigate(route)}
