@@ -10,7 +10,7 @@ const StyledNav = styled((props) => <nav {...props} />)(
   ({ theme }) => css`
     box-sizing: border-box;
     padding: 0 0.75rem;
-    width: 100vw;
+    width: 100%;
     height: 3rem;
     border-radius: 3px;
     border-bottom: solid ${theme.palette.divider} 2px;
