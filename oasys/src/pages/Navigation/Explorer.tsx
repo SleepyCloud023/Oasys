@@ -3,9 +3,13 @@ import * as React from 'react';
 import { Button } from '@components';
 import { To, useNavigate } from 'react-router-dom';
 import { css, styled } from '@mui/material/styles';
-import { Box, ButtonGroup } from '@mui/material';
+import { Box, BoxProps, ButtonGroup } from '@mui/material';
 
-const StyledExplorer = styled(Box)``;
+const StyledSection = styled((props: BoxProps) => (
+  <Box component="section" {...props} />
+))`
+  flex: 30 1 0;
+`;
 
 type TabItem = [route: To, title: string, fullHeight: boolean];
 
@@ -18,20 +22,22 @@ function Explorer() {
   ];
 
   return (
-    <ButtonGroup variant="text">
-      {tabList.map((tabItem, index) => {
-        const [route, title, fullHeight] = tabItem;
-        return (
-          <Button
-            key={title}
-            fullHeight={fullHeight}
-            onClick={() => navigate(route)}
-          >
-            {title}
-          </Button>
-        );
-      })}
-    </ButtonGroup>
+    <StyledSection>
+      <ButtonGroup variant="text">
+        {tabList.map((tabItem, index) => {
+          const [route, title, fullHeight] = tabItem;
+          return (
+            <Button
+              key={title}
+              fullHeight={fullHeight}
+              onClick={() => navigate(route)}
+            >
+              {title}
+            </Button>
+          );
+        })}
+      </ButtonGroup>
+    </StyledSection>
   );
 }
 

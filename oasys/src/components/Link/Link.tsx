@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Link as MuiLink, LinkProps as MuiLinkProps } from '@mui/material';
 import { Link as RouterLink, To } from 'react-router-dom';
 
-type PropsLink = {
+export type PropsLink = {
   to: To;
 } & MuiLinkProps;
 
