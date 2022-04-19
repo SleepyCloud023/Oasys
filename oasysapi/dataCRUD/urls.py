@@ -6,5 +6,4 @@ urlpatterns = [
     path('dataset/<int:id>', views.dataset),
     path('dataset_permission/<int:id>', views.dataset_permission),
     path('user/<int:id>', views.user),
-    path('login', views.login),
 ]

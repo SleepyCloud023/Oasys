@@ -2,27 +2,36 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './login.css';
+import { Buffer } from 'buffer';
 
 function Login() {
   // React States
   const navigate = useNavigate();
   const [errorMessages, setErrorMessages] = useState('');
-  const [isSubmitted, setIsSubmitted] = useState(false);
 
   // Login API
   async function loginApi(uname, pass) {
+    // use
     const login_req = {
       username: uname,
       password: pass,
     };
+
+    // const encodedAuth = Buffer.from(`${uname}:${pass}`).toString('base64');
+    // const config = {
+    //   headers: {
+    //     Autorization: 'Basic ' + encodedAuth,
+    //   },
+    // };
+
     const loginURL = `/api/login`;
     const response = await axios.post(loginURL, login_req);
+    const result = response.data;
 
-    if (response.data.success) {
-      setIsSubmitted(true);
+    if (result.login) {
       navigate('/home');
     } else {
-      setErrorMessages(response.data.error_msg);
+      setErrorMessages(result.error_msg);
     }
   }
 
@@ -35,7 +44,7 @@ function Login() {
   };
 
   // JSX code for login form
-  const renderForm = (
+  const RenderForm = () => (
     <div className="form">
       <form onSubmit={handleSubmit}>
         <div className="input-container">
@@ -53,7 +62,7 @@ function Login() {
       </form>
       <img
         className="oauth-google"
-        src="img/btn_google_signin.png"
+        src="assets/img/btn_google_signin.png"
         alt="google_signin"
       />
     </div>
@@ -63,7 +72,7 @@ function Login() {
     <div className="app">
       <div className="login-form">
         <div className="title">Sign In</div>
-        {isSubmitted ? <div>User is successfully logged in</div> : renderForm}
+        <RenderForm />
       </div>
     </div>
   );
