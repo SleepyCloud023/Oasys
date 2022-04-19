@@ -17,6 +17,7 @@ const StyledButton = styled(({ fullHeight, ...props }: ButtonProps) => (
   <MuiButton {...props} />
 ))(
   ({ theme, fullHeight }) => css`
+    text-transform: none;
     color: ${theme.palette.text.primary};
     &:hover {
       transform: translateY(-2px);

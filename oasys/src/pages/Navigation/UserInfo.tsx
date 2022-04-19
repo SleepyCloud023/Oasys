@@ -2,11 +2,14 @@
 import * as React from 'react';
 import Box, { BoxProps } from '@mui/material/Box';
 import { Button } from '@components';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { css, styled, Theme, useTheme } from '@mui/material/styles';
 import { IconButton } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import useAuth from '@hooks/useAuth';
+import UserDetail from './UserDetail';
+import { Login } from '@mui/icons-material';
+import LoginModal from '@pages/Login/LoginModal';
 
 const StyledSection = styled((props: BoxProps) => (
   <Box component="section" {...props} />
@@ -18,8 +21,8 @@ const StyledSection = styled((props: BoxProps) => (
   align-items: center;
 `;
 
-const styleButtonIcon = (theme: Theme) => css`
-  padding: ${0.2}rem;
+const StyleButtonIcon = styled(IconButton)`
+  padding: ${0.1}rem;
 `;
 
 const styleIcon = (theme: Theme) => css`
@@ -31,50 +34,50 @@ const styleIcon = (theme: Theme) => css`
 // type UserInfoProps = {};
 
 function UserInfo() {
-  const navigate = useNavigate();
-  const [userId, setUserId] = React.useState('');
+  const [user, login, logout] = useAuth();
   const theme = useTheme();
+  const navigate = useNavigate();
 
-  async function loginCheck() {
-    const loginCheckURL = `/api/login`;
-    const response = await axios.get(loginCheckURL);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [modalOpen, setModalOpen] = React.useState(false);
+  const detailOpen = Boolean(anchorEl);
 
-    if (response.data.login) {
-      setUserId(response.data.username);
-    } else {
-      navigate('/login');
-    }
-  }
-  async function logOut() {
-    const logoutURL = `/api/login`;
-    const response = await axios.delete(logoutURL);
-    if (response.data.logout) {
-      navigate('/login');
-    }
-  }
-
-  React.useEffect(() => {
-    loginCheck();
-  }, []);
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const UserAvatar = (
-    <IconButton css={styleButtonIcon(theme)}>
+    <StyleButtonIcon onClick={handleClick}>
       <AccountCircleIcon css={styleIcon(theme)} />
-    </IconButton>
+    </StyleButtonIcon>
   );
 
-  // () => <Box>{'User : ' + userId}</Box>;
-
-  const LogOutButton = () => (
-    <Button onClick={logOut} sx={{ marginLeft: '0.5rem' }}>
-      LogOut
+  const LoginButton = (
+    <Button
+      startIcon={<Login />}
+      onClick={() => setModalOpen(true)}
+      aria-controls={detailOpen ? 'account-menu' : undefined}
+      aria-haspopup="true"
+      aria-expanded={detailOpen ? 'true' : undefined}
+    >
+      Login
     </Button>
   );
 
   return (
     <StyledSection>
-      {UserAvatar}
-      <LogOutButton />
+      {user.login ? UserAvatar : LoginButton}
+      {true ? UserAvatar : LoginButton}
+      <UserDetail
+        open={detailOpen}
+        anchorEl={anchorEl}
+        onClick={handleClose}
+        onClose={handleClose}
+      />
+      <LoginModal open={modalOpen} onClose={() => setModalOpen(false)} />
     </StyledSection>
   );
 }

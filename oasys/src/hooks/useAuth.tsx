@@ -3,6 +3,16 @@ import * as React from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+type Success = {
+  readonly login: boolean;
+  readonly id: string;
+  readonly username: string;
+};
+
+type Fail = {
+  readonly login: boolean;
+};
+
 type User = {
   readonly login: boolean;
   readonly id?: string;
@@ -28,20 +38,22 @@ function useAuth() {
     }
   }
 
-  async function login() {
+  async function logIn() {
     const { data: currentUser } = await axios.get(loginCheckURL);
+
     setUser(currentUser);
     sessionStorage.setItem('user', currentUser);
     navigate(-1);
   }
 
-  async function logout() {
-    const response = await axios.delete(logoutURL);
+  async function logOut() {
+    const { data } = await axios.delete(logoutURL);
 
-    if (!response.data.logout) {
+    if (!data.logout) {
       throw Error('logout is failed!');
     }
 
+    setUser(defaultUser);
     sessionStorage.removeItem('user');
     navigate(-1);
   }
@@ -50,7 +62,7 @@ function useAuth() {
     loginCheck();
   }, []);
 
-  return [user, login, logout];
+  return [user, logIn, logOut] as const;
 }
 
 export default useAuth;

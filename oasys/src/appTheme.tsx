@@ -27,7 +27,8 @@ export const appTheme = createTheme({
     MuiCssBaseline: {
       styleOverrides: `
         :focus {
-          box-shadow: rgba(196, 139, 159, 0.7) 0px 0px 15px 0px;
+          box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 15px 0px;
+          // box-shadow: rgba(196, 139, 159, 0.7) 0px 0px 15px 0px;
           // outline: 2px solid rgba(196, 139, 159, 0.5);
           outline: none;
         }
