@@ -8,7 +8,7 @@
     "@emotion/styled": "^11.6.0",
     "@mui/core": "^5.0.0-alpha.54",
     "@mui/icons-material": "^5.3.1",
-    "@mui/lab": "^5.0.0-alpha.77",
+    "@mui/lab": "^5.0.0-alpha.78",
     "@mui/material": "^5.3.1",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.0.0",
@@ -21,6 +21,7 @@
     "@types/react-router-dom": "^5.3.3",
     "axios": "^0.25.0",
     "buffer": "^6.0.3",
+    "http-proxy-middleware": "^2.0.5",
     "lodash": "^4.17.21",
     "node-sass": "^7.0.1",
     "polished": "^4.1.3",
@@ -61,6 +62,5 @@
     "craco-alias": "^3.0.1",
     "source-map-loader": "^3.0.1",
     "ts-loader": "^9.2.6"
-  },
-  "proxy": "http://oasys.ml:8000"
+  }
 }

@@ -1,5 +1,5 @@
 import type {} from '@mui/lab/themeAugmentation';
-import { createTheme, css } from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles';
 
 export const appTheme = createTheme({
   palette: {

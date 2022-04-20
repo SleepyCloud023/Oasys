@@ -19,10 +19,6 @@ const StyledButton = styled(({ fullHeight, ...props }: ButtonProps) => (
   ({ theme, fullHeight }) => css`
     text-transform: none;
     color: ${theme.palette.text.primary};
-    &:hover {
-      transform: translateY(-2px);
-      color: ${theme.palette.secondary.dark};
-    }
     ${fullHeight
       ? css`
           height: 100%;

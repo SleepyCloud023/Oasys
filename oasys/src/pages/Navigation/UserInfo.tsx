@@ -70,14 +70,19 @@ function UserInfo() {
   return (
     <StyledSection>
       {user.login ? UserAvatar : LoginButton}
-      {true ? UserAvatar : LoginButton}
       <UserDetail
         open={detailOpen}
         anchorEl={anchorEl}
         onClick={handleClose}
         onClose={handleClose}
+        logout={logout}
       />
-      <LoginModal open={modalOpen} onClose={() => setModalOpen(false)} />
+      <LoginModal
+        open={modalOpen}
+        setOpen={setModalOpen}
+        login={login}
+        onClose={() => setModalOpen(false)}
+      />
     </StyledSection>
   );
 }

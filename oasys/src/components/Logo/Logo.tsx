@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import * as React from 'react';
 import { css, styled, Theme, useTheme } from '@mui/material/styles';
-import { Link } from '@src/components';
+import { Link } from '@components';
 import { To } from 'react-router-dom';
 
 const StyledLink = styled(Link)(

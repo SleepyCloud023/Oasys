@@ -31,7 +31,7 @@ function App() {
             <Route path="imageSet/:id" element={<ListImage />} />
           </Route>
           <Route path="/annotation/:id" element={<Annotation />} />
-          <Route path="/login" element={<Login />} />
+          {/* <Route path="/login" element={<Login />} /> */}
         </Routes>
       </StyledApp>
     </ThemeProvider>

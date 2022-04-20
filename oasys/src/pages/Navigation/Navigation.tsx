@@ -18,6 +18,10 @@ const StyledNav = styled((props) => <nav {...props} />)(
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
+    & button:hover {
+      transform: translateY(-2px);
+      color: ${theme.palette.secondary.dark};
+    }
   `,
 );
 

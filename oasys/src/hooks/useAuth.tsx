@@ -3,14 +3,9 @@ import * as React from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-type Success = {
-  readonly login: boolean;
-  readonly id: string;
+export type UserLogin = {
   readonly username: string;
-};
-
-type Fail = {
-  readonly login: boolean;
+  readonly password: string;
 };
 
 type User = {
@@ -19,8 +14,7 @@ type User = {
   readonly username?: string;
 };
 
-const loginCheckURL = `/api/login`;
-const logoutURL = `/api/login`;
+const authURL = `/api/login`;
 const defaultUser: User = { login: false };
 
 // type UserInfoProps = {};
@@ -38,16 +32,18 @@ function useAuth() {
     }
   }
 
-  async function logIn() {
-    const { data: currentUser } = await axios.get(loginCheckURL);
+  async function logIn(userLogin: UserLogin) {
+    const { data: currentUser } = await axios.post(authURL, userLogin);
 
     setUser(currentUser);
-    sessionStorage.setItem('user', currentUser);
-    navigate(-1);
+    sessionStorage.setItem('user', JSON.stringify(currentUser));
+
+    return currentUser.login;
+    // navigate(-1);
   }
 
   async function logOut() {
-    const { data } = await axios.delete(logoutURL);
+    const { data } = await axios.delete(authURL);
 
     if (!data.logout) {
       throw Error('logout is failed!');
@@ -55,7 +51,14 @@ function useAuth() {
 
     setUser(defaultUser);
     sessionStorage.removeItem('user');
-    navigate(-1);
+    // navigate(-1);
+
+    // TODO: 아래 코드 실행 시 업데이트 전 user가 나온다.
+    // setState는 비동기적으로 배치 단위로 실행될 수 있기때문이다.
+    // 여기서 최신화된 user에 대해 log하기 위해 lazy evaluation을 사용하려면
+    // 어떻게 해야할까?
+    // console.log(user);
+    // setTimeout(() => console.log(user), 500);
   }
 
   React.useEffect(() => {
