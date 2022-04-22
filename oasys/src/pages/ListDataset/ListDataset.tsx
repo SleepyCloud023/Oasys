@@ -25,10 +25,7 @@ function ListDataset() {
 
   useEffect(() => {
     (async function () {
-      const login = await axios.get('api/login');
-      const response = await axios.get(
-        `/api/dataset_permission/${login.data.id}`,
-      );
+      const response = await axios.get(`/api/workspace/2`);
       setDatasetPermission(response.data);
     })();
   }, []);
