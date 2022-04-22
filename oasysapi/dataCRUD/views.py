@@ -5,13 +5,23 @@ from django.contrib.auth.models import User
 from rest_framework import status
 from rest_framework.decorators import api_view
 
-from dataCRUD.models import ImageMetadata, Dataset, DatasetPermission
+from dataCRUD.models import ImageMetadata, Dataset, WorkspaceDataset
+from common.models import CustomUser as User, UserWorkspace
+from common.models import Workspace
 from utils.timer import timer
 
 
 @api_view(['GET', 'POST', 'DELETE'])
 def data(request, id):
-    # find tutorial by pk (id)
+    """_summary_
+
+    Args:
+        request (_type_): _description_
+        id (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
     try:
         target = ImageMetadata.objects.get(pk=id)
     except ImageMetadata.DoesNotExist:
@@ -37,6 +47,15 @@ def data(request, id):
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def dataset(request, id):
+    """_summary_
+
+    Args:
+        request (_type_): _description_
+        id (_type_): _description_
+
+    Returns:
+        _type_: check111
+    """
     try:
         target = Dataset.objects.get(pk=id)
     except ImageMetadata.DoesNotExist:
@@ -56,17 +75,26 @@ def dataset(request, id):
 
 @api_view(['GET', 'PUT', 'DELETE'])
 @timer
-def dataset_permission(request, id):
+def workspace(request, id):
+    """_summary_
+
+    Args:
+        request (_type_): _description_
+        id (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
     try:
-        target = User.objects.get(pk=id)
+        target = Workspace.objects.get(pk=id)
     except ImageMetadata.DoesNotExist:
         return JsonResponse({'message': 'user not found'}, status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        result_json = {"userName": "root", "dataset": []}
+        result_json = {"workspace": id, "dataset": []}
 
-        permission = DatasetPermission.objects.filter(
-            user=id).values('dataset')
+        permission = WorkspaceDataset.objects.filter(
+            workspace=id).values('dataset')
 
         targets = Dataset.objects.filter(
             id__in=permission)
@@ -84,10 +112,14 @@ def user(request, id):
         return JsonResponse({'message': 'user not found'}, status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        result_json = {"userName": "root", "dataset": []}
+        result_json = {"userName": target.username, "workspace": []}
 
-        targets = Dataset.objects.filter(user=id)
+        workspace_list = UserWorkspace.objects.filter(
+            user=id).values('workspace')
+
+        targets = Workspace.objects.filter(id__in=workspace_list)
         for row in targets:
-            result_json["dataset"].append({"id": row.id, "name": row.name})
+            result_json["workspace"].append(
+                {"id": row.id, "name": row.workspace_name})
 
         return JsonResponse(result_json, json_dumps_params={'indent': 2})

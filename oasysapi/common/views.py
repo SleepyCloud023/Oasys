@@ -2,12 +2,34 @@ import json
 
 from django.http.response import JsonResponse
 from django.contrib.auth import authenticate
-from django.contrib.auth.models import User
 from rest_framework.decorators import api_view
+
+from common.models import CustomUser as User
+
+import json
+from uuid import UUID
+
+
+class UUIDEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, UUID):
+            # if the obj is uuid, we simply return the value of uuid
+            return obj.hex
+        return json.JSONEncoder.default(self, obj)
 
 
 @api_view(['GET', 'POST', 'DELETE'])
-def login(request):
+def login(request):\
+
+    """_summary_
+
+    Args:
+        request (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
+
     if request.method == "GET":
         result = {}
         user = request.session.get('user')
@@ -34,10 +56,9 @@ def login(request):
             target_user = User.objects.filter(username=username).first()
 
             request.session['user'] = {
-                "username": username, "id": target_user.id}
+                "username": username, "id": str(target_user.id)}
             result = {"login": True, "username": username,
-                      "id": target_user.id}
-
+                      "id": str(target_user.id)}
         return JsonResponse(result, json_dumps_params={'indent': 2})
 
     elif request.method == "DELETE":

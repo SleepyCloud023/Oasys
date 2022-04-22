@@ -60,6 +60,7 @@
   "devDependencies": {
     "@types/styled-components": "^5.1.22",
     "craco-alias": "^3.0.1",
+    "craco-swc": "^0.5.1",
     "source-map-loader": "^3.0.1",
     "ts-loader": "^9.2.6"
   }

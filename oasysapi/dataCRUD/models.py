@@ -10,23 +10,17 @@ from django.db import models
 
 class Dataset(models.Model):
     name = models.CharField(max_length=100, blank=True, null=True)
-    user = models.ForeignKey('User', models.DO_NOTHING, blank=True, null=True)
-    creation_date = models.DateTimeField(blank=True, null=True)
-    modification_date = models.DateTimeField(blank=True, null=True)
-    rep_image = models.CharField(max_length=300, blank=True, null=True)
+    user_id = models.IntegerField(blank=True, null=True)
+    creation_date = models.DateTimeField(
+        blank=True, null=True, auto_now_add=True)
+    modification_date = models.DateTimeField(
+        blank=True, null=True, auto_now_add=True)
+    rep_image = models.CharField(
+        max_length=300, blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'dataset'
-
-
-class DatasetPermission(models.Model):
-    user = models.IntegerField(blank=True, null=True)
-    dataset = models.IntegerField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'dataset_permission'
 
 
 class ImageMetadata(models.Model):
@@ -34,22 +28,23 @@ class ImageMetadata(models.Model):
     image_url = models.CharField(max_length=300, blank=True, null=True)
     image_name = models.CharField(max_length=50, blank=True, null=True)
     image_size = models.CharField(max_length=30, blank=True, null=True)
-    dataset = models.ForeignKey(Dataset, models.DO_NOTHING, blank=True, null=True)
+    dataset = models.ForeignKey(
+        Dataset, models.DO_NOTHING, blank=True, null=True)
     size = models.CharField(max_length=20, blank=True, null=True)
-    creation_date = models.DateTimeField(blank=True, null=True)
-    modification_date = models.DateTimeField(blank=True, null=True)
+    creation_date = models.DateTimeField(
+        blank=True, null=True, auto_now_add=True)
+    modification_date = models.DateTimeField(
+        blank=True, null=True, auto_now_add=True)
 
     class Meta:
         managed = False
         db_table = 'image_metadata'
 
 
-class User(models.Model):
-    name = models.CharField(max_length=30, blank=True, null=True)
-    login_id = models.CharField(max_length=30, blank=True, null=True)
-    login_password = models.CharField(max_length=200, blank=True, null=True)
-    email = models.CharField(max_length=30, blank=True, null=True)
+class WorkspaceDataset(models.Model):
+    workspace = models.IntegerField(blank=True, null=True)
+    dataset = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
-        db_table = 'user'
+        db_table = 'workspace_dataset'

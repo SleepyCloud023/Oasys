@@ -5,6 +5,9 @@ import { css, Divider, Modal, ModalProps, styled } from '@mui/material';
 import { Button } from '@components';
 import { UserLogin } from '@hooks/useAuth';
 
+const REACT_APP_GOOGLE_CLIENT_ID =
+  '982907587510-7qm6n6ogqetnbh69tqb4drn536g8fh88.apps.googleusercontent.com';
+
 const StyledModal = styled(Modal)`
   /* font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; */
   display: flex;
@@ -123,13 +126,6 @@ function LoginModal({ setOpen, login, ...props }: LoginProps) {
           Submit
         </SubmitButton>
         <Divider css={dividerStyle} />
-        <OAuthButton>
-          <img
-            src="assets/img/btn_google_signin.png"
-            // src="https://developers.google.com/identity/images/g-logo.png"
-            alt="google_signin"
-          />
-        </OAuthButton>
       </StyledForm>
     </StyledModal>
   );

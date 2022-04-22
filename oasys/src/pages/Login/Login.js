@@ -3,6 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './login.css';
 import { Buffer } from 'buffer';
+import { GoogleLogin } from 'react-google-login';
+import { validateTokenAndObtainSession } from './oauthUtils.js';
+
+const REACT_APP_GOOGLE_CLIENT_ID =
+  '982907587510-7qm6n6ogqetnbh69tqb4drn536g8fh88.apps.googleusercontent.com';
 
 function Login() {
   // React States
@@ -43,6 +48,22 @@ function Login() {
     loginApi(uname.value, pass.value);
   };
 
+  const onGoogleLoginSuccess = useCallback(
+    (response) => {
+      const idToken = response.tokenId;
+      const data = {
+        email: response.profileObj.email,
+        first_name: response.profileObj.givenName,
+        last_name: response.profileObj.familyName,
+      };
+
+      validateTokenAndObtainSession({ data, idToken })
+        .then(handleUserInit)
+        .catch(notifyError);
+    },
+    [handleUserInit],
+  );
+
   // JSX code for login form
   const RenderForm = () => (
     <div className="form">
@@ -60,10 +81,11 @@ function Login() {
           <input type="submit" />
         </div>
       </form>
-      <img
-        className="oauth-google"
-        src="assets/img/btn_google_signin.png"
-        alt="google_signin"
+      <GoogleLogin
+        clientId={REACT_APP_GOOGLE_CLIENT_ID} // your Google app client ID
+        buttonText="Sign in with Google"
+        onSuccess={onGoogleLoginSuccess} // perform your user logic here
+        onFailure={onGoogleLoginFailure} // handle errors here
       />
     </div>
   );
