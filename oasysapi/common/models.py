@@ -5,6 +5,7 @@ from django.contrib.auth.models import AbstractUser
 
 class CustomUser(AbstractUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    oauth_flag = models.IntegerField(blank=True, null=True)
 
 
 class UserWorkspace(models.Model):

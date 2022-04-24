@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import environ
+# Initialise environment variables
+env = environ.Env()
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework_jwt',
     'dataCRUD.apps.DatacrudConfig',
     'common.apps.CommonConfig',
     'corsheaders',
@@ -75,18 +80,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'oasysapi.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -131,11 +124,14 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Database
+# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'OasysDB',
-        'USER': 'root',
+        'USER': 'euiryeong',
         'PASSWORD': '3376',
         'HOST': '127.0.0.1',
         'PORT': '3306',
@@ -155,3 +151,7 @@ REST_FRAMEWORK = {
 }
 
 AUTH_USER_MODEL = 'common.CustomUser'
+
+GOOGLE_OAUTH2_CLIENT_ID = '163413806779-q6ij208fs7bnk6n24gsbvu9himdks8vs.apps.googleusercontent.com'
+DJANGO_GOOGLE_OAUTH2_CLIENT_SECRET = env.str(
+    'DJANGO_GOOGLE_OAUTH2_CLIENT_SECRET')

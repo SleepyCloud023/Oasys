@@ -37,7 +37,7 @@ schema_view_v1 = get_schema_view(
 
 urlpatterns = [
     path('api/admin/', admin.site.urls),
-    path('api/login', include('common.urls')),
+    path('api/login/', include('common.urls')),
     path('api/', include('dataCRUD.urls')),
     url(r'^api/swagger(?P<format>\.json|\.yaml)$',
         schema_view_v1.without_ui(cache_timeout=0), name='schema-json'),

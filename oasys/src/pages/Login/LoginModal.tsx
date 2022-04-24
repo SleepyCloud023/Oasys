@@ -4,9 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import { css, Divider, Modal, ModalProps, styled } from '@mui/material';
 import { Button } from '@components';
 import { UserLogin } from '@hooks/useAuth';
+import { GoogleLogin } from 'react-google-login';
+import axios from 'axios';
 
 const REACT_APP_GOOGLE_CLIENT_ID =
-  '982907587510-7qm6n6ogqetnbh69tqb4drn536g8fh88.apps.googleusercontent.com';
+  '163413806779-q6ij208fs7bnk6n24gsbvu9himdks8vs.apps.googleusercontent.com';
 
 const StyledModal = styled(Modal)`
   /* font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; */
@@ -74,10 +76,11 @@ type LoginProps = {
   open: ModalProps['open'];
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   login: (userLogin: UserLogin) => Promise<any>;
+  loginSetUer: any
   onClose?: ModalProps['onClose'];
 };
 
-function LoginModal({ setOpen, login, ...props }: LoginProps) {
+function LoginModal({ setOpen, login, loginSetUer, ...props }: LoginProps) {
   const navigate = useNavigate();
   const [userLogin, setUserLogin] = React.useState<UserLogin>({
     username: '',
@@ -99,7 +102,49 @@ function LoginModal({ setOpen, login, ...props }: LoginProps) {
       setOpen(false);
       // navigate('/home');
     } else {
-      // setErrorMessages(response.data.error_msg);
+      // setErrorMessages(Response.data.error_msg);
+      setErrorMessages('로그인에 실패했습니다.');
+    }
+  };
+
+  const onGoogleLoginSuccess = React.useCallback(
+    (Response : any) => {
+      const idToken = Response.tokenId;
+      const data = {
+        email: Response.profileObj.email,
+        first_name: Response.profileObj.givenName,
+        last_name: Response.profileObj.familyName
+      };
+  
+      validateTokenAndObtainSession({ data, idToken });
+    },
+    []
+  );
+
+  const onGoogleLoginFailure = React.useCallback(
+    (Response : any) => {
+      console.log("google login failure")
+      console.log(Response)
+    },
+    []
+  );
+
+  async function validateTokenAndObtainSession ({ data, idToken }: any) {
+    const headers = {
+      Authorization: idToken,
+      'Content-Type': 'application/json'
+    };
+  
+    const loginURL = `/api/login/oauth`;
+    const response = await axios.post(loginURL, data, {headers:headers});
+    const result = response.data;
+    
+    if (result.login) {
+      loginSetUer(result);
+      setOpen(false);
+      // navigate('/home');
+    } else {
+      // setErrorMessages(Response.data.error_msg);
       setErrorMessages('로그인에 실패했습니다.');
     }
   };
@@ -126,6 +171,12 @@ function LoginModal({ setOpen, login, ...props }: LoginProps) {
           Submit
         </SubmitButton>
         <Divider css={dividerStyle} />
+        <GoogleLogin
+          clientId={REACT_APP_GOOGLE_CLIENT_ID}  // your Google app client ID
+          buttonText="Sign in with Google"
+          onSuccess={onGoogleLoginSuccess} // perform your user logic here
+          onFailure={onGoogleLoginFailure} // handle errors here
+        />
       </StyledForm>
     </StyledModal>
   );

@@ -34,7 +34,7 @@ const styleIcon = (theme: Theme) => css`
 // type UserInfoProps = {};
 
 function UserInfo() {
-  const [user, login, logout] = useAuth();
+  const [user, login, logout, loginSetUer] = useAuth();
   const theme = useTheme();
   const navigate = useNavigate();
 
@@ -81,6 +81,7 @@ function UserInfo() {
         open={modalOpen}
         setOpen={setModalOpen}
         login={login}
+        loginSetUer={loginSetUer}
         onClose={() => setModalOpen(false)}
       />
     </StyledSection>

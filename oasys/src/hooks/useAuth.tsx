@@ -14,7 +14,7 @@ type User = {
   readonly username?: string;
 };
 
-const authURL = `/api/login`;
+const authURL = `/api/login/user`;
 const defaultUser: User = { login: false };
 
 // type UserInfoProps = {};
@@ -61,11 +61,16 @@ function useAuth() {
     // setTimeout(() => console.log(user), 500);
   }
 
+  function loginSetUer(currentUser : any){
+    setUser(currentUser);
+    sessionStorage.setItem('user', JSON.stringify(currentUser));
+  }
+
   React.useEffect(() => {
     loginCheck();
   }, []);
 
-  return [user, logIn, logOut] as const;
+  return [user, logIn, logOut, loginSetUer] as const;
 }
 
 export default useAuth;
