@@ -13,7 +13,7 @@ type Profile = {
 
 type Token = any;
 
-type useOauthProps = {};
+// type useOauthProps = {};
 
 function useOauth() {
   async function validateTokenAndObtainSession(
@@ -34,11 +34,11 @@ function useOauth() {
 
   const getGoogleUser = async (Response: any) => {
     const { tokenId } = Response;
-    const { email, first_name, last_name } = Response.profileObj;
+    const { email, givenName, familyName } = Response.profileObj;
     const profile: Profile = {
       email,
-      first_name,
-      last_name,
+      first_name: givenName,
+      last_name: familyName,
     };
     const user: User = await validateTokenAndObtainSession(profile, tokenId);
 
