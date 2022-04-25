@@ -53,8 +53,11 @@ def login(request):\
         return JsonResponse(result, json_dumps_params={'indent': 2})
 
     elif request.method == "DELETE":
-        request.session.clear()
-        return JsonResponse({"logout": True}, json_dumps_params={'indent': 2})
+        request.session.flush()
+        response = JsonResponse(
+            {"logout": True}, json_dumps_params={'indent': 2})
+        # response.delete_cookie('sessionid')
+        return response
 
 
 @api_view(['POST'])
@@ -64,16 +67,11 @@ def oauth_init(request):
     id_token = request.headers.get('Authorization')
     data = json.loads(request.body.decode("utf-8"))
 
-    # try:
-    google_validate_id_token(id_token=id_token)
-    result = oauth_user_get(request, data)
-    # except Exception as e:
-    #     print(e)
-    #     result = {"login": False}
+    try:
+        google_validate_id_token(id_token=id_token)
+        result = oauth_user_get(request, data)
+    except Exception as e:
+        print(e)
+        result = {"login": False}
 
-    # We use get-or-create logic here for the sake of the example.
-    # We don't have a sign-up flow.
-
-    #response = Response(data=user_get_me(user=user))
-    #response = jwt_login(response=response, user=user)
     return JsonResponse(result, json_dumps_params={'indent': 2})

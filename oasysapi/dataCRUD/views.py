@@ -74,7 +74,7 @@ def dataset(request, id):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
-@timer
+# @timer
 def workspace(request, id):
     """_summary_
 
