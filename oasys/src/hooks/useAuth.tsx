@@ -12,6 +12,8 @@ export type User = {
   readonly login: boolean;
   readonly id?: string;
   readonly username?: string;
+  readonly email?: string;
+  readonly imageUrl?: string;
 };
 
 const authURL = `/api/login/user`;

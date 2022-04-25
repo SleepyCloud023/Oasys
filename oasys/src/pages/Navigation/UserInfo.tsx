@@ -4,7 +4,7 @@ import Box, { BoxProps } from '@mui/material/Box';
 import { Button } from '@components';
 import { useNavigate } from 'react-router-dom';
 import { css, styled, Theme, useTheme } from '@mui/material/styles';
-import { IconButton } from '@mui/material';
+import { Avatar, IconButton } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import useAuth from '@hooks/useAuth';
 import UserDetail from './UserDetail';
@@ -22,7 +22,7 @@ const StyledSection = styled((props: BoxProps) => (
 `;
 
 const StyleButtonIcon = styled(IconButton)`
-  padding: ${0.1}rem;
+  padding: ${0.2}rem;
 `;
 
 const styleIcon = (theme: Theme) => css`
@@ -38,20 +38,31 @@ function UserInfo() {
   const theme = useTheme();
   const navigate = useNavigate();
 
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
   const [modalOpen, setModalOpen] = React.useState(false);
   const detailOpen = Boolean(anchorEl);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    logout();
     setAnchorEl(null);
   };
 
   const UserAvatar = (
     <StyleButtonIcon onClick={handleClick}>
-      <AccountCircleIcon css={styleIcon(theme)} />
+      {user.imageUrl ? (
+        // <img src={user.imageUrl} alt="profile" />
+        <Avatar src={user.imageUrl} />
+      ) : (
+        <AccountCircleIcon css={styleIcon(theme)} />
+      )}
     </StyleButtonIcon>
   );
 
@@ -71,11 +82,11 @@ function UserInfo() {
     <StyledSection>
       {user.login ? UserAvatar : LoginButton}
       <UserDetail
+        user={user}
         open={detailOpen}
         anchorEl={anchorEl}
-        onClick={handleClose}
         onClose={handleClose}
-        logout={logout}
+        handleLogout={handleLogout}
       />
       <LoginModal
         open={modalOpen}

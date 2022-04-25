@@ -2,7 +2,6 @@
 import * as React from 'react';
 import { SerializedStyles } from '@emotion/react';
 import { User } from '@hooks/useAuth';
-import axios from 'axios';
 import { GoogleLogin } from 'react-google-login';
 import useOauth from '@hooks/useOauth';
 
@@ -32,7 +31,6 @@ function OauthLogin({
       setOpen(false);
       // navigate('/home');
     } else {
-      // setErrorMessages(Response.data.error_msg);
       setErrorMessage('로그인에 실패했습니다.');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

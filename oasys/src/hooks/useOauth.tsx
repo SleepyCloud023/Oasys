@@ -33,8 +33,10 @@ function useOauth() {
   }
 
   const getGoogleUser = async (Response: any) => {
+    console.log(Response);
+
     const { tokenId } = Response;
-    const { email, givenName, familyName } = Response.profileObj;
+    const { email, givenName, familyName, imageUrl } = Response.profileObj;
     const profile: Profile = {
       email,
       first_name: givenName,
@@ -42,7 +44,7 @@ function useOauth() {
     };
     const user: User = await validateTokenAndObtainSession(profile, tokenId);
 
-    return user;
+    return { ...user, imageUrl, email };
   };
 
   return [getGoogleUser] as const;
