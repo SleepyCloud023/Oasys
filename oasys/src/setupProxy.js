@@ -4,7 +4,7 @@ module.exports = function (app) {
   app.use(
     '/api',
     createProxyMiddleware({
-      target: 'http://oasys.ml:8000',
+      target: 'https://oasys.ml',
       changeOrigin: true,
     }),
   );

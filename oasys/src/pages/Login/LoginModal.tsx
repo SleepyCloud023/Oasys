@@ -3,12 +3,8 @@ import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { css, Divider, Modal, ModalProps, styled } from '@mui/material';
 import { Button } from '@components';
-import { UserLogin } from '@hooks/useAuth';
-import { GoogleLogin } from 'react-google-login';
-import axios from 'axios';
-
-const REACT_APP_GOOGLE_CLIENT_ID =
-  '163413806779-q6ij208fs7bnk6n24gsbvu9himdks8vs.apps.googleusercontent.com';
+import { User, UserLogin } from '@hooks/useAuth';
+import OauthLogin from './OauthLogin';
 
 const StyledModal = styled(Modal)`
   /* font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; */
@@ -19,6 +15,15 @@ const StyledModal = styled(Modal)`
 `;
 
 const StyledForm = styled('form')`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 2rem;
+  /* height: 30rem; */
+  border-radius: 3px;
+  background-color: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
   & h1 {
     font-size: 1.5rem;
     font-style: italic;
@@ -26,13 +31,6 @@ const StyledForm = styled('form')`
     margin: 0;
     margin-bottom: 1rem;
   }
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  border-radius: 3px;
-  background-color: white;
-  padding: 2rem;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 `;
 
 const StyledInputSection = styled('section')(
@@ -60,12 +58,11 @@ const SubmitButton = styled(Button)`
   }
 `;
 
-const OAuthButton = styled(Button)(
-  ({ theme }) => css`
-    padding: 0;
-    align-self: center;
-  `,
-);
+const oAuthButtonStyle = css`
+  /* width: 100%; */
+  align-self: center;
+  /* margin: 0 10px; */
+`;
 
 const dividerStyle = css`
   align-self: stretch;
@@ -74,19 +71,19 @@ const dividerStyle = css`
 
 type LoginProps = {
   open: ModalProps['open'];
+  onClose?: ModalProps['onClose'];
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   login: (userLogin: UserLogin) => Promise<any>;
-  loginSetUer: any
-  onClose?: ModalProps['onClose'];
+  oAuthSetUser: (user: User) => void;
 };
 
-function LoginModal({ setOpen, login, loginSetUer, ...props }: LoginProps) {
+function LoginModal({ setOpen, login, oAuthSetUser, ...props }: LoginProps) {
   const navigate = useNavigate();
   const [userLogin, setUserLogin] = React.useState<UserLogin>({
     username: '',
     password: '',
   });
-  const [errorMessages, setErrorMessages] = React.useState('');
+  const [errorMessage, setErrorMessage] = React.useState('');
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     const { name, value } = event.target;
@@ -103,49 +100,7 @@ function LoginModal({ setOpen, login, loginSetUer, ...props }: LoginProps) {
       // navigate('/home');
     } else {
       // setErrorMessages(Response.data.error_msg);
-      setErrorMessages('로그인에 실패했습니다.');
-    }
-  };
-
-  const onGoogleLoginSuccess = React.useCallback(
-    (Response : any) => {
-      const idToken = Response.tokenId;
-      const data = {
-        email: Response.profileObj.email,
-        first_name: Response.profileObj.givenName,
-        last_name: Response.profileObj.familyName
-      };
-  
-      validateTokenAndObtainSession({ data, idToken });
-    },
-    []
-  );
-
-  const onGoogleLoginFailure = React.useCallback(
-    (Response : any) => {
-      console.log("google login failure")
-      console.log(Response)
-    },
-    []
-  );
-
-  async function validateTokenAndObtainSession ({ data, idToken }: any) {
-    const headers = {
-      Authorization: idToken,
-      'Content-Type': 'application/json'
-    };
-  
-    const loginURL = `/api/login/oauth`;
-    const response = await axios.post(loginURL, data, {headers:headers});
-    const result = response.data;
-    
-    if (result.login) {
-      loginSetUer(result);
-      setOpen(false);
-      // navigate('/home');
-    } else {
-      // setErrorMessages(Response.data.error_msg);
-      setErrorMessages('로그인에 실패했습니다.');
+      setErrorMessage('로그인에 실패했습니다.');
     }
   };
 
@@ -166,16 +121,16 @@ function LoginModal({ setOpen, login, loginSetUer, ...props }: LoginProps) {
             onChange={handleChange}
           />
         </StyledInputSection>
-        <p style={{ fontSize: '0.5rem', color: 'red' }}>{errorMessages}</p>
+        <p style={{ fontSize: '0.5rem', color: 'red' }}>{errorMessage}</p>
         <SubmitButton variant="contained" onClick={handleSubmit}>
           Submit
         </SubmitButton>
         <Divider css={dividerStyle} />
-        <GoogleLogin
-          clientId={REACT_APP_GOOGLE_CLIENT_ID}  // your Google app client ID
-          buttonText="Sign in with Google"
-          onSuccess={onGoogleLoginSuccess} // perform your user logic here
-          onFailure={onGoogleLoginFailure} // handle errors here
+        <OauthLogin
+          cssProps={oAuthButtonStyle}
+          setOpen={setOpen}
+          oAuthSetUser={oAuthSetUser}
+          setErrorMessage={setErrorMessage}
         />
       </StyledForm>
     </StyledModal>

@@ -8,7 +8,7 @@ export type UserLogin = {
   readonly password: string;
 };
 
-type User = {
+export type User = {
   readonly login: boolean;
   readonly id?: string;
   readonly username?: string;
@@ -61,7 +61,7 @@ function useAuth() {
     // setTimeout(() => console.log(user), 500);
   }
 
-  function loginSetUer(currentUser : any){
+  function oAuthSetUser(currentUser: User) {
     setUser(currentUser);
     sessionStorage.setItem('user', JSON.stringify(currentUser));
   }
@@ -70,7 +70,7 @@ function useAuth() {
     loginCheck();
   }, []);
 
-  return [user, logIn, logOut, loginSetUer] as const;
+  return [user, logIn, logOut, oAuthSetUser] as const;
 }
 
 export default useAuth;

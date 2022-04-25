@@ -1,9 +1,6 @@
 {
   "name": "oasys",
   "version": "0.1.0",
-  "engines": {
-    "node": "16.14.2"
-  },
   "private": true,
   "dependencies": {
     "@craco/craco": "^6.4.3",
