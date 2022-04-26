@@ -34,7 +34,11 @@ function ListImage() {
 
   return (
     <StyledBox>
-      <ImageSetController id={parseInt(id)} data={dataset} />
+      <ImageSetController
+        id={parseInt(id)}
+        data={dataset}
+        setDataset={setDataset}
+      />
       <ImageSet id={parseInt(id)} data={dataset} />
     </StyledBox>
   );
