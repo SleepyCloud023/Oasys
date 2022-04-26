@@ -1,4 +1,6 @@
 import json
+from PIL import Image
+import io
 
 from django.http.response import JsonResponse
 from django.contrib.auth.models import User
@@ -9,6 +11,10 @@ from dataCRUD.models import ImageMetadata, Dataset, WorkspaceDataset
 from common.models import CustomUser as User, UserWorkspace
 from common.models import Workspace
 from utils.timer import timer
+
+
+DEFAULT_ANNO = json.dumps(
+    {"category_list": [], "tag_list": [], "box_object_list": []})
 
 
 @api_view(['GET', 'POST', 'DELETE'])
@@ -123,3 +129,25 @@ def user(request, id):
                 {"id": row.id, "name": row.workspace_name})
 
         return JsonResponse(result_json, json_dumps_params={'indent': 2})
+
+
+@api_view(['POST'])
+def image(request):
+    try:
+        dataset, filename = request.headers['Filepath'].split("/")
+        file_loc = 'img/'+dataset + "/" + filename
+
+        image = Image.open(io.BytesIO(request.body))
+        width = image.width
+        height = image.height
+
+        with open(file_loc, 'wb') as f:
+            f.write(request.body)
+
+        ImageMetadata.objects.create(annotation=DEFAULT_ANNO, image_url="https://oasys.ml/res/" +
+                                     file_loc, image_name=filename, image_size=str(width)+" "+str(height), dataset_id=dataset)
+
+        return JsonResponse({"type": "image_upload", "success": True}, json_dumps_params={'indent': 2})
+
+    except Exception as e:
+        return JsonResponse({"type": "image_upload", "success": False, "error_msg": e}, json_dumps_params={'indent': 2})
