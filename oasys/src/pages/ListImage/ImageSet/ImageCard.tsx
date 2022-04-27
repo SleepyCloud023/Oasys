@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 import { DatasetInfo, ImageMetaData } from '../types/list-image';
 import Tooltip from '@mui/material/Tooltip';
 import axios from 'axios';
+import { deleteImageById } from '@api/image';
 
 type PropsImageCard = {
   imageInfo: ImageMetaData;
@@ -32,7 +33,6 @@ const cardHeaderStyle = (useHeader: boolean) => css`
   width: 100%;
   z-index: 1000;
   visibility: ${useHeader ? 'visible' : 'hidden'};
-  /* color: white; */
 
   & span {
     color: white;
@@ -61,11 +61,14 @@ function ImageCard({ imageInfo, setDataset, datasetId }: PropsImageCard) {
   ) {
     e.preventDefault();
 
-    const imageDelete = await axios.delete(`/api/image/${imageInfo.id}`);
+    const response = await deleteImageById(imageInfo.id);
 
-    if (imageDelete.data.success) {
+    if (response.success) {
       const get_data_res = await axios.get(`/api/dataset/${datasetId}`);
       setDataset(get_data_res.data);
+    }
+    // TODO: 실패 시 Alert 추가
+    else {
     }
   }
 
@@ -100,7 +103,7 @@ function ImageCard({ imageInfo, setDataset, datasetId }: PropsImageCard) {
         <CardMedia
           component="img"
           image={imageInfo.imageURL}
-          alt="img/no_image.jpg"
+          alt={imageInfo.imageName}
         />
       </Card>
     </Link>
