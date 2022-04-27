@@ -40,23 +40,19 @@ function UserDetail({ user, handleLogout, ...props }: UserDetailProps) {
       anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       {...props}
     >
-      <StyledProfile component={'section'}>
-        {/* <h1>My account</h1> */}
-        <Avatar
-          src={user.imageUrl}
-          sx={{ width: '5rem', height: '5rem' }}
-          alt="profile-image"
-        />
-        <span>{user.username}</span>
-        <span>{user.email}</span>
-      </StyledProfile>
+      <li>
+        <StyledProfile component={'section'}>
+          {/* <h1>My account</h1> */}
+          <Avatar
+            src={user.imageUrl}
+            sx={{ width: '5rem', height: '5rem' }}
+            alt="profile-image"
+          />
+          <span>{user.username}</span>
+          <span>{user.email}</span>
+        </StyledProfile>
+      </li>
       <Divider />
-      {/* <MenuItem>
-        <ListItemIcon>
-          <PersonAdd fontSize="small" />
-        </ListItemIcon>
-        Add another account
-      </MenuItem> */}
       <MenuItem>
         <ListItemIcon>
           <Settings fontSize="small" />

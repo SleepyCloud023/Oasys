@@ -1,3 +1,4 @@
+/** @jsxImportSource @emotion/react */
 import React, { useState } from 'react';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -5,7 +6,7 @@ import CardMedia from '@mui/material/CardMedia';
 import IconButton from '@mui/material/IconButton';
 import { grey } from '@mui/material/colors';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Box } from '@mui/material';
+import { Box, css } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { DatasetInfo, ImageMetaData } from '../types/list-image';
 import Tooltip from '@mui/material/Tooltip';
@@ -17,15 +18,44 @@ type PropsImageCard = {
   datasetId: number;
 };
 
+const boxStyle = (useHeader: boolean) => css`
+  background-color: black;
+  position: absolute;
+  opacity: ${useHeader ? 0.7 : 0};
+  z-index: 900;
+  width: 100%;
+  height: 100%;
+`;
+
+const cardHeaderStyle = (useHeader: boolean) => css`
+  position: absolute;
+  width: 100%;
+  z-index: 1000;
+  visibility: ${useHeader ? 'visible' : 'hidden'};
+  /* color: white; */
+
+  & span {
+    color: white;
+  }
+  & .MuiCardHeader-title {
+    font-size: 1.5rem;
+  }
+  & .MuiCardHeader-subheader {
+    font-size: 1rem;
+  }
+`;
+
 function ImageCard({ imageInfo, setDataset, datasetId }: PropsImageCard) {
-  const [useHeader, setUseHeader] = useState(0);
+  const [useHeader, setUseHeader] = useState(false);
 
   const onMouseOver = () => {
-    setUseHeader(1);
+    setUseHeader(true);
   };
+
   const onMouseOut = () => {
-    setUseHeader(0);
+    setUseHeader(false);
   };
+
   async function deleteImage(
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) {
@@ -39,6 +69,18 @@ function ImageCard({ imageInfo, setDataset, datasetId }: PropsImageCard) {
     }
   }
 
+  const HeaderDeleteIcon = (
+    <Tooltip title="Delete">
+      <IconButton
+        aria-label="settings"
+        sx={{ color: grey[200] }}
+        onClick={deleteImage}
+      >
+        <DeleteIcon />
+      </IconButton>
+    </Tooltip>
+  );
+
   return (
     <Link to={'/annotation/' + imageInfo.id}>
       <Card
@@ -46,36 +88,12 @@ function ImageCard({ imageInfo, setDataset, datasetId }: PropsImageCard) {
         onMouseOut={onMouseOut}
         sx={{ position: 'relative' }}
       >
-        <Box
-          sx={{
-            backgroundColor: 'black',
-            position: 'absolute',
-            opacity: useHeader ? '0.5' : '0',
-            zIndex: 900,
-            width: '100%',
-            height: '100%',
-          }}
-        />
+        <Box css={boxStyle(useHeader)} />
         <CardHeader
-          action={
-            <Tooltip title="Delete">
-              <IconButton
-                aria-label="settings"
-                sx={{ color: grey[200] }}
-                onClick={deleteImage}
-              >
-                <DeleteIcon />
-              </IconButton>
-            </Tooltip>
-          }
+          css={cardHeaderStyle(useHeader)}
+          action={HeaderDeleteIcon}
           title={imageInfo.imageName}
           subheader="September 14, 2016"
-          sx={{
-            position: 'absolute',
-            zIndex: 1000,
-            visibility: useHeader ? 'visible' : 'hidden',
-            color: 'white',
-          }}
           titleTypographyProps={{ fontSize: '1rem' }}
           subheaderTypographyProps={{ fontSize: '0.7rem' }}
         />
