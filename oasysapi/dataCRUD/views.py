@@ -1,6 +1,7 @@
 import json
 from PIL import Image
 import io
+import os
 
 from django.http.response import JsonResponse
 from django.contrib.auth.models import User
@@ -74,7 +75,7 @@ def dataset(request, id):
         targets = ImageMetadata.objects.filter(dataset=id)
         for row in targets:
             result_json["image_metadata"].append({"id": row.id, "imageURL": row.image_url,
-                                                  "imageName": row.image_name, "imageSize": row.image_size})
+                                                  "imageName": row.image_name, "imageSize": row.image_size, "modification_date": row.modification_date})
 
         return JsonResponse(result_json, json_dumps_params={'indent': 2})
 
@@ -131,23 +132,44 @@ def user(request, id):
         return JsonResponse(result_json, json_dumps_params={'indent': 2})
 
 
-@api_view(['POST'])
-def image(request):
-    try:
-        dataset, filename = request.headers['Filepath'].split("/")
-        file_loc = 'img/'+dataset + "/" + filename
+@api_view(['POST', 'DELETE'])
+def image(request, id):
+    if request.method == 'POST':
+        try:
+            dataset, name = request.headers['Filepath'].split("/")
+            image = Image.open(io.BytesIO(request.body))
+            width = image.width
+            height = image.height
+            filename = image.filename
+            file_loc = 'img/'+dataset + "/" + name
+            print("check !!! -------------")
+            print(file_loc)
 
-        image = Image.open(io.BytesIO(request.body))
-        width = image.width
-        height = image.height
+            with open(file_loc, 'wb') as f:
+                f.write(request.body)
 
-        with open(file_loc, 'wb') as f:
-            f.write(request.body)
+            ImageMetadata.objects.create(annotation=DEFAULT_ANNO, image_url="https://oasys.ml/res/" +
+                                         file_loc, image_name=name, image_size=str(width)+" "+str(height), dataset_id=dataset)
 
-        ImageMetadata.objects.create(annotation=DEFAULT_ANNO, image_url="https://oasys.ml/res/" +
-                                     file_loc, image_name=filename, image_size=str(width)+" "+str(height), dataset_id=dataset)
+            return JsonResponse({"type": "image_upload", "success": True}, json_dumps_params={'indent': 2})
 
-        return JsonResponse({"type": "image_upload", "success": True}, json_dumps_params={'indent': 2})
+        except Exception as e:
+            print(e)
+            return JsonResponse({"type": "image_upload", "success": False, "error_msg": e}, json_dumps_params={'indent': 2})
 
-    except Exception as e:
-        return JsonResponse({"type": "image_upload", "success": False, "error_msg": e}, json_dumps_params={'indent': 2})
+    elif request.method == 'DELETE':
+        try:
+            target = ImageMetadata.objects.get(pk=id)
+        except:
+            return JsonResponse({"type": "image_delete", "success": False}, json_dumps_params={'indent': 2})
+
+        dataset = target.dataset_id
+        filename = target.image_name
+
+        file_loc = 'img/' + str(dataset) + "/" + filename
+        if os.path.isfile(file_loc):
+            os.remove(file_loc)
+
+        target.delete()
+
+        return JsonResponse({"type": "image_delete", "success": True}, json_dumps_params={'indent': 2})

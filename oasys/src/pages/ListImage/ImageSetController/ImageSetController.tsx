@@ -1,9 +1,8 @@
 /** @jsxImportSource @emotion/react */
-import { Button, css, Divider } from '@mui/material';
+import { css, Divider } from '@mui/material';
 import axios from 'axios';
-import React, { useState } from 'react';
+import React from 'react';
 import { DatasetInfo } from '../types/list-image';
-import styled from 'styled-components';
 
 export type ImageSetControllerProps = {
   id: number;
@@ -35,8 +34,8 @@ function ImageSetController({ id, data, setDataset }: ImageSetControllerProps) {
         filepath: `${id}/${filename}`,
       },
     };
-
-    const iu_res = await axios.post('/api/image', file, config);
+    console.log(file);
+    const iu_res = await axios.post('/api/image/0', file, config);
 
     if (iu_res.data.success) {
       const get_data_res = await axios.get(`/api/dataset/${id}`);

@@ -4,16 +4,20 @@ import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import IconButton from '@mui/material/IconButton';
 import { grey } from '@mui/material/colors';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { Box } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { ImageMetaData } from '../types/list-image';
+import { DatasetInfo, ImageMetaData } from '../types/list-image';
+import Tooltip from '@mui/material/Tooltip';
+import axios from 'axios';
 
 type PropsImageCard = {
   imageInfo: ImageMetaData;
+  setDataset: React.Dispatch<React.SetStateAction<DatasetInfo | null>>;
+  datasetId: number;
 };
 
-function ImageCard({ imageInfo }: PropsImageCard) {
+function ImageCard({ imageInfo, setDataset, datasetId }: PropsImageCard) {
   const [useHeader, setUseHeader] = useState(0);
 
   const onMouseOver = () => {
@@ -22,6 +26,18 @@ function ImageCard({ imageInfo }: PropsImageCard) {
   const onMouseOut = () => {
     setUseHeader(0);
   };
+  async function deleteImage(
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) {
+    e.preventDefault();
+
+    const imageDelete = await axios.delete(`/api/image/${imageInfo.id}`);
+
+    if (imageDelete.data.success) {
+      const get_data_res = await axios.get(`/api/dataset/${datasetId}`);
+      setDataset(get_data_res.data);
+    }
+  }
 
   return (
     <Link to={'/annotation/' + imageInfo.id}>
@@ -42,9 +58,15 @@ function ImageCard({ imageInfo }: PropsImageCard) {
         />
         <CardHeader
           action={
-            <IconButton aria-label="settings" sx={{ color: grey[50] }}>
-              <MoreVertIcon />
-            </IconButton>
+            <Tooltip title="Delete">
+              <IconButton
+                aria-label="settings"
+                sx={{ color: grey[200] }}
+                onClick={deleteImage}
+              >
+                <DeleteIcon />
+              </IconButton>
+            </Tooltip>
           }
           title={imageInfo.imageName}
           subheader="September 14, 2016"
