@@ -39,7 +39,7 @@ function ListImage() {
         data={dataset}
         setDataset={setDataset}
       />
-      <ImageSet id={parseInt(id)} data={dataset} />
+      <ImageSet id={parseInt(id)} data={dataset} setDataset={setDataset} />
     </StyledBox>
   );
 }

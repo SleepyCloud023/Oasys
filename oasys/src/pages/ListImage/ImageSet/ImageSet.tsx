@@ -17,13 +17,18 @@ const StyledImageSet = styled(Box)`
 type ImageSetProps = {
   id: number;
   data: DatasetInfo;
+  setDataset: React.Dispatch<React.SetStateAction<DatasetInfo | null>>;
 };
 
-function ImageSet({ id, data }: ImageSetProps) {
+function ImageSet({ id, data, setDataset }: ImageSetProps) {
   const { image_metadata } = data;
   const cardElements = image_metadata.map((objects, index) => (
     <Grid item xs={4} sm={3} md={3} lg={2} key={`imageCard${index}`}>
-      <ImageCard imageInfo={objects}></ImageCard>
+      <ImageCard
+        imageInfo={objects}
+        setDataset={setDataset}
+        datasetId={id}
+      ></ImageCard>
     </Grid>
   ));
 
