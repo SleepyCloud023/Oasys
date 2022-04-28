@@ -3,6 +3,7 @@ from PIL import Image
 import io
 import os
 
+from django.http import HttpResponse
 from django.http.response import JsonResponse
 from django.contrib.auth.models import User
 from rest_framework import status
@@ -173,3 +174,30 @@ def image(request, id):
         target.delete()
 
         return JsonResponse({"type": "image_delete", "success": True}, json_dumps_params={'indent': 2})
+
+
+@api_view(['GET', 'POST'])
+def annotation(request, id):
+    try:
+        target = Dataset.objects.get(pk=id)
+    except ImageMetadata.DoesNotExist:
+        return JsonResponse({'type': "annotation_"+request.method, 'success': False, 'error_msg': 'user not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        result = []
+
+        targets = ImageMetadata.objects.filter(dataset=id)
+        for index, row in enumerate(targets):
+            anno_json = json.loads(row.annotation)
+            anno_json["_image_num"] = index
+            anno_json["_image_name"] = row.image_name
+            result.append(anno_json)
+
+        result = json.dumps(result, indent=2, sort_keys=True)
+
+        response = HttpResponse(
+            result, content_type='text/json')
+        response['Content-Disposition'] = 'attachment; filename=' + \
+            target.name+'.json'
+
+        return response

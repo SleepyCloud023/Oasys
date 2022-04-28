@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { css, Divider } from '@mui/material';
+import { Button, css, Divider } from '@mui/material';
 import axios from 'axios';
 import React from 'react';
 import { DatasetInfo } from '../types/list-image';
@@ -10,59 +10,99 @@ export type ImageSetControllerProps = {
   setDataset: React.Dispatch<React.SetStateAction<DatasetInfo | null>>;
 };
 
-const fileUploaderStyle = {
-  marginLeft: '4px',
-  cursor: 'pointer',
-  color: 'white',
-  background: 'teal',
-  padding: '.375rem .75rem',
-  border: '1px solid teal',
-  borderRadius: '.25rem',
-  fontSize: '1rem',
-  lineHeight: 1.5,
-};
+const annoExportUrl = '/api/annotation';
+const imageUploadUrl = '/api/image/0';
+const datasetUrl = '/api/dataset';
+
+const buttonStyle = css`
+  margin-left: 6px;
+  background: teal;
+  color: white;
+`;
 
 const dividerStyle = css`
   align-self: stretch;
   margin: 0.5rem 10px;
 `;
 
+const fileUploaderStyle = {
+  cursor: 'pointer',
+  position: 'absolute' as 'absolute',
+  width: '100%',
+  height: '100%',
+};
+
+const filePickerStyle = {
+  position: 'absolute' as 'absolute',
+  visibility: 'hidden' as 'hidden',
+};
+
+const annoExporterStyle = {
+  position: 'absolute' as 'absolute',
+  width: '100%',
+  height: '100%',
+};
+
 function ImageSetController({ id, data, setDataset }: ImageSetControllerProps) {
-  async function newBook(file: File | null, filename: string) {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const target = e.currentTarget.files;
+
+    if (target != null) {
+      uploadImage(target[0], target[0].name);
+    }
+  };
+
+  const onClick = (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
+    e.currentTarget.value = '';
+  };
+
+  async function uploadImage(file: File | null, filename: string) {
     let config = {
       headers: {
         filepath: `${id}/${filename}`,
       },
     };
-    console.log(file);
-    const iu_res = await axios.post('/api/image/0', file, config);
 
-    if (iu_res.data.success) {
-      const get_data_res = await axios.get(`/api/dataset/${id}`);
-      setDataset(get_data_res.data);
+    const uploadRes = await axios.post(imageUploadUrl, file, config);
+    const uploadSuccess = uploadRes.data.success;
+
+    if (uploadSuccess) {
+      const getDatasetRes = await axios.get(`${datasetUrl}/${id}`);
+      const dataset = getDatasetRes.data;
+      setDataset(dataset);
     }
   }
+
+  const FileUploader = () => (
+    <Button variant="contained" css={buttonStyle}>
+      <label htmlFor="filePicker" style={fileUploaderStyle}></label>
+      Image Upload
+    </Button>
+  );
+
+  const FilePicker = () => (
+    <input
+      id="filePicker"
+      style={filePickerStyle}
+      type={'file'}
+      onChange={onChange}
+      onClick={onClick}
+    ></input>
+  );
+
+  const AnnoExportLink = () => (
+    <Button variant="contained" css={buttonStyle}>
+      <a href={`${annoExportUrl}/${id}`} style={annoExporterStyle} download></a>
+      Export Anno
+    </Button>
+  );
 
   return (
     <>
       <h2>ImageSetController</h2>
-      <label htmlFor="filePicker" style={fileUploaderStyle}>
-        Image Upload
-      </label>
-      <input
-        id="filePicker"
-        style={{ visibility: 'hidden' }}
-        type={'file'}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-          const target = e.currentTarget.files;
-          if (target != null) {
-            newBook(target[0], target[0].name);
-          }
-        }}
-        onClick={(e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
-          e.currentTarget.value = '';
-        }}
-      ></input>
+      <FileUploader />
+      <FilePicker />
+      <AnnoExportLink />
       <Divider css={dividerStyle} />
     </>
   );
