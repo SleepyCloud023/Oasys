@@ -3,6 +3,10 @@ import { Box, css } from '@mui/material';
 import { Link } from 'react-router-dom';
 import styled from '@mui/system/styled';
 import axios from 'axios';
+import Datasets from './Datasets';
+import { Workspace } from './types/list-dataset';
+
+const id = 2;
 
 const StyledBox = styled(Box)(
   ({ theme }) => css`
@@ -18,34 +22,25 @@ type Permission = {
 };
 
 function ListDataset() {
-  const [datasetPermission, setDatasetPermission] = useState<Permission | null>(
-    null,
-  );
+  const [workspace, setWorkspace] = useState<Workspace | null>(null);
   // const imageSetURL = useLocation().pathname;
 
   useEffect(() => {
     (async function () {
-      const response = await axios.get(`/api/workspace/2`);
-      setDatasetPermission(response.data);
+      const response = await axios.get(`/api/workspace/${id}`);
+      setWorkspace(response.data);
     })();
   }, []);
 
-  if (datasetPermission === null || datasetPermission.dataset === undefined) {
+  if (typeof id === 'undefined' || workspace === null) {
     // TODO: 에러시 보여줄 페이지 작성
     return null;
   }
 
-  const datasetList = datasetPermission.dataset.map((objects) => (
-    <div key={`dataset${objects.id}`}>
-      <Link to={`/imageSet/${objects.id}`}>{objects.name}</Link>
-      <br />
-    </div>
-  ));
-
   return (
     <StyledBox>
       <h1>Display list of Dataset Here</h1>
-      {datasetList}
+      <Datasets workspaceId={id} workspace={workspace} />
     </StyledBox>
   );
 }

@@ -75,8 +75,10 @@ def dataset(request, id):
         result_json["datasetName"] = target.name
         targets = ImageMetadata.objects.filter(dataset=id)
         for row in targets:
+            mf_time = row.modification_date.strftime(
+                'Last modified on %Y-%m-%d  %H:%M:%S (KST:UTC+9)')
             result_json["image_metadata"].append({"id": row.id, "imageURL": row.image_url,
-                                                  "imageName": row.image_name, "imageSize": row.image_size, "modification_date": row.modification_date})
+                                                  "imageName": row.image_name, "imageSize": row.image_size, "modification_date": mf_time})
 
         return JsonResponse(result_json, json_dumps_params={'indent': 2})
 
@@ -107,7 +109,10 @@ def workspace(request, id):
         targets = Dataset.objects.filter(
             id__in=permission)
         for row in targets:
-            result_json["dataset"].append({"id": row.id, "name": row.name})
+            mf_time = row.modification_date.strftime(
+                '%Y-%m-%d  %H:%M:%S (Last modified)')
+            result_json["dataset"].append(
+                {"id": row.id, "name": row.name, "modification_date": mf_time})
 
         return JsonResponse(result_json, json_dumps_params={'indent': 2})
 
