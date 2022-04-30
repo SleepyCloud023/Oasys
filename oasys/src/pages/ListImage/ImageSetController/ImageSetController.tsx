@@ -11,7 +11,7 @@ export type ImageSetControllerProps = {
 };
 
 const annoExportUrl = '/api/annotation';
-const imageUploadUrl = '/api/image/0';
+const imageUploadUrl = '/api/image';
 const datasetUrl = '/api/dataset';
 
 const buttonStyle = css`
@@ -56,14 +56,12 @@ function ImageSetController({ id, data, setDataset }: ImageSetControllerProps) {
     e.currentTarget.value = '';
   };
 
-  async function uploadImage(file: File | null, filename: string) {
-    let config = {
-      headers: {
-        filepath: `${id}/${filename}`,
-      },
-    };
+  async function uploadImage(file: File, filename: string) {
+    const formData = new FormData();
+    formData.append('title', filename);
+    formData.append('file', file);
 
-    const uploadRes = await axios.post(imageUploadUrl, file, config);
+    const uploadRes = await axios.post(`${imageUploadUrl}/${id}`, formData);
     const uploadSuccess = uploadRes.data.success;
 
     if (uploadSuccess) {

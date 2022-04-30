@@ -13,6 +13,7 @@ from dataCRUD.models import ImageMetadata, Dataset, WorkspaceDataset
 from common.models import CustomUser as User, UserWorkspace
 from common.models import Workspace
 from utils.timer import timer
+from .forms import ImgForm
 
 
 DEFAULT_ANNO = json.dumps(
@@ -142,26 +143,31 @@ def user(request, id):
 def image(request, id):
     if request.method == 'POST':
         try:
-            dataset, name = request.headers['Filepath'].split("/")
-            image = Image.open(io.BytesIO(request.body))
+
+            form = ImgForm(request.POST, request.FILES)
+            if not form.is_valid():
+                raise Exception('It is not valid form')
+
+            filename = form.cleaned_data['title']
+            image = form.cleaned_data['file']
+            image = Image.open(image)
             width = image.width
             height = image.height
-            filename = image.filename
-            file_loc = 'img/'+dataset + "/" + name
-            print("check !!! -------------")
-            print(file_loc)
 
-            with open(file_loc, 'wb') as f:
-                f.write(request.body)
+            file_loc = 'img/' + str(id) + "/" + filename
+            # print("check !!! -------------")
+            # print(file_loc, width, height)
+
+            image.save(file_loc)
 
             ImageMetadata.objects.create(annotation=DEFAULT_ANNO, image_url="https://oasys.ml/res/" +
-                                         file_loc, image_name=name, image_size=str(width)+" "+str(height), dataset_id=dataset)
+                                         file_loc, image_name=filename, image_size=str(width)+" "+str(height), dataset_id=id)
 
             return JsonResponse({"type": "image_upload", "success": True}, json_dumps_params={'indent': 2})
 
         except Exception as e:
             print(e)
-            return JsonResponse({"type": "image_upload", "success": False, "error_msg": e}, json_dumps_params={'indent': 2})
+            return JsonResponse({"type": "image_upload", "success": False, "error_msg": str(e)}, json_dumps_params={'indent': 2})
 
     elif request.method == 'DELETE':
         try:
