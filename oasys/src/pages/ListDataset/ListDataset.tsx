@@ -39,7 +39,11 @@ function ListDataset() {
 
   return (
     <StyledBox>
-      <DatasetsController workspaceId={id} workspace={workspace} />
+      <DatasetsController
+        workspaceId={id}
+        workspace={workspace}
+        setWorkspace={setWorkspace}
+      />
       <Datasets workspaceId={id} workspace={workspace} />
     </StyledBox>
   );

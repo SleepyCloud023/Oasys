@@ -54,7 +54,7 @@ def data(request, id):
         return JsonResponse(result_json, json_dumps_params={'indent': 2})
 
 
-@api_view(['GET', 'PUT', 'DELETE'])
+@api_view(['GET', 'POST', 'DELETE'])
 def dataset(request, id):
     """_summary_
 
@@ -65,6 +65,20 @@ def dataset(request, id):
     Returns:
         _type_: check111
     """
+    if request.method == "POST":
+        submit = json.loads(request.body.decode("utf-8"))
+
+        same_name = Dataset.objects.filter(name=submit["name"])
+        if len(same_name) >= 1:
+            return JsonResponse({"type": "dataset_create", "success": True, "error_msg": "The name already exists."},
+                                json_dumps_params={'indent': 2})
+
+        target = Dataset.objects.create(name=submit["name"])
+        WorkspaceDataset.objects.create(
+            workspace=submit["workspace"], dataset=target.id)
+        return JsonResponse({"type": "dataset_create", "success": True},
+                            json_dumps_params={'indent': 2})
+
     try:
         target = Dataset.objects.get(pk=id)
     except ImageMetadata.DoesNotExist:
@@ -190,7 +204,7 @@ def image(request, id):
         return JsonResponse({"type": "image_delete", "success": True}, json_dumps_params={'indent': 2})
 
 
-@api_view(['GET', 'POST'])
+@api_view(['GET', 'PUT'])
 def annotation(request, id):
     try:
         target = Dataset.objects.get(pk=id)
