@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { Box, css } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Box, Button, css } from '@mui/material';
 import styled from '@mui/system/styled';
 import axios from 'axios';
 import Datasets from './Datasets';
 import { Workspace } from './types/list-dataset';
+import DatasetsController from './DatasetsController';
 
 const id = 2;
 
@@ -39,7 +39,7 @@ function ListDataset() {
 
   return (
     <StyledBox>
-      <h1>Display list of Dataset Here</h1>
+      <DatasetsController workspaceId={id} workspace={workspace} />
       <Datasets workspaceId={id} workspace={workspace} />
     </StyledBox>
   );

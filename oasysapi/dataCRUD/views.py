@@ -178,9 +178,12 @@ def image(request, id):
         dataset = target.dataset_id
         filename = target.image_name
 
-        file_loc = 'img/' + str(dataset) + "/" + filename
-        if os.path.isfile(file_loc):
-            os.remove(file_loc)
+        same_name = ImageMetadata.objects.filter(image_name=filename)
+
+        if len(same_name) <= 1:
+            file_loc = 'img/' + str(dataset) + "/" + filename
+            if os.path.isfile(file_loc):
+                os.remove(file_loc)
 
         target.delete()
 
