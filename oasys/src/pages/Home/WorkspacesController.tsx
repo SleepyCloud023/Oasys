@@ -1,13 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import { useState } from 'react';
 import { Button, css, Divider, styled } from '@mui/material';
-import { Workspace } from './types/list-dataset';
-import DatasetCreater from './DatasetCreater';
+import { Permission } from './types/list-workspace';
+import DatasetCreater from './WorkspaceCreater';
 
 type DatasetsControllerProps = {
-  workspaceId: number;
-  workspace: Workspace;
-  setWorkspace: React.Dispatch<React.SetStateAction<Workspace | null>>;
+  userId: string;
+  permission: Permission;
+  setPermission: React.Dispatch<React.SetStateAction<Permission | null>>;
 };
 
 const buttonStyle = css`
@@ -21,10 +21,10 @@ const dividerStyle = css`
   margin: 0.5rem 10px;
 `;
 
-function DatasetsController({
-  workspaceId,
-  workspace,
-  setWorkspace,
+function WorkspacesController({
+  userId,
+  permission,
+  setPermission,
 }: DatasetsControllerProps) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -32,19 +32,19 @@ function DatasetsController({
 
   return (
     <>
-      <h1>Dataset List</h1>
+      <h1>Home - Workspace List</h1>
       <Button variant="contained" css={buttonStyle} onClick={handleOpen}>
-        Create Dataset
+        Create Workspace
       </Button>
       <Divider css={dividerStyle} />
       <DatasetCreater
-        workspaceId={workspaceId}
+        userId={userId}
         open={open}
         handleClose={handleClose}
-        setWorkspace={setWorkspace}
+        setPermission={setPermission}
       />
     </>
   );
 }
 
-export default DatasetsController;
+export default WorkspacesController;

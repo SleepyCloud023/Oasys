@@ -4,17 +4,17 @@ import { styled, TextField } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import Modal from '@mui/material/Modal';
 import axios from 'axios';
-import { Workspace } from './types/list-dataset';
+import { Permission } from './types/list-workspace';
 
 type DatasetCreaterProps = {
-  workspaceId: number;
+  userId: string;
   open: boolean;
   handleClose: () => void;
-  setWorkspace: React.Dispatch<React.SetStateAction<Workspace | null>>;
+  setPermission: React.Dispatch<React.SetStateAction<Permission | null>>;
 };
 
-const datasetUrl = '/api/dataset';
 const workspaceUrl = '/api/workspace';
+const permissionUrl = '/api/permission';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -39,11 +39,11 @@ const MsgBox = styled(Box)`
   color: red;
 `;
 
-function DatasetCreater({
-  workspaceId,
+function WorkspaceCreater({
+  userId,
   open,
   handleClose,
-  setWorkspace,
+  setPermission,
 }: DatasetCreaterProps) {
   const [name, setName] = useState('');
   const [loading, setLoading] = useState(false);
@@ -56,15 +56,13 @@ function DatasetCreater({
     event.preventDefault();
     //await new Promise((r) => setTimeout(r, 1000));
 
-    const data = { name: name, workspace: workspaceId };
-    const { data: res } = await axios.post(`${datasetUrl}/0`, data);
+    const data = { name: name, user: userId };
+    const { data: res } = await axios.post(`${workspaceUrl}/0`, data);
     setLoading(false);
 
     if (res.success) {
-      const { data: resData } = await axios.get(
-        `${workspaceUrl}/${workspaceId}`,
-      );
-      setWorkspace(resData);
+      const { data: resData } = await axios.get(`${permissionUrl}/${userId}`);
+      setPermission(resData);
       handleClose();
     } else {
       setMsg(res.error_msg);
@@ -86,7 +84,7 @@ function DatasetCreater({
         <TextField
           required
           id="outlined-required"
-          label="Dataset Name"
+          label="Workspace Name"
           variant="outlined"
           value={name}
           onChange={handleChange}
@@ -106,4 +104,4 @@ function DatasetCreater({
   );
 }
 
-export default DatasetCreater;
+export default WorkspaceCreater;

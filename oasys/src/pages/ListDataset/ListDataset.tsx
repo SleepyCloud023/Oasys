@@ -5,8 +5,7 @@ import axios from 'axios';
 import Datasets from './Datasets';
 import { Workspace } from './types/list-dataset';
 import DatasetsController from './DatasetsController';
-
-const id = 2;
+import { useParams } from 'react-router-dom';
 
 const StyledBox = styled(Box)(
   ({ theme }) => css`
@@ -23,6 +22,7 @@ type Permission = {
 
 function ListDataset() {
   const [workspace, setWorkspace] = useState<Workspace | null>(null);
+  const id = useParams().id;
   // const imageSetURL = useLocation().pathname;
 
   useEffect(() => {
@@ -40,11 +40,11 @@ function ListDataset() {
   return (
     <StyledBox>
       <DatasetsController
-        workspaceId={id}
+        workspaceId={parseInt(id)}
         workspace={workspace}
         setWorkspace={setWorkspace}
       />
-      <Datasets workspaceId={id} workspace={workspace} />
+      <Datasets workspaceId={parseInt(id)} workspace={workspace} />
     </StyledBox>
   );
 }

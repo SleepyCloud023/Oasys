@@ -27,7 +27,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Navigation />}>
             <Route path="home" element={<Home />} />
-            <Route path="dataset" element={<ListDataset />} />
+            <Route path="dataset/:id" element={<ListDataset />} />
             <Route path="imageSet/:id" element={<ListImage />} />
           </Route>
           <Route path="/annotation/:id" element={<Annotation />} />

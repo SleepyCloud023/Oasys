@@ -10,8 +10,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 
 from dataCRUD.models import ImageMetadata, Dataset, WorkspaceDataset
-from common.models import CustomUser as User, UserWorkspace
-from common.models import Workspace
+from common.models import CustomUser as User, UserWorkspace, Workspace
 from utils.timer import timer
 from .forms import ImgForm
 
@@ -70,7 +69,7 @@ def dataset(request, id):
 
         same_name = Dataset.objects.filter(name=submit["name"])
         if len(same_name) >= 1:
-            return JsonResponse({"type": "dataset_create", "success": True, "error_msg": "The name already exists."},
+            return JsonResponse({"type": "dataset_create", "success": False, "error_msg": "The name already exists."},
                                 json_dumps_params={'indent': 2})
 
         target = Dataset.objects.create(name=submit["name"])
@@ -98,7 +97,7 @@ def dataset(request, id):
         return JsonResponse(result_json, json_dumps_params={'indent': 2})
 
 
-@api_view(['GET', 'PUT', 'DELETE'])
+@api_view(['GET', 'POST', 'DELETE'])
 # @timer
 def workspace(request, id):
     """_summary_
@@ -110,6 +109,21 @@ def workspace(request, id):
     Returns:
         _type_: _description_
     """
+    if request.method == "POST":
+        submit = json.loads(request.body.decode("utf-8"))
+
+        same_name = Workspace.objects.filter(workspace_name=submit["name"])
+        if len(same_name) >= 1:
+            return JsonResponse({"type": "workspace_create", "success": False, "error_msg": "The name already exists."},
+                                json_dumps_params={'indent': 2})
+
+        target = Workspace.objects.create(workspace_name=submit["name"])
+        UserWorkspace.objects.create(
+            user=submit["user"], workspace=target.id)
+
+        return JsonResponse({"type": "workspace_create", "success": True},
+                            json_dumps_params={'indent': 2})
+
     try:
         target = Workspace.objects.get(pk=id)
     except ImageMetadata.DoesNotExist:
@@ -133,22 +147,25 @@ def workspace(request, id):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
-def user(request, id):
+def permission(request, id):
+    print("permission")
     try:
         target = User.objects.get(pk=id)
     except ImageMetadata.DoesNotExist:
         return JsonResponse({'message': 'user not found'}, status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        result_json = {"userName": target.username, "workspace": []}
+        result_json = {"user": target.username, "workspace": []}
 
         workspace_list = UserWorkspace.objects.filter(
             user=id).values('workspace')
 
         targets = Workspace.objects.filter(id__in=workspace_list)
         for row in targets:
+            mf_time = row.modification_date.strftime(
+                '%Y-%m-%d %H:%M:%S')
             result_json["workspace"].append(
-                {"id": row.id, "name": row.workspace_name})
+                {"id": row.id, "name": row.workspace_name, "modification_date": mf_time})
 
         return JsonResponse(result_json, json_dumps_params={'indent': 2})
 

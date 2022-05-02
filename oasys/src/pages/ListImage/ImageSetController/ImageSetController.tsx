@@ -97,7 +97,7 @@ function ImageSetController({ id, data, setDataset }: ImageSetControllerProps) {
 
   return (
     <>
-      <h2>ImageSetController</h2>
+      <h2>Image List</h2>
       <FileUploader />
       <FilePicker />
       <AnnoExportLink />
