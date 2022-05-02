@@ -148,9 +148,10 @@ def workspace(request, id):
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def permission(request, id):
-    print("permission")
+    id = id.replace('-', "")
     try:
         target = User.objects.get(pk=id)
+        print(target.id)
     except ImageMetadata.DoesNotExist:
         return JsonResponse({'message': 'user not found'}, status=status.HTTP_404_NOT_FOUND)
 

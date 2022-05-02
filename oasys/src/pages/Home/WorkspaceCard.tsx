@@ -78,7 +78,7 @@ function WorkspaceCard({ userId, workspaceInfo }: PropsWorkspaceCard) {
         css={cardHeaderStyle}
         action={HeaderDeleteIcon}
         title={workspaceInfo.name}
-        subheader={workspaceInfo.modification_date}
+        subheader={workspaceInfo.modification_date + ' (Last modified)'}
       />
       {/* <CardMedia
         component="img"
@@ -104,7 +104,7 @@ function WorkspaceCard({ userId, workspaceInfo }: PropsWorkspaceCard) {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>Dataset Info</Typography>
+          <Typography paragraph>Workspace Info</Typography>
         </CardContent>
       </Collapse>
     </StyledCard>

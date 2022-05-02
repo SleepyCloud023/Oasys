@@ -25,14 +25,23 @@ const StyledNav = styled((props) => <nav {...props} />)(
   `,
 );
 
-function Navigation() {
+function Navigation({
+  setLoginState,
+}: {
+  setLoginState: React.Dispatch<
+    React.SetStateAction<{
+      login: boolean;
+      id: string;
+    }>
+  >;
+}) {
   return (
     <>
       <StyledNav>
         <Logo />
         <Explorer />
         <SearchBar />
-        <UserInfo />
+        <UserInfo setLoginState={setLoginState} />
       </StyledNav>
       <Outlet />
     </>

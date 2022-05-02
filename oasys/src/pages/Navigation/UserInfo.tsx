@@ -33,7 +33,16 @@ const styleIcon = (theme: Theme) => css`
 
 // type UserInfoProps = {};
 
-function UserInfo() {
+function UserInfo({
+  setLoginState,
+}: {
+  setLoginState: React.Dispatch<
+    React.SetStateAction<{
+      login: boolean;
+      id: string;
+    }>
+  >;
+}) {
   const [user, login, logout, oAuthSetUser] = useAuth();
   const theme = useTheme();
   const navigate = useNavigate();
@@ -41,6 +50,14 @@ function UserInfo() {
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
   const [modalOpen, setModalOpen] = React.useState(false);
   const detailOpen = Boolean(anchorEl);
+
+  React.useEffect(() => {
+    if (user.login && user.id != undefined) {
+      setLoginState({ login: true, id: user.id });
+    } else {
+      setLoginState({ login: false, id: '' });
+    }
+  }, [user]);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);

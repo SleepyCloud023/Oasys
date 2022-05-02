@@ -5,8 +5,7 @@ import axios from 'axios';
 import Workspaces from './Workspaces';
 import { Permission } from './types/list-workspace';
 import WorkspacesController from './WorkspacesController';
-
-const id = 'a3dcf03caaa4488491fea63113f20452';
+import { idText } from 'typescript';
 
 const StyledBox = styled(Box)(
   ({ theme }) => css`
@@ -16,16 +15,19 @@ const StyledBox = styled(Box)(
   `,
 );
 
-function Home() {
+function Home({ id }: { id: string }) {
+  console.log(id);
   const [permission, setPermission] = useState<Permission | null>(null);
   // const imageSetURL = useLocation().pathname;
 
   useEffect(() => {
+    console.log(id);
     (async function () {
+      console.log(id);
       const response = await axios.get(`/api/permission/${id}`);
       setPermission(response.data);
     })();
-  }, []);
+  }, [id]);
 
   if (typeof id === 'undefined' || permission === null) {
     // TODO: 에러시 보여줄 페이지 작성

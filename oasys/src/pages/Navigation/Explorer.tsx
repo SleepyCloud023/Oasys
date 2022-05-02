@@ -22,9 +22,9 @@ function Explorer() {
   const navigate = useNavigate();
   const tabList: Array<TabItem> = [
     ['/home', 'Home', true],
-    ['/dataset', 'Dataset', true],
-    ['/home', 'Image', true],
-    ['/dataset', 'Upload', true],
+    //['/dataset', 'Dataset', true],
+    //['/home', 'Image', true],
+    //['/dataset', 'Upload', true],
   ];
 
   return (
