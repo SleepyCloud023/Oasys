@@ -16,14 +16,11 @@ const StyledBox = styled(Box)(
 );
 
 function Home({ id }: { id: string }) {
-  console.log(id);
   const [permission, setPermission] = useState<Permission | null>(null);
   // const imageSetURL = useLocation().pathname;
 
   useEffect(() => {
-    console.log(id);
     (async function () {
-      console.log(id);
       const response = await axios.get(`/api/permission/${id}`);
       setPermission(response.data);
     })();

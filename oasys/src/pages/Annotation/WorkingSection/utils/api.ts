@@ -12,7 +12,7 @@ import {
 const errorImageInfo = {
   imageURL: 'img/test_image.jpg',
   imageName: 'File Not Found',
-  imageSize: '',
+  imageSize: '0 0',
 };
 const errorAnnotation = {
   box_object_list: [],

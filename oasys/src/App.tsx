@@ -26,8 +26,6 @@ function App() {
     id: '',
   });
 
-  console.log(loginState);
-
   return (
     <ThemeProvider theme={appTheme}>
       <CssBaseline enableColorScheme />

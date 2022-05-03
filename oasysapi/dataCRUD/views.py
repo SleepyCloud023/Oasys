@@ -13,6 +13,7 @@ from dataCRUD.models import ImageMetadata, Dataset, WorkspaceDataset
 from common.models import CustomUser as User, UserWorkspace, Workspace
 from utils.timer import timer
 from .forms import ImgForm
+from .permission import data_check, dataset_check, workspace_check
 
 
 DEFAULT_ANNO = json.dumps(
@@ -30,15 +31,24 @@ def data(request, id):
     Returns:
         _type_: _description_
     """
+    print('check ------------')
     try:
         target = ImageMetadata.objects.get(pk=id)
     except ImageMetadata.DoesNotExist:
         return JsonResponse({'success': False}, status=status.HTTP_404_NOT_FOUND)
 
+    user = request.session.get('user')
+    if user is None:
+        return JsonResponse({'type': 'data_get', 'success': False}, status=status.HTTP_401_UNAUTHORIZED)
+
+    permission_flag = data_check(user, target)
+    if not permission_flag:
+        return JsonResponse({'type': 'data_get', 'success': False}, status=status.HTTP_403_FORBIDDEN)
+
     if request.method == 'GET':
         anno_str = target.annotation
         anno_json = json.loads(anno_str)
-        result_json = {"imageURL": target.image_url, "imageName": target.image_name,
+        result_json = {"success": True, "imageURL": target.image_url, "imageName": target.image_name,
                        "imageSize": target.image_size, "annotation": anno_json}
 
         return JsonResponse(result_json, json_dumps_params={'indent': 2})
@@ -82,6 +92,14 @@ def dataset(request, id):
         target = Dataset.objects.get(pk=id)
     except ImageMetadata.DoesNotExist:
         return JsonResponse({'message': 'dataset not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    user = request.session.get('user')
+    if user is None:
+        return JsonResponse({'type': 'dataset_get', 'success': False}, status=status.HTTP_401_UNAUTHORIZED)
+
+    permission_flag = dataset_check(user, target)
+    if not permission_flag:
+        return JsonResponse({'type': 'dataset_get', 'success': False}, status=status.HTTP_403_FORBIDDEN)
 
     if request.method == 'GET':
         result_json = {"datasetName": "", "image_metadata": []}
@@ -128,6 +146,14 @@ def workspace(request, id):
         target = Workspace.objects.get(pk=id)
     except ImageMetadata.DoesNotExist:
         return JsonResponse({'message': 'user not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    user = request.session.get('user')
+    if user is None:
+        return JsonResponse({'type': 'workspace_get', 'success': False}, status=status.HTTP_401_UNAUTHORIZED)
+
+    permission_flag = workspace_check(user, target)
+    if not permission_flag:
+        return JsonResponse({'type': 'workspace_get', 'success': False}, status=status.HTTP_403_FORBIDDEN)
 
     if request.method == 'GET':
         result_json = {"workspace": id, "dataset": []}
