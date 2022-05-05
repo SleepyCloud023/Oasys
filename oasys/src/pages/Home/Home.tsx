@@ -38,7 +38,11 @@ function Home({ id }: { id: string }) {
         permission={permission}
         setPermission={setPermission}
       />
-      <Workspaces userId={id} permission={permission} />
+      <Workspaces
+        userId={id}
+        permission={permission}
+        setPermission={setPermission}
+      />
     </StyledBox>
   );
 }

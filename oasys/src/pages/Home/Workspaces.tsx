@@ -7,6 +7,7 @@ import { StringDecoder } from 'string_decoder';
 type WorkspacesProps = {
   userId: string;
   permission: Permission;
+  setPermission: React.Dispatch<React.SetStateAction<Permission | null>>;
 };
 
 const StyledDatasetsPanel = styled(Box)`
@@ -20,11 +21,15 @@ const StyledDatasets = styled(Box)`
   padding: 20pt;
 `;
 
-function Workspaces({ userId, permission }: WorkspacesProps) {
+function Workspaces({ userId, permission, setPermission }: WorkspacesProps) {
   const { workspace } = permission;
   const cardElements = workspace.map((objects, index) => (
     <Grid item xs={4} sm={3} md={3} lg={2} key={`datasetCard${index}`}>
-      <WorkspaceCard userId={userId} workspaceInfo={objects} />
+      <WorkspaceCard
+        userId={userId}
+        workspaceInfo={objects}
+        setPermission={setPermission}
+      />
     </Grid>
   ));
 

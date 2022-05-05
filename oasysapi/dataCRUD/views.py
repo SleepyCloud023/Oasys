@@ -114,6 +114,14 @@ def dataset(request, id):
 
         return JsonResponse(result_json, json_dumps_params={'indent': 2})
 
+    elif request.method == "DELETE":
+        dataset_id = target.id
+        workspace_dataset = WorkspaceDataset.objects.filter(dataset=dataset_id)
+        workspace_dataset.delete()
+        target.delete()
+
+        return JsonResponse({"type": "dataset_delete", "success": True}, json_dumps_params={'indent': 2})
+
 
 @api_view(['GET', 'POST', 'DELETE'])
 # @timer
@@ -170,6 +178,14 @@ def workspace(request, id):
                 {"id": row.id, "name": row.name, "modification_date": mf_time})
 
         return JsonResponse(result_json, json_dumps_params={'indent': 2})
+
+    elif request.method == "DELETE":
+        workspace_id = target.id
+        user_workspace = UserWorkspace.objects.filter(workspace=workspace_id)
+        user_workspace.delete()
+        target.delete()
+
+        return JsonResponse({"type": "dataset_delete", "success": True}, json_dumps_params={'indent': 2})
 
 
 @api_view(['GET', 'PUT', 'DELETE'])

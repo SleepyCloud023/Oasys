@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Tooltip from '@mui/material/Tooltip';
 
@@ -15,11 +16,13 @@ import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { grey } from '@mui/material/colors';
 
-import { Workspace } from './types/list-workspace';
+import { Permission, Workspace } from './types/list-workspace';
+import { deleteWorkspaceById } from '@api/workspace';
 
 type PropsWorkspaceCard = {
   userId: string;
   workspaceInfo: Workspace;
+  setPermission: React.Dispatch<React.SetStateAction<Permission | null>>;
 };
 
 const StyledCard = styled(Card)`
@@ -57,15 +60,39 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
   }),
 }));
 
-function WorkspaceCard({ userId, workspaceInfo }: PropsWorkspaceCard) {
+function WorkspaceCard({
+  userId,
+  workspaceInfo,
+  setPermission,
+}: PropsWorkspaceCard) {
   const [expanded, setExpanded] = React.useState(false);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
+  async function deleteWorkspace(
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) {
+    e.preventDefault();
+
+    const response = await deleteWorkspaceById(workspaceInfo.id);
+
+    if (response.success) {
+      const get_data_res = await axios.get(`/api/permission/${userId}`);
+      setPermission(get_data_res.data);
+    }
+    // TODO: 실패 시 Alert 추가
+    else {
+    }
+  }
+
   const HeaderDeleteIcon = (
     <Tooltip title="Delete">
-      <IconButton aria-label="settings" sx={{ color: grey[500] }}>
+      <IconButton
+        aria-label="settings"
+        sx={{ color: grey[500] }}
+        onClick={deleteWorkspace}
+      >
         <DeleteIcon />
       </IconButton>
     </Tooltip>

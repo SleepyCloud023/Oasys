@@ -6,6 +6,7 @@ import DatasetCard from './DatasetCard';
 type DatasetsProps = {
   workspaceId: number;
   workspace: Workspace;
+  setWorkspace: React.Dispatch<React.SetStateAction<Workspace | null>>;
 };
 
 const StyledDatasetsPanel = styled(Box)`
@@ -19,11 +20,15 @@ const StyledDatasets = styled(Box)`
   padding: 20pt;
 `;
 
-function Datasets({ workspaceId, workspace }: DatasetsProps) {
+function Datasets({ workspaceId, workspace, setWorkspace }: DatasetsProps) {
   const { dataset } = workspace;
   const cardElements = dataset.map((objects, index) => (
     <Grid item xs={4} sm={3} md={3} lg={2} key={`datasetCard${index}`}>
-      <DatasetCard workspaceId={workspaceId} datasetInfo={objects} />
+      <DatasetCard
+        workspaceId={workspaceId}
+        datasetInfo={objects}
+        setWorkspace={setWorkspace}
+      />
     </Grid>
   ));
 

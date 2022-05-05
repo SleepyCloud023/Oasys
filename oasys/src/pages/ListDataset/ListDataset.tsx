@@ -44,7 +44,11 @@ function ListDataset() {
         workspace={workspace}
         setWorkspace={setWorkspace}
       />
-      <Datasets workspaceId={parseInt(id)} workspace={workspace} />
+      <Datasets
+        workspaceId={parseInt(id)}
+        workspace={workspace}
+        setWorkspace={setWorkspace}
+      />
     </StyledBox>
   );
 }
