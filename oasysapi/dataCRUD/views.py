@@ -1,4 +1,5 @@
 import json
+from tabnanny import filename_only
 from PIL import Image
 import io
 import os
@@ -217,25 +218,23 @@ def permission(request, id):
 def image(request, id):
     if request.method == 'POST':
         try:
+            titles = request.POST.getlist('title')
+            files = request.FILES.getlist('file')
 
             form = ImgForm(request.POST, request.FILES)
-            if not form.is_valid():
-                raise Exception('It is not valid form')
+            print(files)
+            if form.is_valid():
+                for i, filename in enumerate(titles):
+                    image = files[i]
+                    image = Image.open(image)
+                    width = image.width
+                    height = image.height
 
-            filename = form.cleaned_data['title']
-            image = form.cleaned_data['file']
-            image = Image.open(image)
-            width = image.width
-            height = image.height
+                    file_loc = 'img/' + str(id) + "/" + filename
 
-            file_loc = 'img/' + str(id) + "/" + filename
-            # print("check !!! -------------")
-            # print(file_loc, width, height)
-
-            image.save(file_loc)
-
-            ImageMetadata.objects.create(annotation=DEFAULT_ANNO, image_url="https://oasys.ml/res/" +
-                                         file_loc, image_name=filename, image_size=str(width)+" "+str(height), dataset_id=id)
+                    image.save(file_loc)
+                    ImageMetadata.objects.create(annotation=DEFAULT_ANNO, image_url="https://oasys.ml/res/" +
+                                                 file_loc, image_name=filename, image_size=str(width)+" "+str(height), dataset_id=id)
 
             return JsonResponse({"type": "image_upload", "success": True}, json_dumps_params={'indent': 2})
 

@@ -19,6 +19,19 @@ type PropsImageCard = {
   datasetId: number;
 };
 
+function getPrettyName(imageName: string) {
+  let pos = 13;
+  while (1) {
+    if (imageName.length <= pos) {
+      break;
+    }
+    imageName = [imageName.slice(0, pos), imageName.slice(pos)].join(' ');
+    pos = pos + 14;
+  }
+
+  return imageName;
+}
+
 const boxStyle = (useHeader: boolean) => css`
   background-color: black;
   position: absolute;
@@ -46,6 +59,7 @@ const cardHeaderStyle = (useHeader: boolean) => css`
 `;
 
 function ImageCard({ imageInfo, setDataset, datasetId }: PropsImageCard) {
+  const imageName = getPrettyName(imageInfo.imageName);
   const [useHeader, setUseHeader] = useState(false);
 
   const onMouseOver = () => {
@@ -95,7 +109,7 @@ function ImageCard({ imageInfo, setDataset, datasetId }: PropsImageCard) {
         <CardHeader
           css={cardHeaderStyle(useHeader)}
           action={HeaderDeleteIcon}
-          title={imageInfo.imageName}
+          title={imageName}
           subheader="September 14, 2016"
           titleTypographyProps={{ fontSize: '1rem' }}
           subheaderTypographyProps={{ fontSize: '0.7rem' }}
