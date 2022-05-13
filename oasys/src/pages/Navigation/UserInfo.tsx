@@ -38,7 +38,7 @@ function UserInfo({
 }: {
   setLoginState: React.Dispatch<
     React.SetStateAction<{
-      login: boolean;
+      login: boolean | null;
       id: string;
     }>
   >;

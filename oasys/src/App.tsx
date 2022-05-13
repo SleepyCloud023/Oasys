@@ -21,8 +21,11 @@ const StyledApp = styled(Box)`
 `;
 
 function App() {
-  const [loginState, setLoginState] = useState<{ login: boolean; id: string }>({
-    login: false,
+  const [loginState, setLoginState] = useState<{
+    login: boolean | null;
+    id: string;
+  }>({
+    login: null,
     id: '',
   });
 
@@ -38,16 +41,32 @@ function App() {
             <Route
               path="home"
               element={
-                loginState.login ? <Home id={loginState.id} /> : <ErrorPage />
+                loginState.login ? (
+                  <Home id={loginState.id} />
+                ) : (
+                  <ErrorPage login={loginState.login} />
+                )
               }
             />
             <Route
               path="dataset/:id"
-              element={loginState.login ? <ListDataset /> : <ErrorPage />}
+              element={
+                loginState.login ? (
+                  <ListDataset />
+                ) : (
+                  <ErrorPage login={loginState.login} />
+                )
+              }
             />
             <Route
               path="imageSet/:id"
-              element={loginState.login ? <ListImage /> : <ErrorPage />}
+              element={
+                loginState.login ? (
+                  <ListImage />
+                ) : (
+                  <ErrorPage login={loginState.login} />
+                )
+              }
             />
           </Route>
           <Route path="/annotation/:id" element={<Annotation />} />
