@@ -1,5 +1,4 @@
 function ErrorPage({ login }: { login: boolean | null }) {
-  console.log('ErrorPage', login);
   return login == null ? (
     <></>
   ) : (

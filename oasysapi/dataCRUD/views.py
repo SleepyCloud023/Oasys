@@ -16,6 +16,8 @@ from utils.timer import timer
 from .forms import ImgForm
 from .permission import data_check, dataset_check, workspace_check
 
+from modules.delete_data import delete_dataset
+
 
 DEFAULT_ANNO = json.dumps(
     {"category_list": [], "tag_list": [], "box_object_list": []})
@@ -86,6 +88,11 @@ def dataset(request, id):
         target = Dataset.objects.create(name=submit["name"])
         WorkspaceDataset.objects.create(
             workspace=submit["workspace"], dataset=target.id)
+
+        directory = "img/" + str(target.id)
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+
         return JsonResponse({"type": "dataset_create", "success": True},
                             json_dumps_params={'indent': 2})
 
@@ -116,10 +123,7 @@ def dataset(request, id):
         return JsonResponse(result_json, json_dumps_params={'indent': 2})
 
     elif request.method == "DELETE":
-        dataset_id = target.id
-        workspace_dataset = WorkspaceDataset.objects.filter(dataset=dataset_id)
-        workspace_dataset.delete()
-        target.delete()
+        delete_dataset(target.id, target)
 
         return JsonResponse({"type": "dataset_delete", "success": True}, json_dumps_params={'indent': 2})
 
@@ -184,6 +188,7 @@ def workspace(request, id):
         workspace_id = target.id
         user_workspace = UserWorkspace.objects.filter(workspace=workspace_id)
         user_workspace.delete()
+
         target.delete()
 
         return JsonResponse({"type": "dataset_delete", "success": True}, json_dumps_params={'indent': 2})

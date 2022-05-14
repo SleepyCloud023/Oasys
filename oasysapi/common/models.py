@@ -23,6 +23,7 @@ class Workspace(models.Model):
         blank=True, null=True, auto_now_add=True)
     modification_date = models.DateTimeField(
         blank=True, null=True, auto_now_add=True)
+    user = models.CharField(max_length=32, blank=True, null=True)
 
     class Meta:
         managed = False

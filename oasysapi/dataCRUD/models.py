@@ -10,13 +10,14 @@ from django.db import models
 
 class Dataset(models.Model):
     name = models.CharField(max_length=100, blank=True, null=True)
-    user_id = models.IntegerField(blank=True, null=True)
+    user = models.CharField(max_length=32, blank=True, null=True)
     creation_date = models.DateTimeField(
         blank=True, null=True, auto_now_add=True)
     modification_date = models.DateTimeField(
         blank=True, null=True, auto_now_add=True)
     rep_image = models.CharField(
         max_length=300, blank=True, null=True)
+    local_flag = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False

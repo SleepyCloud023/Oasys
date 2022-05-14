@@ -53,7 +53,15 @@ function ImageSetController({ id, data, setDataset }: ImageSetControllerProps) {
 
   async function uploadImage(fileList: FileList) {
     const [file, filename] = [fileList[0], fileList[0].name];
-    console.log(filename);
+    //console.log(file.type);
+
+    // let url = '';
+    // if (window.URL != undefined) {
+    //   url = window.URL.createObjectURL(file);
+    // } else if (window.webkitURL != undefined) {
+    //   url = window.webkitURL.createObjectURL(file);
+    // }
+    //console.log(url);
     const formData = new FormData();
     formData.append('title', filename);
     formData.append('file', file);
