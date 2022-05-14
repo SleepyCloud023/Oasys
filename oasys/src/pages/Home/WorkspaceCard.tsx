@@ -18,6 +18,7 @@ import { grey } from '@mui/material/colors';
 
 import { Permission, Workspace } from './types/list-workspace';
 import { deleteWorkspaceById } from '@api/workspace';
+import ConfirmDelete from './ConfirmDelete';
 
 type PropsWorkspaceCard = {
   userId: string;
@@ -69,32 +70,34 @@ function WorkspaceCard({
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+  const [open, setOpen] = React.useState(false);
 
-  async function deleteWorkspace(
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-  ) {
-    e.preventDefault();
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
-    const response = await deleteWorkspaceById(workspaceInfo.id);
-
-    if (response.success) {
-      const get_data_res = await axios.get(`/api/permission/${userId}`);
-      setPermission(get_data_res.data);
-    }
-    // TODO: 실패 시 Alert 추가
-    else {
-    }
-  }
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const HeaderDeleteIcon = (
     <Tooltip title="Delete">
-      <IconButton
-        aria-label="settings"
-        sx={{ color: grey[500] }}
-        onClick={deleteWorkspace}
-      >
-        <DeleteIcon />
-      </IconButton>
+      <>
+        <IconButton
+          aria-label="settings"
+          sx={{ color: grey[500] }}
+          onClick={handleClickOpen}
+        >
+          <DeleteIcon />
+        </IconButton>
+        <ConfirmDelete
+          open={open}
+          userId={userId}
+          workspaceInfo={workspaceInfo}
+          setPermission={setPermission}
+          handleClose={handleClose}
+        />
+      </>
     </Tooltip>
   );
 

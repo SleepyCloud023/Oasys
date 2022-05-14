@@ -142,6 +142,7 @@ def workspace(request, id):
     """
     if request.method == "POST":
         submit = json.loads(request.body.decode("utf-8"))
+        submit_user = submit["user"].replace('-', "")
 
         same_name = Workspace.objects.filter(workspace_name=submit["name"])
         if len(same_name) >= 1:
@@ -150,7 +151,7 @@ def workspace(request, id):
 
         target = Workspace.objects.create(workspace_name=submit["name"])
         UserWorkspace.objects.create(
-            user=submit["user"], workspace=target.id)
+            user=submit_user, workspace=target.id)
 
         return JsonResponse({"type": "workspace_create", "success": True},
                             json_dumps_params={'indent': 2})
@@ -188,7 +189,6 @@ def workspace(request, id):
         workspace_id = target.id
         user_workspace = UserWorkspace.objects.filter(workspace=workspace_id)
         user_workspace.delete()
-
         target.delete()
 
         return JsonResponse({"type": "dataset_delete", "success": True}, json_dumps_params={'indent': 2})

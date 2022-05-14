@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Tooltip from '@mui/material/Tooltip';
 
@@ -17,7 +16,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { grey } from '@mui/material/colors';
 
 import { Dataset, Workspace } from './types/list-dataset';
-import { deleteDatasetById } from '@api/dataset';
+import ConfirmDelete from './ConfirmDelete';
 
 type PropsDatasetCard = {
   workspaceId: number;
@@ -69,32 +68,34 @@ function DatasetCard({
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+  const [open, setOpen] = React.useState(false);
 
-  async function deleteDataset(
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-  ) {
-    e.preventDefault();
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
-    const response = await deleteDatasetById(datasetInfo.id);
-
-    if (response.success) {
-      const get_data_res = await axios.get(`/api/workspace/${workspaceId}`);
-      setWorkspace(get_data_res.data);
-    }
-    // TODO: 실패 시 Alert 추가
-    else {
-    }
-  }
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const HeaderDeleteIcon = (
     <Tooltip title="Delete">
-      <IconButton
-        aria-label="settings"
-        sx={{ color: grey[500] }}
-        onClick={deleteDataset}
-      >
-        <DeleteIcon />
-      </IconButton>
+      <>
+        <IconButton
+          aria-label="settings"
+          sx={{ color: grey[500] }}
+          onClick={handleClickOpen}
+        >
+          <DeleteIcon />
+        </IconButton>
+        <ConfirmDelete
+          open={open}
+          workspaceId={workspaceId}
+          datasetInfo={datasetInfo}
+          handleClose={handleClose}
+          setWorkspace={setWorkspace}
+        />
+      </>
     </Tooltip>
   );
 
