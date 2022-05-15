@@ -16,7 +16,7 @@ from utils.timer import timer
 from .forms import ImgForm
 from .permission import data_check, dataset_check, workspace_check
 
-from modules.delete_data import delete_dataset
+from modules.delete_data import delete_dataset, delete_workspace
 
 
 DEFAULT_ANNO = json.dumps(
@@ -123,7 +123,7 @@ def dataset(request, id):
         return JsonResponse(result_json, json_dumps_params={'indent': 2})
 
     elif request.method == "DELETE":
-        delete_dataset(target.id, target)
+        delete_dataset(target)
 
         return JsonResponse({"type": "dataset_delete", "success": True}, json_dumps_params={'indent': 2})
 
@@ -186,10 +186,7 @@ def workspace(request, id):
         return JsonResponse(result_json, json_dumps_params={'indent': 2})
 
     elif request.method == "DELETE":
-        workspace_id = target.id
-        user_workspace = UserWorkspace.objects.filter(workspace=workspace_id)
-        user_workspace.delete()
-        target.delete()
+        delete_workspace(target)
 
         return JsonResponse({"type": "dataset_delete", "success": True}, json_dumps_params={'indent': 2})
 
