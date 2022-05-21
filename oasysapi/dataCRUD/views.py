@@ -12,11 +12,12 @@ from rest_framework.decorators import api_view
 
 from dataCRUD.models import ImageMetadata, Dataset, WorkspaceDataset
 from common.models import CustomUser as User, UserWorkspace, Workspace
-from utils.timer import timer
 from .forms import ImgForm
+from utils.timer import timer
 from .permission import data_check, dataset_check, workspace_check
 
 from modules.delete_data import delete_dataset, delete_workspace
+from modules.check_user import check_user
 
 
 DEFAULT_ANNO = json.dumps(
@@ -34,19 +35,14 @@ def data(request, id):
     Returns:
         _type_: _description_
     """
-    print('check ------------')
     try:
         target = ImageMetadata.objects.get(pk=id)
     except ImageMetadata.DoesNotExist:
         return JsonResponse({'success': False}, status=status.HTTP_404_NOT_FOUND)
 
-    user = request.session.get('user')
-    if user is None:
-        return JsonResponse({'type': 'data_get', 'success': False}, status=status.HTTP_401_UNAUTHORIZED)
-
-    permission_flag = data_check(user, target)
-    if not permission_flag:
-        return JsonResponse({'type': 'data_get', 'success': False}, status=status.HTTP_403_FORBIDDEN)
+    ucheck_result = check_user(request, target, "data")
+    if ucheck_result is not True:
+        return ucheck_result
 
     if request.method == 'GET':
         anno_str = target.annotation
@@ -101,13 +97,9 @@ def dataset(request, id):
     except ImageMetadata.DoesNotExist:
         return JsonResponse({'message': 'dataset not found'}, status=status.HTTP_404_NOT_FOUND)
 
-    user = request.session.get('user')
-    if user is None:
-        return JsonResponse({'type': 'dataset_get', 'success': False}, status=status.HTTP_401_UNAUTHORIZED)
-
-    permission_flag = dataset_check(user, target)
-    if not permission_flag:
-        return JsonResponse({'type': 'dataset_get', 'success': False}, status=status.HTTP_403_FORBIDDEN)
+    ucheck_result = check_user(request, target, "dataset")
+    if ucheck_result is not True:
+        return ucheck_result
 
     if request.method == 'GET':
         result_json = {"datasetName": "", "image_metadata": []}
@@ -161,13 +153,9 @@ def workspace(request, id):
     except ImageMetadata.DoesNotExist:
         return JsonResponse({'message': 'user not found'}, status=status.HTTP_404_NOT_FOUND)
 
-    user = request.session.get('user')
-    if user is None:
-        return JsonResponse({'type': 'workspace_get', 'success': False}, status=status.HTTP_401_UNAUTHORIZED)
-
-    permission_flag = workspace_check(user, target)
-    if not permission_flag:
-        return JsonResponse({'type': 'workspace_get', 'success': False}, status=status.HTTP_403_FORBIDDEN)
+    ucheck_result = check_user(request, target, "workspace")
+    if ucheck_result is not True:
+        return ucheck_result
 
     if request.method == 'GET':
         result_json = {"workspace": id, "dataset": []}
@@ -193,6 +181,15 @@ def workspace(request, id):
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def permission(request, id):
+    """_summary_
+
+    Args:
+        request (_type_): _description_
+        id (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
     id = id.replace('-', "")
     try:
         target = User.objects.get(pk=id)
@@ -218,6 +215,15 @@ def permission(request, id):
 
 @api_view(['POST', 'DELETE'])
 def image(request, id):
+    """_summary_
+
+    Args:
+        request (_type_): _description_
+        id (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
     if request.method == 'POST':
         try:
             titles = request.POST.getlist('title')
@@ -267,6 +273,15 @@ def image(request, id):
 
 @api_view(['GET', 'PUT'])
 def annotation(request, id):
+    """_summary_
+
+    Args:
+        request (_type_): _description_
+        id (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
     try:
         target = Dataset.objects.get(pk=id)
     except ImageMetadata.DoesNotExist:
