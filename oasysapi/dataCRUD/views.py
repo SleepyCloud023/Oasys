@@ -1,7 +1,5 @@
 import json
-from tabnanny import filename_only
 from PIL import Image
-import io
 import os
 
 from django.http import HttpResponse
@@ -9,6 +7,7 @@ from django.http.response import JsonResponse
 from django.contrib.auth.models import User
 from rest_framework import status
 from rest_framework.decorators import api_view
+from django.conf import settings
 
 from dataCRUD.models import ImageMetadata, Dataset, WorkspaceDataset
 from common.models import CustomUser as User, UserWorkspace, Workspace
@@ -18,10 +17,9 @@ from .permission import data_check, dataset_check, workspace_check
 
 from modules.delete_data import delete_dataset, delete_workspace
 from modules.check_user import check_user
+from modules.annotation import DEFAULT_ANNO
 
-
-DEFAULT_ANNO = json.dumps(
-    {"category_list": [], "tag_list": [], "box_object_list": []})
+IMG_DIR_PATH = getattr(settings, 'IMG_DIR_PATH', None)
 
 
 @api_view(['GET', 'POST', 'DELETE'])
@@ -85,7 +83,7 @@ def dataset(request, id):
         WorkspaceDataset.objects.create(
             workspace=submit["workspace"], dataset=target.id)
 
-        directory = "img/" + str(target.id)
+        directory = IMG_DIR_PATH + str(target.id)
         if not os.path.exists(directory):
             os.makedirs(directory)
 
@@ -238,11 +236,12 @@ def image(request, id):
                     width = image.width
                     height = image.height
 
-                    file_loc = 'img/' + str(id) + "/" + filename
+                    file_loc = IMG_DIR_PATH + str(id) + "/" + filename
+                    url_loc = str(id) + "/" + filename
 
                     image.save(file_loc)
-                    ImageMetadata.objects.create(annotation=DEFAULT_ANNO, image_url="https://oasys.ml/res/" +
-                                                 file_loc, image_name=filename, image_size=str(width)+" "+str(height), dataset_id=id)
+                    ImageMetadata.objects.create(annotation=DEFAULT_ANNO, image_url="https://oasys.ml/res/img/" +
+                                                 url_loc, image_name=filename, image_size=str(width)+" "+str(height), dataset_id=id)
 
             return JsonResponse({"type": "image_upload", "success": True}, json_dumps_params={'indent': 2})
 
@@ -262,7 +261,7 @@ def image(request, id):
         same_name = ImageMetadata.objects.filter(image_name=filename)
 
         if len(same_name) <= 1:
-            file_loc = 'img/' + str(dataset) + "/" + filename
+            file_loc = IMG_DIR_PATH + str(dataset) + "/" + filename
             if os.path.isfile(file_loc):
                 os.remove(file_loc)
 

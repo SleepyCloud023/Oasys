@@ -1,8 +1,12 @@
 import os
 import shutil
 
+from django.conf import settings
+
 from dataCRUD.models import ImageMetadata, Dataset, WorkspaceDataset
 from common.models import CustomUser as User, UserWorkspace, Workspace
+
+IMG_DIR_PATH = getattr(settings, 'IMG_DIR_PATH', None)
 
 
 def delete_dataset(target):
@@ -14,7 +18,7 @@ def delete_dataset(target):
     for row in data_list:
         row.delete()
 
-    directory = "img/" + str(id)
+    directory = IMG_DIR_PATH + str(id)
     if os.path.exists(directory):
         shutil.rmtree(directory)
 

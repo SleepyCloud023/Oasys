@@ -155,3 +155,6 @@ AUTH_USER_MODEL = 'common.CustomUser'
 GOOGLE_OAUTH2_CLIENT_ID = '163413806779-q6ij208fs7bnk6n24gsbvu9himdks8vs.apps.googleusercontent.com'
 DJANGO_GOOGLE_OAUTH2_CLIENT_SECRET = env.str(
     'DJANGO_GOOGLE_OAUTH2_CLIENT_SECRET')
+
+
+IMG_DIR_PATH = '/home/tempoasys/img/'
