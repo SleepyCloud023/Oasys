@@ -1,5 +1,5 @@
 from dataCRUD.models import Dataset
-from modules.delete_data import delete_dataset
+from modules.delete import delete_dataset
 
 
 def delete(id):

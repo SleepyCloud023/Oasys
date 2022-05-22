@@ -2,20 +2,19 @@ import json
 from PIL import Image
 import os
 
+from django.conf import settings
 from django.http import HttpResponse
 from django.http.response import JsonResponse
 from django.contrib.auth.models import User
 from rest_framework import status
 from rest_framework.decorators import api_view
-from django.conf import settings
 
 from dataCRUD.models import ImageMetadata, Dataset, WorkspaceDataset
 from common.models import CustomUser as User, UserWorkspace, Workspace
 from .forms import ImgForm
 from utils.timer import timer
-from .permission import data_check, dataset_check, workspace_check
 
-from modules.delete_data import delete_dataset, delete_workspace
+from modules.delete import delete_dataset, delete_workspace
 from modules.check_user import check_user
 from modules.annotation import DEFAULT_ANNO
 
@@ -60,7 +59,7 @@ def data(request, id):
         return JsonResponse(result_json, json_dumps_params={'indent': 2})
 
 
-@api_view(['GET', 'POST', 'DELETE'])
+@api_view(['GET', 'DELETE'])
 def dataset(request, id):
     """_summary_
 
@@ -71,25 +70,6 @@ def dataset(request, id):
     Returns:
         _type_: check111
     """
-    if request.method == "POST":
-        submit = json.loads(request.body.decode("utf-8"))
-
-        same_name = Dataset.objects.filter(name=submit["name"])
-        if len(same_name) >= 1:
-            return JsonResponse({"type": "dataset_create", "success": False, "error_msg": "The name already exists."},
-                                json_dumps_params={'indent': 2})
-
-        target = Dataset.objects.create(name=submit["name"])
-        WorkspaceDataset.objects.create(
-            workspace=submit["workspace"], dataset=target.id)
-
-        directory = IMG_DIR_PATH + str(target.id)
-        if not os.path.exists(directory):
-            os.makedirs(directory)
-
-        return JsonResponse({"type": "dataset_create", "success": True},
-                            json_dumps_params={'indent': 2})
-
     try:
         target = Dataset.objects.get(pk=id)
     except ImageMetadata.DoesNotExist:
@@ -130,22 +110,6 @@ def workspace(request, id):
     Returns:
         _type_: _description_
     """
-    if request.method == "POST":
-        submit = json.loads(request.body.decode("utf-8"))
-        submit_user = submit["user"].replace('-', "")
-
-        same_name = Workspace.objects.filter(workspace_name=submit["name"])
-        if len(same_name) >= 1:
-            return JsonResponse({"type": "workspace_create", "success": False, "error_msg": "The name already exists."},
-                                json_dumps_params={'indent': 2})
-
-        target = Workspace.objects.create(workspace_name=submit["name"])
-        UserWorkspace.objects.create(
-            user=submit_user, workspace=target.id)
-
-        return JsonResponse({"type": "workspace_create", "success": True},
-                            json_dumps_params={'indent': 2})
-
     try:
         target = Workspace.objects.get(pk=id)
     except ImageMetadata.DoesNotExist:
@@ -171,13 +135,32 @@ def workspace(request, id):
 
         return JsonResponse(result_json, json_dumps_params={'indent': 2})
 
+    if request.method == "POST":
+        submit = json.loads(request.body.decode("utf-8"))
+
+        same_name = Dataset.objects.filter(name=submit["name"])
+        if len(same_name) >= 1:
+            return JsonResponse({"type": "dataset_create", "success": False, "error_msg": "The name already exists."},
+                                json_dumps_params={'indent': 2})
+
+        target = Dataset.objects.create(name=submit["name"], local_flag=0)
+        WorkspaceDataset.objects.create(
+            workspace=id, dataset=target.id)
+
+        directory = IMG_DIR_PATH + str(target.id)
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+
+        return JsonResponse({"type": "dataset_create", "success": True},
+                            json_dumps_params={'indent': 2})
+
     elif request.method == "DELETE":
         delete_workspace(target)
 
         return JsonResponse({"type": "dataset_delete", "success": True}, json_dumps_params={'indent': 2})
 
 
-@api_view(['GET', 'PUT', 'DELETE'])
+@api_view(['GET', 'POST', 'DELETE'])
 def permission(request, id):
     """_summary_
 
@@ -191,7 +174,6 @@ def permission(request, id):
     id = id.replace('-', "")
     try:
         target = User.objects.get(pk=id)
-        print(target.id)
     except ImageMetadata.DoesNotExist:
         return JsonResponse({'message': 'user not found'}, status=status.HTTP_404_NOT_FOUND)
 
@@ -209,6 +191,21 @@ def permission(request, id):
                 {"id": row.id, "name": row.workspace_name, "modification_date": mf_time})
 
         return JsonResponse(result_json, json_dumps_params={'indent': 2})
+
+    if request.method == "POST":
+        submit = json.loads(request.body.decode("utf-8"))
+
+        same_name = Workspace.objects.filter(workspace_name=submit["name"])
+        if len(same_name) >= 1:
+            return JsonResponse({"type": "workspace_create", "success": False, "error_msg": "The name already exists."},
+                                json_dumps_params={'indent': 2})
+
+        target = Workspace.objects.create(workspace_name=submit["name"])
+        UserWorkspace.objects.create(
+            user=id, workspace=target.id)
+
+        return JsonResponse({"type": "workspace_create", "success": True},
+                            json_dumps_params={'indent': 2})
 
 
 @api_view(['POST', 'DELETE'])

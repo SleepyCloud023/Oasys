@@ -56,8 +56,8 @@ function WorkspaceCreater({
     event.preventDefault();
     //await new Promise((r) => setTimeout(r, 1000));
 
-    const data = { name: name, user: userId };
-    const { data: res } = await axios.post(`${workspaceUrl}/0`, data);
+    const data = { name: name };
+    const { data: res } = await axios.post(`${permissionUrl}/${userId}`, data);
     setLoading(false);
 
     if (res.success) {

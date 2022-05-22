@@ -56,8 +56,11 @@ function DatasetCreater({
     event.preventDefault();
     //await new Promise((r) => setTimeout(r, 1000));
 
-    const data = { name: name, workspace: workspaceId };
-    const { data: res } = await axios.post(`${datasetUrl}/0`, data);
+    const data = { name: name };
+    const { data: res } = await axios.post(
+      `${workspaceUrl}/${workspaceId}`,
+      data,
+    );
     setLoading(false);
 
     if (res.success) {
