@@ -35,7 +35,7 @@ def data(request, id):
     try:
         target = ImageMetadata.objects.get(pk=id)
     except ImageMetadata.DoesNotExist:
-        return JsonResponse({'success': False}, status=status.HTTP_404_NOT_FOUND)
+        return JsonResponse({'type': "data_"+request.method, 'success': False, 'error_msg': 'data not found'}, status=status.HTTP_404_NOT_FOUND)
 
     ucheck_result = check_user(request, target, "data")
     if ucheck_result is not True:
@@ -65,7 +65,7 @@ def annotation(request, id):
     try:
         target = Dataset.objects.get(pk=id)
     except ImageMetadata.DoesNotExist:
-        return JsonResponse({'type': "annotation_"+request.method, 'success': False, 'error_msg': 'user not found'}, status=status.HTTP_404_NOT_FOUND)
+        return JsonResponse({'type': "annotation_"+request.method, 'success': False, 'error_msg': 'dataset not found'}, status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
         return get_annotation(target)
@@ -85,7 +85,7 @@ def dataset(request, id):
     try:
         target = Dataset.objects.get(pk=id)
     except ImageMetadata.DoesNotExist:
-        return JsonResponse({'message': 'dataset not found'}, status=status.HTTP_404_NOT_FOUND)
+        return JsonResponse({'type': "dataset_"+request.method, 'success': False, 'error_msg': 'dataset not found'}, status=status.HTTP_404_NOT_FOUND)
 
     ucheck_result = check_user(request, target, "dataset")
     if ucheck_result is not True:
@@ -116,7 +116,7 @@ def workspace(request, id):
     try:
         target = Workspace.objects.get(pk=id)
     except ImageMetadata.DoesNotExist:
-        return JsonResponse({'message': 'user not found'}, status=status.HTTP_404_NOT_FOUND)
+        return JsonResponse({'type': "workspace_"+request.method, 'success': False, 'error_msg': 'workspace not found'}, status=status.HTTP_404_NOT_FOUND)
 
     ucheck_result = check_user(request, target, "workspace")
     if ucheck_result is not True:
@@ -147,7 +147,7 @@ def permission(request, id):
     try:
         target = User.objects.get(pk=id)
     except ImageMetadata.DoesNotExist:
-        return JsonResponse({'message': 'user not found'}, status=status.HTTP_404_NOT_FOUND)
+        return JsonResponse({'type': "permission_"+request.method, 'success': False, 'error_msg': 'user not found'}, status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
         return get_permission(target)
