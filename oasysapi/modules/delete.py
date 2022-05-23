@@ -2,6 +2,7 @@ import os
 import shutil
 
 from django.conf import settings
+from django.http.response import JsonResponse
 
 from dataCRUD.models import ImageMetadata, Dataset, WorkspaceDataset
 from common.models import CustomUser as User, UserWorkspace, Workspace
@@ -9,7 +10,23 @@ from common.models import CustomUser as User, UserWorkspace, Workspace
 IMG_DIR_PATH = getattr(settings, 'IMG_DIR_PATH', None)
 
 
-def delete_dataset(target):
+def delete_image(target):
+    dataset = target.dataset_id
+    filename = target.image_name
+
+    same_name = ImageMetadata.objects.filter(image_name=filename)
+
+    if len(same_name) <= 1:
+        file_loc = IMG_DIR_PATH + str(dataset) + "/" + filename
+        if os.path.isfile(file_loc):
+            os.remove(file_loc)
+
+    target.delete()
+
+    return JsonResponse({"type": "image_delete", "success": True}, json_dumps_params={'indent': 2})
+
+
+def delete_dataset(target, return_type="bool"):
     id = target.id
     workspace_dataset = WorkspaceDataset.objects.filter(dataset=id)
     workspace_dataset.delete()
@@ -23,6 +40,11 @@ def delete_dataset(target):
         shutil.rmtree(directory)
 
     target.delete()
+
+    if return_type == "bool":
+        return True
+    elif return_type == "response":
+        return JsonResponse({"type": "dataset_delete", "success": True}, json_dumps_params={'indent': 2})
 
 
 def delete_workspace(target):
@@ -49,3 +71,5 @@ def delete_workspace(target):
 
     workspace_dataset.delete()
     target.delete()
+
+    return JsonResponse({"type": "dataset_delete", "success": True}, json_dumps_params={'indent': 2})

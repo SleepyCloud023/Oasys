@@ -13,7 +13,6 @@ export type ImageSetControllerProps = {
 };
 
 const annoExportUrl = '/api/annotation';
-const imageUploadUrl = '/api/image';
 const datasetUrl = '/api/dataset';
 
 const buttonStyle = css`
@@ -66,7 +65,7 @@ function ImageSetController({ id, data, setDataset }: ImageSetControllerProps) {
     formData.append('title', filename);
     formData.append('file', file);
 
-    const uploadRes = await axios.post(`${imageUploadUrl}/${id}`, formData);
+    const uploadRes = await axios.post(`${datasetUrl}/${id}`, formData);
     const uploadSuccess = uploadRes.data.success;
 
     if (uploadSuccess) {
@@ -86,7 +85,7 @@ function ImageSetController({ id, data, setDataset }: ImageSetControllerProps) {
       formData.append('file', file);
     }
 
-    const uploadRes = await axios.post(`${imageUploadUrl}/${id}`, formData);
+    const uploadRes = await axios.post(`${datasetUrl}/${id}`, formData);
     const uploadSuccess = uploadRes.data.success;
 
     if (uploadSuccess) {

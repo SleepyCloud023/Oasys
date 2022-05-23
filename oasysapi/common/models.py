@@ -9,7 +9,7 @@ class CustomUser(AbstractUser):
 
 
 class UserWorkspace(models.Model):
-    user = models.CharField(max_length=32, blank=True, null=True)
+    user = models.UUIDField()
     workspace = models.IntegerField(blank=True, null=True)
 
     class Meta:
@@ -23,7 +23,7 @@ class Workspace(models.Model):
         blank=True, null=True, auto_now_add=True)
     modification_date = models.DateTimeField(
         blank=True, null=True, auto_now_add=True)
-    user = models.CharField(max_length=32, blank=True, null=True)
+    user = models.UUIDField()
 
     class Meta:
         managed = False
