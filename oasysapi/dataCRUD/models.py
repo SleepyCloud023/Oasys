@@ -30,7 +30,7 @@ class ImageMetadata(models.Model):
     image_name = models.CharField(max_length=50, blank=True, null=True)
     image_size = models.CharField(max_length=30, blank=True, null=True)
     dataset = models.ForeignKey(
-        Dataset, models.DO_NOTHING, blank=True, null=True)
+        Dataset, models.DO_NOTHING, blank=True, null=True, db_index=True)
     size = models.CharField(max_length=20, blank=True, null=True)
     creation_date = models.DateTimeField(
         blank=True, null=True, auto_now_add=True)
@@ -43,8 +43,8 @@ class ImageMetadata(models.Model):
 
 
 class WorkspaceDataset(models.Model):
-    workspace = models.IntegerField(blank=True, null=True)
-    dataset = models.IntegerField(blank=True, null=True)
+    workspace = models.IntegerField(db_index=True, blank=True, null=True)
+    dataset = models.IntegerField(db_index=True, blank=True, null=True)
 
     class Meta:
         managed = False

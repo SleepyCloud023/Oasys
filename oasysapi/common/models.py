@@ -9,8 +9,8 @@ class CustomUser(AbstractUser):
 
 
 class UserWorkspace(models.Model):
-    user = models.UUIDField()
-    workspace = models.IntegerField(blank=True, null=True)
+    user = models.UUIDField(db_index=True)
+    workspace = models.IntegerField(db_index=True, blank=True, null=True)
 
     class Meta:
         managed = False

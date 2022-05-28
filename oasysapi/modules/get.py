@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.http.response import JsonResponse
 
 from dataCRUD.models import ImageMetadata, Dataset, WorkspaceDataset
-from common.models import CustomUser as User, UserWorkspace, Workspace
+from common.models import UserWorkspace, Workspace
 
 
 def get_data(target):
@@ -81,3 +81,5 @@ def get_permission(target):
             {"id": row.id, "name": row.workspace_name, "modification_date": mf_time})
 
     return JsonResponse(result_json, json_dumps_params={'indent': 2})
+
+# a3dcf03c-aaa4-4884-91fe-a63113f20452
