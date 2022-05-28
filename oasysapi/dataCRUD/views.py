@@ -9,7 +9,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 
 from dataCRUD.models import ImageMetadata, Dataset
-from common.models import CustomUser as User, UserWorkspace, Workspace
+from common.models import CustomUser as User, Workspace
 from utils.timer import timer
 
 from modules.check_user import check_user

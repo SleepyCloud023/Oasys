@@ -13,7 +13,6 @@ type DatasetCreaterProps = {
   setWorkspace: React.Dispatch<React.SetStateAction<Workspace | null>>;
 };
 
-const datasetUrl = '/api/dataset';
 const workspaceUrl = '/api/workspace';
 
 const style = {
