@@ -52,7 +52,7 @@ function ConfirmDelete({
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {`Delete Dataset : "${workspaceInfo.name}"`}
+          {`Delete Workspace : "${workspaceInfo.name}"`}
         </DialogTitle>
         <DialogActions>
           <Button variant="contained" onClick={handleClose}>

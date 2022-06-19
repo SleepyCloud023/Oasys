@@ -78,7 +78,7 @@ def create_workspace(request, target):
                                     json_dumps_params={'indent': 2})
 
             new_workspace = Workspace.objects.create(
-                workspace_name=submit["name"])
+                workspace_name=submit["name"], user=target.id)
             UserWorkspace.objects.create(
                 user=target.id, workspace=new_workspace.id)
 
